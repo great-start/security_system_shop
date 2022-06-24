@@ -43,12 +43,13 @@ model Product {
   id          String         @id @default(uuid())
   name        String         @unique
   price       Int
-  status      Product_status
+  status      Product_status?
   type        Type           @relation(fields: [typeId], references: [id])
   typeId      Int
   category    Category       @relation(fields: [categoryId], references: [id])
   categoryId  Int
-  quantity    Int
+  quantity    Int?
+  image       String?
   createdAt   DateTime       @default(now())
   Basket_item Basket_item[]
 }
