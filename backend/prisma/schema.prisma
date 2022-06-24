@@ -41,28 +41,30 @@ model Basket_item {
 
 model Product {
   id          String         @id @default(uuid())
-  name        String
+  name        String         @unique
   price       Int
   status      Product_status
   type        Type           @relation(fields: [typeId], references: [id])
-  typeId      String
+  typeId      Int
   category    Category       @relation(fields: [categoryId], references: [id])
-  categoryId  String
-  createdAt   DateTime       @default(now())
+  categoryId  Int
   quantity    Int
+  createdAt   DateTime       @default(now())
   Basket_item Basket_item[]
 }
 
 model Type {
-  id      String    @id @default(uuid())
-  name    String
-  Product Product[]
+  id        Int       @id @default(autoincrement())
+  name      String    @unique
+  createdAt DateTime  @default(now())
+  Product   Product[]
 }
 
 model Category {
-  id      String    @id @default(uuid())
-  name    String
-  Product Product[]
+  id        Int       @id @default(autoincrement())
+  name      String    @unique
+  createdAt DateTime  @default(now())
+  Product   Product[]
 }
 
 enum Product_status {

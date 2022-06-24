@@ -1,11 +1,12 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { SdfModule } from './sdf/sdf.module';
-import { SdfasdasdModule } from './sdfasdasd/sdfasdasd.module';
+import { ProductModule } from './product/product.module';
+import { TypeModule } from './type/type.module';
+import { CategoryModule } from './category/category.module';
 
 @Module({
-  imports: [SdfModule, SdfasdasdModule],
+  imports: [ProductModule, TypeModule, CategoryModule],
   controllers: [AppController],
   providers: [AppService],
 })
