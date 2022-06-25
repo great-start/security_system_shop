@@ -10,8 +10,8 @@ export class TypeController {
   constructor(private readonly typeService: TypeService) {}
 
   @Post()
-  create(@Body() createTypeDto: CreateTypeDto) {
-    return this.typeService.create(createTypeDto);
+  create(@Body() type: CreateTypeDto) {
+    return this.typeService.create(type);
   }
 
   @Get()

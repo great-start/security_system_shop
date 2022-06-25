@@ -7,8 +7,13 @@ import { PrismaService } from '../prisma.service';
 export class ProductService {
   constructor(private prismaService: PrismaService) {}
 
-  async create(createProductDto: CreateProductDto) {
-    return 'This action adds a new product';
+  async create(product: CreateProductDto, filename: string) {
+    return this.prismaService.product.create({
+      data: {
+        ...product,
+        image: filename,
+      },
+    });
   }
 
   async findAll() {
@@ -25,7 +30,7 @@ export class ProductService {
     return `This action updates a #${id} product`;
   }
 
-  async remove(id: number) {
-    return `This action removes a #${id} product`;
+  async remove(id: string) {
+    return this.prismaService.product.delete({ where: { id } });
   }
 }

@@ -7,8 +7,8 @@ import { PrismaService } from '../prisma.service';
 export class TypeService {
   constructor(private readonly prismaService: PrismaService) {}
 
-  create(createTypeDto: CreateTypeDto) {
-    return 'This action adds a new type';
+  create(type: CreateTypeDto) {
+    return this.prismaService.type.create({ data: type });
   }
 
   findAll() {
