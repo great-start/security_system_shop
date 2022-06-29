@@ -1,5 +1,7 @@
-/backend/node_modules/
 .idea
+/backend/node_modules/
 /backend/.env
 /backend/prisma/migrations/
 /backend/dist/
+/frontend/node_modules/
+/frontend/build
