@@ -42,6 +42,7 @@ model Basket_item {
 model Product {
   id          String          @id @default(uuid())
   name        String          @unique
+  title       String?
   price       Int
   status      Product_status?
   type        Type            @relation(fields: [typeId], references: [id])

@@ -9,7 +9,7 @@ const App: FC = () => {
     return (
         <Routes>
             <Route path={'/'} element={<Layout />}>
-                <Route path={'shop'} element={<Shop />} />
+                <Route path={'shop/*'} element={<Shop />} />
                 <Route path={'install'} element={<Install />} />
             </Route>
         </Routes>

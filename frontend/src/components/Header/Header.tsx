@@ -7,11 +7,11 @@ import css from './Header.module.css';
 const Header = () => {
     return (
         <Navbar bg='light' variant='dark'>
-            <Container>
+            <Container className="my-2">
                 <Nav className={css.navLink}>
-                    <NavLink to={'/'}>SECSYSTEM</NavLink>
+                    <NavLink to={'/'} className={css.navLink} style={{marginRight: 50}}>SECSYSTEMS</NavLink>
                     <NavLink to={'/shop'} className={css.isActive ? css.activeClassName : undefined} >Магазин</NavLink>
-                    <NavLink to={'/install'} className={css.isActive ? css.activeClassName : undefined}>Замовити роботи</NavLink>
+                    <NavLink to={'/install'} className={css.isActive ? css.activeClassName : undefined}>Послуги</NavLink>
                 </Nav>
                 <Nav className='ml-auto'>
                     <Button style={{ color: 'black' }} className='ml-10' variant={'secondary'}>Увійти</Button>
