@@ -3,8 +3,9 @@ import React, { FC, useEffect, useState } from 'react';
 import { productService } from '../../services';
 import { IProduct } from '../../interaces';
 import Product from '../Product/Product';
+import Header from '../Header/Header';
 
-const Products: FC = () => {
+const Shop: FC = () => {
 
     const [products, setProducts] = useState<IProduct[]>([]);
 
@@ -23,9 +24,11 @@ const Products: FC = () => {
 
     return (
         <div>
-            {products && products.map(product => <Product key={product.id} product={product} />)}
-       </div>
+            <div>
+                {products && products.map(product => <Product key={product.id} product={product} />)}
+            </div>
+        </div>
     );
 };
 
-export default Products;
+export default Shop;

@@ -1,0 +1,17 @@
+.navLink {
+    display: flex;
+    column-gap: 20px;
+}
+
+.navLink a {
+    color: black;
+    text-decoration: none;
+}
+
+.navLink a:hover {
+    color: lightslategray;
+}
+
+.navLink a[class=active] {
+    color: lightslategray;
+}
