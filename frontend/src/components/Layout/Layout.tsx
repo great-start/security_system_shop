@@ -8,7 +8,7 @@ const Layout: FC = () => {
         <div>
             <Header/>
             <Container className="mt-5">
-                <Outlet />
+                <Outlet/>
             </Container>
         </div>
     );

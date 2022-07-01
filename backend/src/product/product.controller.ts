@@ -27,7 +27,7 @@ export class ProductController {
   @UsePipes(new ValidationPipe({ transform: true }))
   @UseInterceptors(FileInterceptor('image', MulterFileOptions))
   create(@Body() product: CreateProductDto, @UploadedFile() image: Express.Multer.File) {
-    return this.productService.create(product, image.path);
+    return this.productService.create(product, image?.path);
   }
 
   @Get()

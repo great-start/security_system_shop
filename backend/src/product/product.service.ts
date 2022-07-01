@@ -7,11 +7,11 @@ import { PrismaService } from '../prisma.service';
 export class ProductService {
   constructor(private prismaService: PrismaService) {}
 
-  async create(product: CreateProductDto, filename: string) {
+  async create(product: CreateProductDto, filename?: string) {
     return this.prismaService.product.create({
       data: {
         ...product,
-        image: filename,
+        image: filename || null,
       },
     });
   }

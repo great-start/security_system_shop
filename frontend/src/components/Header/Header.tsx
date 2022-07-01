@@ -6,7 +6,7 @@ import css from './Header.module.css';
 
 const Header = () => {
     return (
-        <Navbar bg='light' variant='dark'>
+        <Navbar style={{backgroundColor: 'lightgray'}}>
             <Container className="my-2">
                 <Nav className={css.navLink}>
                     <NavLink to={'/'} className={css.navLink} style={{marginRight: 50}}>SECSYSTEMS</NavLink>

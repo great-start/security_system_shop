@@ -1,12 +1,13 @@
 import React, { FC, useEffect, useState } from 'react';
 import { categoryService } from '../../services';
 import { ICategory } from '../../interaces';
-import { NavLink } from 'react-router-dom';
-import { Nav } from 'react-bootstrap';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { ListGroup, Nav } from 'react-bootstrap';
 
 const CategoryList: FC = () => {
 
     const [categories, setCategories]  = useState<ICategory[]>([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const getCategories = async () => {
@@ -17,22 +18,17 @@ const CategoryList: FC = () => {
     },[])
 
     return (
-        <div>
-            <Nav defaultActiveKey="/home" className="flex-column">
-                <p style={{paddingLeft: 0}}>Каталог товарів</p>
-                {categories && categories.map(category =>
-                    <NavLink key={category.name} to={`${category.name}`} >
-                        {category.name}
-                    </NavLink>
-                )}
-                {/*<Nav.Link href="/home">Active</Nav.Link>*/}
-                {/*<Nav.Link eventKey="link-1">Link</Nav.Link>*/}
-                {/*<Nav.Link eventKey="link-2">Link</Nav.Link>*/}
-                {/*<Nav.Link eventKey="disabled" disabled>*/}
-                {/*    Disabled*/}
-                {/*</Nav.Link>*/}
-            </Nav>
-        </div>
+        <ListGroup>
+            <p>Каталог товарів</p>
+            {categories && categories.map(value =>
+                <ListGroup.Item key={value.name} action href={`/shop/${value.name}`} onClick={e => {
+                    e.preventDefault();
+                    navigate(`/shop/${value.name}`);
+                }}>
+                    {value.name}
+                </ListGroup.Item>
+            )}
+        </ListGroup>
     );
 };
 
