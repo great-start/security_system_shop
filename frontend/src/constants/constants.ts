@@ -1,6 +1,6 @@
 export const baseURL = 'http://localhost:5000';
 
 export const urls = {
-    products: '/product',
+    product: '/product',
     categories: '/category'
 }

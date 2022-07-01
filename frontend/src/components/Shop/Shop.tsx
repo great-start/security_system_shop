@@ -15,7 +15,6 @@ const Shop: FC = () => {
     useEffect(  () => {
         const getProducts = async () => {
             if (params.category) {
-                console.log(params.category);
                 const { data } = await categoryService.getProductsByCategory(params.category);
                 setProducts(data);
                 return;
@@ -31,12 +30,9 @@ const Shop: FC = () => {
             <CategoryList />
             <div style={{display: 'flex', flexDirection: 'column', marginLeft: 20}}>
                 <p>Сортувати: </p>
-
-                {/*{<Outlet /> &&*/}
                     <div className={css.products}>
                         {products && products.map(product => <Product key={product.id} product={product} />)}
                     </div>
-                {/*}*/}
             </div>
         </div>
     );
