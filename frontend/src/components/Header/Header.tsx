@@ -17,7 +17,7 @@ const Header = () => {
                     <NavLink to={'/install'} className={css.isActive ? css.activeClassName : undefined}>Послуги</NavLink>
                 </Nav>
                 <Nav className='ml-auto gap-3'>
-                    <Button style={{ color: 'black' }} className='ml-10' variant={'secondary'}>Корзина</Button>
+                    <Button style={{ color: 'black' }} className='ml-10' variant={'outline-secondary'}>Корзина</Button>
                     <Button style={{ color: 'black' }} className='ml-10' variant={'outline-secondary'} onClick={e => {
                         e.preventDefault();
                         navigate('auth');
