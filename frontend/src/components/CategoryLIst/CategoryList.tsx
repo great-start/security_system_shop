@@ -3,6 +3,7 @@ import { categoryService } from '../../services';
 import { ICategory } from '../../interaces';
 import { useNavigate, useParams } from 'react-router-dom';
 import { ListGroup } from 'react-bootstrap';
+import css from './CategoryList.module.css';
 
 const CategoryList: FC = () => {
 
@@ -23,10 +24,11 @@ const CategoryList: FC = () => {
             <p>Каталог товарів</p>
             {categories && categories.map(value =>
                 <ListGroup.Item key={value.name} action href={`/shop/${value.name}`}
-                                onClick={e => {
+                                onClick={(e) => {
                                     e.preventDefault();
                                     navigate(`/shop/${value.name}`);
-                                }} active={params.category === value.name}>
+                                }} active={params.category === value.name}
+                className={css.link}>
                     {value.name}
                 </ListGroup.Item>)
             }
