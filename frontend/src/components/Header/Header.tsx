@@ -4,12 +4,12 @@ import { Button, Container, Nav } from 'react-bootstrap';
 import { NavLink, useNavigate } from 'react-router-dom';
 import css from './Header.module.css';
 
-const Header = () => {
+export const Header = () => {
 
     const navigate = useNavigate();
 
     return (
-        <Navbar style={{backgroundColor: 'lightgray'}}>
+        <Navbar style={{backgroundColor: '#f6f6f6'}}>
             <Container className="my-2">
                 <Nav className={css.navLink}>
                     <NavLink to={'/'} className={css.navLink} style={{marginRight: 50}}>SECSYSTEMS</NavLink>
@@ -27,5 +27,3 @@ const Header = () => {
         </Navbar>
     );
 };
-
-export default Header;

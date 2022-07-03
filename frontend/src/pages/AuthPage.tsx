@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, Card, Container, Form } from 'react-bootstrap';
 import css from './Auth.module.css';
 
-const AuthPage = () => {
+export const AuthPage = () => {
     return (
         <Container className={css.wrap}>
             <Card className={css.card}>
@@ -23,5 +23,3 @@ const AuthPage = () => {
         </Container>
     );
 };
-
-export default AuthPage;

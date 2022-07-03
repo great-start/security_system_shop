@@ -1,12 +1,9 @@
-import React from 'react';
+import React, { FC } from 'react';
 
-const Install = () => {
-
-    console.log('install');
+export const Install: FC = () => {
 
     return (
         <div>Install</div>
     );
 };
 
-export default Install;

@@ -1,12 +1,8 @@
 import React, { FC } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
-import Layout from './components/Layout/Layout';
-import Shop from './components/Shop/Shop';
-import Install from './components/Install/Install';
-import MainPage from './pages/MainPage';
-import ProductPage from './pages/ProductPage';
-import AuthPage from './pages/AuthPage';
+import { Install, Layout, Shop } from './components';
+import { AuthPage, MainPage, ProductPage } from './pages';
 
 const App: FC = () => {
     return (

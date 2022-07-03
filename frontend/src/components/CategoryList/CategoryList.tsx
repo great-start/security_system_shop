@@ -5,7 +5,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { ListGroup } from 'react-bootstrap';
 import css from './CategoryList.module.css';
 
-const CategoryList: FC = () => {
+export const CategoryList: FC = () => {
 
     const [categories, setCategories]  = useState<ICategory[]>([]);
     const navigate = useNavigate();
@@ -35,5 +35,3 @@ const CategoryList: FC = () => {
         </ListGroup>
     );
 };
-
-export default CategoryList;

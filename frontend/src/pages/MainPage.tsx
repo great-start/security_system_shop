@@ -1,9 +1,8 @@
 import React from 'react';
 import { Container } from 'react-bootstrap';
-import CategoryList from '../components/CategoryLIst/CategoryList';
-import Install from '../components/Install/Install';
+import { CategoryList, Install } from '../components';
 
-const MainPage = () => {
+export const MainPage = () => {
     return (
         <Container className='mt-5'>
             <CategoryList />
@@ -11,5 +10,3 @@ const MainPage = () => {
         </Container>
     );
 };
-
-export default MainPage;

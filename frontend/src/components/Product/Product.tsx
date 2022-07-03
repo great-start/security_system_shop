@@ -9,7 +9,7 @@ interface IProps {
     product: IProduct
 }
 
-const Product: FC<IProps> = ({ product}) => {
+export const Product: FC<IProps> = ({ product}) => {
 
     const navigate = useNavigate();
     const { id, name, image, price } = product
@@ -27,5 +27,3 @@ const Product: FC<IProps> = ({ product}) => {
         </div>
     );
 };
-
-export default Product;

@@ -4,7 +4,7 @@ import { productService } from '../services';
 import { IProduct } from '../interaces';
 
 
-const ProductPage: FC = () => {
+export const ProductPage: FC = () => {
 
     const [product, setProduct] = useState<IProduct | null>(null);
     const location = useLocation();
@@ -30,5 +30,3 @@ const ProductPage: FC = () => {
         </div>
     );
 };
-
-export default ProductPage;

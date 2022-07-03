@@ -1,29 +1,28 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useEffect } from 'react';
 
-import { categoryService, productService } from '../../services';
-import { IProduct } from '../../interaces';
-import Product from '../Product/Product';
-import CategoryList from '../CategoryLIst/CategoryList';
 import css from './Shop.module.css';
 import { useParams } from 'react-router-dom';
+import { CategoryList } from '../CategoryList/CategoryList';
+import { Product } from '../Product/Product';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { getAllCategoryAsync, getAllProductsAsync } from '../../store';
 
-const Shop: FC = () => {
+export const Shop: FC = () => {
 
-    const [products, setProducts] = useState<IProduct[]>([]);
+    const { products } = useAppSelector(state => state.productReducer);
+    const dispatch = useAppDispatch();
     const params = useParams();
 
-    useEffect(  () => {
+    useEffect(() => {
         const getProducts = async () => {
             if (params.category) {
-                const { data } = await categoryService.getProductsByCategory(params.category);
-                setProducts(data);
+                dispatch(getAllCategoryAsync);
                 return;
             }
-            const { data } = await productService.getAll();
-            setProducts(data);
-        }
+            dispatch(getAllProductsAsync());
+        };
         getProducts();
-    },[params])
+    }, [params.category]);
 
     return (
         <div style={{ display: 'flex'}}>
@@ -37,5 +36,3 @@ const Shop: FC = () => {
         </div>
     );
 };
-
-export default Shop;

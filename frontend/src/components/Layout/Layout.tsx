@@ -1,9 +1,9 @@
 import React, { FC } from 'react';
-import Header from '../Header/Header';
 import { Outlet } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
+import { Header } from '../Header/Header';
 
-const Layout: FC = () => {
+export const Layout: FC = () => {
     return (
         <div>
             <Header/>
@@ -13,5 +13,3 @@ const Layout: FC = () => {
         </div>
     );
 };
-
-export default Layout;
