@@ -20,15 +20,19 @@ export const CategoryList: FC = () => {
     },[])
 
     return (
-        <ListGroup>
+        <ListGroup className={css.groupList}>
             <p>Каталог товарів</p>
             {categories && categories.map(value =>
-                <ListGroup.Item key={value.name} action href={`/shop/${value.name}`}
+                <ListGroup.Item key={value.name}
+                                className={params.category === value.name ? css.linkedin : "" }
+                                action
+                                href={`/shop/${value.name}`}
                                 onClick={(e) => {
                                     e.preventDefault();
                                     navigate(`/shop/${value.name}`);
-                                }} active={params.category === value.name}
-                className={css.link}>
+                                }}
+                                active={params.category === value.name}
+                                variant="secondary">
                     {value.name}
                 </ListGroup.Item>)
             }

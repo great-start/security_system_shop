@@ -1,3 +1,9 @@
-.link :active {
-    background: red !important;
+.groupList {
+    max-width: 226px;
+    width: 25%;
+}
+
+.linkedin {
+    background-color: lightsteelblue !important;
+    border-color: lightgray !important;
 }
