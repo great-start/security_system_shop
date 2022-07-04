@@ -9,10 +9,11 @@ export const Header = () => {
     const navigate = useNavigate();
 
     return (
-        <Navbar style={{backgroundColor: '#f6f6f6'}}>
+        <Navbar style={{backgroundColor: 'rgba(123, 171, 231, 0.23)'}}>
             <Container className="my-2">
                 <Nav className={css.navLink}>
-                    <NavLink to={'/'} className={css.navLink} style={{marginRight: 50}}>SECSYSTEMS</NavLink>
+                    <NavLink to={'/'} className={css.navLink}
+                             style={{marginRight: 50, color: 'rgba(31,119,206,0.6)', fontSize: 'large'}}>SECSYSTEMS</NavLink>
                     <NavLink to={'/shop'} className={css.isActive ? css.activeClassName : undefined} >Магазин</NavLink>
                     <NavLink to={'/install'} className={css.isActive ? css.activeClassName : undefined}>Послуги</NavLink>
                 </Nav>

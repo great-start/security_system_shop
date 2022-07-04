@@ -22,13 +22,12 @@ export const getAllCategoryAsync = createAsyncThunk(
     }
 )
 
-
 const categorySlice = createSlice({
     name: 'carSlice',
     initialState,
     reducers: {
         setAllCategory: (state, action) => {
-            state.category = action.payload;
+            state.category = action.payload.data;
         }
     },
     extraReducers: (builder) => {

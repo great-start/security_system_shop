@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
 import { Install, Layout, Shop } from './components';
-import { AuthPage, MainPage, ProductPage } from './pages';
+import { AuthPage, MainPage, ProductDetails } from './pages';
 
 const App: FC = () => {
     return (
@@ -12,7 +12,7 @@ const App: FC = () => {
                 <Route path={'shop'} element={<Shop />}>
                     <Route path={':category'} element={<Shop />} />
                 </Route>
-                <Route path={'product/:id'} element={<ProductPage />}/>
+                <Route path={'product/:id'} element={<ProductDetails />}/>
                 <Route path={'install'} element={<Install />} />
                 <Route path={'auth'} element={<AuthPage />} />
             </Route>

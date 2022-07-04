@@ -1,10 +1,10 @@
 import React, { FC, useEffect, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
-import { productService } from '../services';
-import { IProduct } from '../interaces';
+import { productService } from '../../services';
+import { IProduct } from '../../interaces';
 
 
-export const ProductPage: FC = () => {
+export const ProductDetails: FC = () => {
 
     const [product, setProduct] = useState<IProduct | null>(null);
     const location = useLocation();

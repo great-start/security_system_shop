@@ -2,10 +2,10 @@ import React, { FC, useEffect } from 'react';
 
 import css from './Shop.module.css';
 import { useParams } from 'react-router-dom';
-import { CategoryList } from '../CategoryList/CategoryList';
-import { Product } from '../Product/Product';
+import { CategoryList } from '../../components/CategoryList/CategoryList';
+import { Product } from '../../components/Product/Product';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { getAllCategoryAsync, getAllProductsAsync } from '../../store';
+import { getAllCategoryAsync, getAllProductsAsync, getProductsByCategoryAsync } from '../../store';
 
 export const Shop: FC = () => {
 
@@ -16,7 +16,7 @@ export const Shop: FC = () => {
     useEffect(() => {
         const getProducts = async () => {
             if (params.category) {
-                dispatch(getAllCategoryAsync);
+                dispatch(getProductsByCategoryAsync(params.category));
                 return;
             }
             dispatch(getAllProductsAsync());

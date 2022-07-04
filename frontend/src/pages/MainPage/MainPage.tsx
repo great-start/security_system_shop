@@ -1,5 +1,5 @@
 import React from 'react';
-import { CategoryList, Install } from '../components';
+import { CategoryList, Install } from '../../components';
 
 export const MainPage = () => {
     return (

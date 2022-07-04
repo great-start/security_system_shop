@@ -4,6 +4,7 @@
 }
 
 .linkedin {
-    background-color: lightsteelblue !important;
+    background-color: rgba(123, 171, 231, 0.23) !important;
     border-color: lightgray !important;
+    color: black !important;
 }

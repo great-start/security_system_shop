@@ -19,10 +19,11 @@ export const Product: FC<IProps> = ({ product}) => {
             e.preventDefault();
             navigate(`/product/${id}`, {state: product })
         }}>
-            <img style={{display: 'block', margin: 'auto', backgroundColor: 'grey' }} src={`${baseURL}/${image}`} width={150} height={150} />
+            <img style={{display: 'block', margin: 'auto', backgroundColor: 'grey' }}
+                 src={`${baseURL}/${image}`} width={150} height={150} />
             <div>
                 <p>{name}</p>
-                <p>{price}</p>
+                <p style={{color: 'darkblue', fontSize: 'large'}}>{price} грн.</p>
             </div>
         </div>
     );
