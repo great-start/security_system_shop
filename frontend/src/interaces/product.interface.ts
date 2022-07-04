@@ -4,5 +4,11 @@ export interface IProduct {
     title: string
     image: string,
     price: number,
-    status: string
+    status: string;
+}
+
+export const ProductStatus: { [key: string]: string } = {
+    OUT_OF_STOCK: 'Немає в наявності',
+    IN_STOCK: 'В наявності',
+    RUNNING_LOW: 'Товар закінчується',
 }

@@ -1,9 +1,9 @@
 import React, { FC } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { IProduct } from '../../interaces';
 import { baseURL } from '../../constants';
 import css from './Product.module.css';
-import { useNavigate } from 'react-router-dom';
 
 interface IProps {
     product: IProduct
