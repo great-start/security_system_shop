@@ -24,8 +24,9 @@ export const Header = () => {
                     onClick={e => {
                         e.preventDefault();
                         navigate('/basket')
-                    }}>Кошик {products.length}</Button>
-                    <Button style={{ color: 'black' }} className='ml-10' variant={'outline-secondary'} onClick={e => {
+                    }}>Кошик {sum !== 0 && products.length}</Button>
+                    <Button style={{ color: 'black' }} className='ml-10' variant={'outline-secondary'}
+                            onClick={e => {
                         e.preventDefault();
                         navigate('auth');
                     }}>Кабінет</Button>

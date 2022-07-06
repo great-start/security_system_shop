@@ -1,6 +1,7 @@
 import React from 'react';
-import { Button, Card, Modal } from 'react-bootstrap';
+import { Button, Card, CardGroup, Modal } from 'react-bootstrap';
 import { useAppDispatch, useAppSelector } from '../../hooks';
+import css from './Basket.module.css';
 
 export const Basket = () => {
 
@@ -8,22 +9,24 @@ export const Basket = () => {
     const dispatch = useAppDispatch();
 
     return (
-        <Modal.Dialog >
-            <Modal.Header>
-                <Modal.Title>Кошик</Modal.Title>
-            </Modal.Header>
+        <Card border='light' className={css.basket}>
+            <Card.Header style={{marginBottom: '20px'}}>
+                <Card.Title>Кошик</Card.Title>
+            </Card.Header>
 
-            {products && products.map(product => <Card key={product.id}>
-                <p>{product.name}</p>
-                <p>{product.price}</p>
+            {products && products.map(product => <Card
+                className="d-flex flex-row"
+                key={product.id}>
+                <Card.Body className="border-none">{product.name}</Card.Body>
+                <div style={{alignSelf: 'center', marginRight: "10px"}}>{product.price} грн.</div>
             </Card>)}
 
-            <p>Загальна сумма покупки: {sum} грн.</p>
+            <p style={{alignSelf: 'end'}}>Загальна сумма покупки: {sum} грн.</p>
 
             <Modal.Footer>
                 <Button variant="outline-secondary">Продовжити покупки</Button>
-                <Button variant="outline-primary">Оформити замовлення</Button>
+                <Button variant="outline-success">Оформити замовлення</Button>
             </Modal.Footer>
-        </Modal.Dialog>
+        </Card>
     );
 };
