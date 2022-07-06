@@ -2,10 +2,12 @@ import {configureStore, combineReducers} from '@reduxjs/toolkit';
 
 import productReducer from './slice/product.slice';
 import categoryReducer from './slice/category.slice';
+import basketReducer from './slice/basket.slice';
 
 const rootReducer = combineReducers({
     productReducer,
-    categoryReducer
+    categoryReducer,
+    basketReducer,
 })
 
 export const store = configureStore({

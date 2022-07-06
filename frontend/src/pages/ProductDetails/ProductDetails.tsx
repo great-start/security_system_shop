@@ -1,18 +1,22 @@
 import React, { FC, useEffect, useState } from 'react';
-import { useLocation, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 import { productService } from '../../services';
-import { IProduct, ProductStatus } from '../../interaces';
+import { IProduct, Prod } from '../../interaces';
 import { baseURL } from '../../constants';
 import { Button, Card } from 'react-bootstrap';
+import { useAppDispatch } from '../../hooks';
+import { setProductToBasket } from '../../store';
 
 
 export const ProductDetails: FC = () => {
 
     const [product, setProduct] = useState<IProduct | null>(null);
+    const dispatch = useAppDispatch();
     const location = useLocation();
     const state = location.state as IProduct;
     const { id } = useParams();
+    const navigate = useNavigate();
 
     useEffect(() => {
         async function getProduct() {
@@ -37,8 +41,12 @@ export const ProductDetails: FC = () => {
                 <div style={{padding: '50px'}}>
                     <p>{product.title}</p>
                     <p>{product.price} грн.</p>
-                    <p>{ProductStatus[`${product.status}`]}</p>
-                    <Button variant='success'>Купити</Button>
+                    <p>{Prod[`${product.status}` as keyof typeof Prod]}</p>
+                    <Button variant='success' onClick={(e) => {
+                        e.preventDefault();
+                        dispatch(setProductToBasket(product))
+                        navigate(`/basket`, { state: product });
+                    }}>Купити</Button>
                 </div>
             </div>
         </div>

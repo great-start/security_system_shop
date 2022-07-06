@@ -3,7 +3,7 @@ import { ICategory } from '../../interaces';
 import { categoryService } from '../../services';
 
 interface ICategoryState {
-    category: ICategory[]
+    category: ICategory[],
 }
 
 const initialState: ICategoryState = {

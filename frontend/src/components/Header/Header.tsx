@@ -3,9 +3,11 @@ import Navbar from 'react-bootstrap/Navbar';
 import { Button, Container, Nav } from 'react-bootstrap';
 import { NavLink, useNavigate } from 'react-router-dom';
 import css from './Header.module.css';
+import { useAppSelector } from '../../hooks';
 
 export const Header = () => {
 
+    const { products, sum } = useAppSelector(state => state.basketReducer);
     const navigate = useNavigate();
 
     return (
@@ -18,7 +20,11 @@ export const Header = () => {
                     <NavLink to={'/install'} className={css.isActive ? css.activeClassName : undefined}>Послуги</NavLink>
                 </Nav>
                 <Nav className='ml-auto gap-3'>
-                    <Button style={{ color: 'black' }} className='ml-10' variant={'outline-secondary'}>Корзина</Button>
+                    <Button style={{ color: 'black' }} className='ml-10' variant={'outline-secondary'} disabled={sum === 0}
+                    onClick={e => {
+                        e.preventDefault();
+                        navigate('/basket')
+                    }}>Кошик {products.length}</Button>
                     <Button style={{ color: 'black' }} className='ml-10' variant={'outline-secondary'} onClick={e => {
                         e.preventDefault();
                         navigate('auth');
