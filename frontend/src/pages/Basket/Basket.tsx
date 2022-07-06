@@ -18,10 +18,10 @@ export const Basket = () => {
                 className="d-flex flex-row"
                 key={product.id}>
                 <Card.Body className="border-none">{product.name}</Card.Body>
-                <div style={{alignSelf: 'center', marginRight: "10px"}}>{product.price} грн.</div>
+                <div style={{alignSelf: 'center', marginRight: '10px'}}>{product.price} грн.</div>
             </Card>)}
 
-            <p style={{alignSelf: 'end'}}>Загальна сумма покупки: {sum} грн.</p>
+            <p style={{alignSelf: 'end', marginRight: '10px', marginTop: '10px'}}>Загальна сумма покупки: {sum} грн.</p>
 
             <Modal.Footer>
                 <Button variant="outline-secondary">Продовжити покупки</Button>
