@@ -33,18 +33,19 @@ export const ProductDetails: FC = () => {
     return (product &&
         <div>
             <h2>{product.name}</h2>
-            <div style={{ display: 'flex'}}>
-                <Card style={{padding: '50px', marginTop: '30px'}}>
+            <div style={{ display: 'flex' }}>
+                <Card style={{ padding: '50px', marginTop: '30px' }}>
                     <img style={{ display: 'block', backgroundColor: 'grey' }}
-                        src={`${baseURL}/${product.image}`} width={400} height={400} />
+                         alt={product.name}
+                         src={`${baseURL}/${product.image}`} width={400} height={400} />
                 </Card>
-                <div style={{padding: '50px'}}>
+                <div style={{ padding: '50px' }}>
                     <p>{product.title}</p>
                     <p>{product.price} грн.</p>
                     <p>{Prod[`${product.status}` as keyof typeof Prod]}</p>
                     <Button variant='success' onClick={(e) => {
                         e.preventDefault();
-                        dispatch(setProductToBasket(product))
+                        dispatch(setProductToBasket(product));
                         navigate(`/basket`, { state: product });
                     }}>Купити</Button>
                 </div>
