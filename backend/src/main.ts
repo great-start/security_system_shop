@@ -13,8 +13,6 @@ async function bootstrap() {
     prefix: '/src/images',
   });
 
-  console.log(join(__dirname, '..', 'src', 'images'));
-
   const config = new DocumentBuilder()
     .setTitle('Backend documentation')
     .setDescription('The store API description')

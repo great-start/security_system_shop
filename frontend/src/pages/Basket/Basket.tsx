@@ -7,7 +7,7 @@ import { deleteProductInBasket } from '../../store';
 
 export const Basket = () => {
 
-    const { products, sum } = useAppSelector(state => state.basketReducer);
+    const { products, sum, productSum } = useAppSelector(state => state.basketReducer);
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
@@ -22,6 +22,9 @@ export const Basket = () => {
                 key={product.id}>
                 <Card.Body className="border-none">{product.name}</Card.Body>
                 <div style={{alignSelf: 'center', marginRight: '10px'}}>{product.price} грн.</div>
+                <Button variant={'outline-secondary'} style={{alignSelf: 'center', marginRight: '10px', border: 'none'}}>+</Button>
+                <div>{productSum[product.id]}</div>
+                <Button variant={'outline-secondary'} style={{alignSelf: 'center', marginRight: '10px', border: 'none'}}>-</Button>
                 <Button variant="outline-secondary"
                         style={{alignSelf: 'center', marginRight: '10px', border: 'none'}}
                 onClick={(e) => {
