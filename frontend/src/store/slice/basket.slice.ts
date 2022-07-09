@@ -18,7 +18,7 @@ const initialState: IBasket = {
 const calculateSum = (state: IBasket) => {
     state.sum = 0;
     state.products.forEach(product => {
-        state.sum += product.price;
+        state.sum += product.price * state.productSum[product.id];
     })
 }
 
@@ -33,7 +33,14 @@ const basketSlice = createSlice({
             } else {
                 state.productSum[action.payload.id] += 1;
             }
-            console.log(current(state.productSum));
+            calculateSum(state);
+        },
+        plusProduct: (state, action: PayloadAction<IProduct>) => {
+            state.productSum[action.payload.id] += 1;
+            calculateSum(state);
+        },
+        minusProduct: (state, action:PayloadAction<IProduct>) => {
+            state.productSum[action.payload.id] ? state.productSum[action.payload.id] -= 1 : deleteProductInBasket(action.payload);
             calculateSum(state);
         },
         deleteProductInBasket: (state, action: PayloadAction<IProduct>) => {
@@ -43,7 +50,7 @@ const basketSlice = createSlice({
     }
 })
 
-export const { setProductToBasket, deleteProductInBasket } = basketSlice.actions;
+export const { setProductToBasket, deleteProductInBasket, plusProduct, minusProduct } = basketSlice.actions;
 
 const basketReducer = basketSlice.reducer;
 export default basketReducer;
