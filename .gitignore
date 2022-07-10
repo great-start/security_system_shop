@@ -1,7 +1,7 @@
 .idea
-/backend/node_modules/
-/backend/.env
-/backend/prisma/migrations/
-/backend/dist/
-/frontend/node_modules/
-/frontend/build
+/server/node_modules/
+/server/.env
+/server/prisma/migrations/
+/server/dist/
+/client/node_modules/
+/client/build

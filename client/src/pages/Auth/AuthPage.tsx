@@ -9,7 +9,7 @@ export const AuthPage = () => {
     return (
         <Container className={css.wrap}>
             <Card className={css.card}>
-                {!authState && <Card.Title className='mb-3'>Реєстрація</Card.Title>}
+                <Card.Title style={{ margin: 'auto' }}>{!authState ? 'Sing Up' : 'Sign In'}</Card.Title>
                 <Form className={css.form}>
                     <Form.Group className='mb-3' controlId='formBasicEmail'>
                         <Form.Label>Email</Form.Label>
@@ -35,11 +35,10 @@ export const AuthPage = () => {
                                     setAuthState(true);
                                 }}>Авторизуватись</a></p>}
                         <Button variant='outline-success' type='submit' className='align-self-end'
-                                onClick={e => {
+                                onClick={(e: any) => {
                                     e.preventDefault();
                                     authState ? console.log('auth') : console.log('register');
                                 }}
-
                         >
                             {authState ? 'Увійти' : 'Зареєструватись'}
                         </Button>

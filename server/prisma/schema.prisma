@@ -19,6 +19,16 @@ model User {
   createdAt DateTime @default(now())
   role      Roles    @default(USER)
   Basket    Basket[]
+  Token     Token[]
+}
+
+model Token {
+  id           String   @id @default(uuid())
+  accessToken  String
+  refreshToken String
+  createdAt    DateTime @default(now())
+  user         User     @relation(fields: [userId], references: [id])
+  userId       String
 }
 
 model Basket {
