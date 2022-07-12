@@ -12,12 +12,13 @@ async function bootstrap() {
     new ValidationPipe({
       transform: true,
       exceptionFactory: (error) => {
-        const errors = error.map((err) => {
+        const errors = error.reduce((obj, err) => {
           return {
+            ...obj,
             [err.property]: Object.values(err.constraints)[0],
           };
-        });
-        return new BadRequestException(errors);
+        }, {});
+        return new BadRequestException([errors]);
       },
     }),
   );
