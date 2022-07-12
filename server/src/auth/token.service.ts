@@ -39,4 +39,12 @@ export class TokenService {
   public async verifyToken(token: string) {
     return jwt.verify(token, constants.JWT_SECRET_KEY);
   }
+
+  async deleteTokenPair(user: User) {
+    return this.prismaService.token.deleteMany({
+      where: {
+        userId: user.id,
+      },
+    });
+  }
 }

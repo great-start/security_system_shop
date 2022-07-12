@@ -2,13 +2,14 @@ import React, { FC } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
 import { Install, Layout, Shop } from './components';
-import { AuthPage, MainPage, ProductDetails, Basket } from './pages';
+import { AuthPage, MainPage, ProductDetails, Basket, AdminPage, PersonalPage } from './pages';
 import RequireAuth from './features/RequireAuth';
 
 const App: FC = () => {
     return (
         <Routes>
             <Route path={'/'} element={<Layout />}>
+
                 {/*public routes*/}
                 <Route index element={<MainPage />} />
                 <Route path={'shop'} element={<Shop />}>
@@ -21,7 +22,8 @@ const App: FC = () => {
 
                 {/*protected routes*/}
                 <Route element={<RequireAuth />}>
-                    {/*<Route path={''}*/}
+                    <Route path={'personal'} element={<PersonalPage />} />
+                    <Route path={'admin'} element={<AdminPage />} />
                 </Route>
             </Route>
         </Routes>

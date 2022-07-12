@@ -5,6 +5,7 @@ import * as bcrypt from 'bcrypt';
 import { TokenService } from './token.service';
 import { SignInUserDto } from './dto/signIn.user.dto';
 import { Response } from 'express';
+import { IRequestExtended } from './interface/requestExtended.interface';
 import { constants } from '../constants';
 import { JwtPayload } from 'jsonwebtoken';
 
@@ -17,10 +18,10 @@ export class AuthService {
 
   async signUp(user: SignUpUserDto) {
     try {
-      const userInDB = await this.userService.findOneByEmail(user.email);
+      const existingUser = await this.userService.findOneByEmail(user.email);
 
-      if (userInDB) {
-        throw new HttpException('User has already exist', HttpStatus.BAD_REQUEST);
+      if (existingUser) {
+        throw new HttpException('User already exist', HttpStatus.BAD_REQUEST);
       }
 
       const hashPass = await bcrypt.hash(user.password, 7);
@@ -38,13 +39,13 @@ export class AuthService {
 
   async signIn(userData: SignInUserDto) {
     try {
-      const userFromDB = await this._validateUser(userData);
+      const existingUser = await this._validateUser(userData);
 
-      const tokenPair = await this.tokenService.getTokenPair(userFromDB);
+      const tokenPair = await this.tokenService.getTokenPair(existingUser);
 
       const { accessToken, refreshToken } = await this.tokenService.saveTokenPair(tokenPair);
 
-      return { accessToken, refreshToken };
+      return { accessToken, refreshToken, user: existingUser };
     } catch (e) {
       throw new HttpException(e.message, e.status);
     }
@@ -52,25 +53,34 @@ export class AuthService {
 
   private async _validateUser(userData: SignInUserDto) {
     try {
-      const userFromDB = await this.userService.findOneByEmail(userData.email);
+      const existingUser = await this.userService.findOneByEmail(userData.email);
 
-      if (!userFromDB) {
+      if (!existingUser) {
+        throw new UnauthorizedException('User does not exist');
+      }
+
+      const isPasswordCorrect = await bcrypt.compare(userData.password, existingUser.password);
+
+      if (!isPasswordCorrect) {
         throw new UnauthorizedException('Wrong password or email');
       }
 
-      const check = await bcrypt.compare(userFromDB.password, userData.password);
-
-      if (!check) {
-        throw new UnauthorizedException('Wrong password or email');
-      }
-
-      return userFromDB;
+      return existingUser;
     } catch (e) {
       throw new HttpException(e.message, e.status);
     }
   }
 
-  async logout(req: Request, res: Response) {
+  async logout(req: IRequestExtended, res: Response) {
+    try {
+      await this.tokenService.deleteTokenPair(req.user);
+      res.status(HttpStatus.OK).json({ message: 'You are logout' });
+    } catch (e) {
+      throw new HttpException(e.message, e.status);
+    }
+  }
+
+  async checkAccess(req: Request) {
     try {
       const accessToken = req.headers[constants.AUTHORIZATION].split(' ')[1];
 
@@ -81,19 +91,19 @@ export class AuthService {
       const tokenPair = await this.tokenService.findTokenPair(accessToken);
 
       if (!tokenPair) {
-        throw new UnauthorizedException('Token not valid');
+        throw new UnauthorizedException('Permission denied');
       }
 
       const { email } = (await this.tokenService.verifyToken(accessToken)) as JwtPayload;
-      const userFromDB = await this.userService.findOneByEmail(email);
+      const existingUser = await this.userService.findOneByEmail(email);
 
-      if (!userFromDB) {
-        throw new UnauthorizedException('Token not valid');
+      if (!existingUser) {
+        throw new UnauthorizedException('Permission denied');
       }
 
-      res.status(HttpStatus.OK).json({ message: 'You are logged out' });
+      return existingUser;
     } catch (e) {
-      throw new HttpException(e.message, e.status);
+      throw new UnauthorizedException({ message: e.message });
     }
   }
 }

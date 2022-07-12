@@ -7,8 +7,8 @@ import { SignUpUserDto } from '../auth/dto/signUp.user.dto';
 export class UserService {
   constructor(private readonly prismaService: PrismaService) {}
 
-  findAll() {
-    return `This action returns all user`;
+  async findAll() {
+    return this.prismaService.user.findMany();
   }
 
   async findOneByEmail(email: string) {

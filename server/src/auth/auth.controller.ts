@@ -1,8 +1,19 @@
-import { Controller, Post, Body, Req, Res, UseInterceptors, ClassSerializerInterceptor } from '@nestjs/common';
+import {
+    Controller,
+    Post,
+    Body,
+    Req,
+    Res,
+    UseInterceptors,
+    ClassSerializerInterceptor, UseGuards,
+} from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { SignUpUserDto } from './dto/signUp.user.dto';
 import { SignInUserDto } from './dto/signIn.user.dto';
+import { Response } from 'express';
+import { IRequestExtended } from './interface/requestExtended.interface';
+import { LogoutGuard } from './guards/logout.guard';
 
 @ApiTags('auth')
 @Controller('auth')
@@ -23,8 +34,7 @@ export class AuthController {
     },
   })
   @ApiBody({ type: SignUpUserDto })
-  @Post('/signup')
-  @UseInterceptors(ClassSerializerInterceptor)
+  @Post('/sign-up')
   singUp(@Body() user: SignUpUserDto) {
     return this.authService.signUp(user);
   }
@@ -43,7 +53,7 @@ export class AuthController {
     },
   })
   @ApiBody({ type: SignInUserDto })
-  @Post('/sing_in')
+  @Post('/sign-in')
   signIn(@Body() authUser: SignInUserDto) {
     return this.authService.signIn(authUser);
   }
@@ -56,7 +66,20 @@ export class AuthController {
     status: 200,
   })
   @Post('/logout')
-  logOut(@Req() req, @Res() res) {
+  @UseGuards(LogoutGuard)
+  logOut(@Req() req: IRequestExtended, @Res() res: Response) {
+    return this.authService.logout(req, res);
+  }
+
+  @ApiOperation({
+    summary: 'User LogOut',
+    description: 'LogOut',
+  })
+  @ApiResponse({
+    status: 200,
+  })
+  @Post('/refresh')
+  refresh(@Req() req: IRequestExtended, @Res() res: Response) {
     return this.authService.logout(req, res);
   }
 }
