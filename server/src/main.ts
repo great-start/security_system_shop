@@ -11,11 +11,13 @@ async function bootstrap() {
   app.useGlobalPipes(
     new ValidationPipe({
       transform: true,
-      validationError: { target: false, value: true },
-      validateCustomDecorators: true,
       exceptionFactory: (error) => {
-        console.error(JSON.stringify(error));
-        return new BadRequestException(error);
+        const errors = error.map((err) => {
+          return {
+            [err.property]: Object.values(err.constraints)[0],
+          };
+        });
+        return new BadRequestException(errors);
       },
     }),
   );

@@ -9,6 +9,6 @@ export class SignInUserDto {
 
   @ApiProperty({ example: 'snruen$2n3n4iASAS', description: 'password' })
   @IsString()
-  @IsNotEmpty({ context: 'password' })
+  @IsNotEmpty()
   password: string;
 }
