@@ -82,6 +82,7 @@ export class AuthService {
 
   async checkAccess(req: Request) {
     try {
+      console.log(req.headers);
       const accessToken = req.headers[constants.AUTHORIZATION].split(' ')[1];
 
       if (!accessToken) {
