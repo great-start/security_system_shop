@@ -1,11 +1,12 @@
 import {
-    Controller,
-    Post,
-    Body,
-    Req,
-    Res,
-    UseInterceptors,
-    ClassSerializerInterceptor, UseGuards,
+  Controller,
+  Post,
+  Body,
+  Req,
+  Res,
+  UseInterceptors,
+  ClassSerializerInterceptor,
+  UseGuards,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';

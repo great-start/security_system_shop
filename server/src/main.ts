@@ -3,12 +3,22 @@ import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { join } from 'path';
-import { ValidationPipe } from '@nestjs/common';
+import { BadRequestException, ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
   app.enableCors();
-  app.useGlobalPipes(new ValidationPipe({ transform: true}));
+  app.useGlobalPipes(
+    new ValidationPipe({
+      transform: true,
+      validationError: { target: false, value: true },
+      validateCustomDecorators: true,
+      exceptionFactory: (error) => {
+        console.error(JSON.stringify(error));
+        return new BadRequestException(error);
+      },
+    }),
+  );
 
   app.useStaticAssets(join(__dirname, '..', 'src', 'images'), {
     // index: false,
@@ -27,3 +37,9 @@ async function bootstrap() {
   await app.listen(process.env.PORT);
 }
 bootstrap();
+
+// export interface ValidationPipeOptions extends ValidatorOptions {
+//   transform?: boolean;
+//   disableErrorMessages?: true;
+//   // exceptionFactory?: (errors: ValidationError[]) => any;
+// }

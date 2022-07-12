@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Card, Container, Form } from 'react-bootstrap';
+import { Button, Card, Container, Form, Spinner } from 'react-bootstrap';
 import css from './Auth.module.css';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { signInAsync } from '../../store/slice/auth.slice';
@@ -9,7 +9,7 @@ export const AuthPage = () => {
 
     const [authState, setAuthState] = useState(true);
     const dispatch = useAppDispatch();
-    const { isAuth } = useAppSelector(state => state.authReducer);
+    const { isAuth, isLoading } = useAppSelector(state => state.authReducer);
     const navigate = useNavigate();
 
     const changeForm = (e: any) => {
@@ -18,14 +18,10 @@ export const AuthPage = () => {
     }
 
     const signIn = async (e: any) => {
-        try {
-            e.preventDefault();
-            await dispatch(signInAsync({ email: e.target.email.value, password: e.target.password.value }));
-            navigate('/personal');
-        } catch (e) {
-            console.log(e);
-        }
-    }
+        e.preventDefault();
+        await dispatch(signInAsync({ email: e.target.email.value, password: e.target.password.value }));
+        navigate('/personal');
+    };
 
     return (
         <Container className={css.wrap}>
@@ -52,6 +48,7 @@ export const AuthPage = () => {
                                 <a href={''} onClick={changeForm}> Зареєструватись</a></p>
                             : <p className='align-self-end' style={{ margin: '0' }}>
                                 <a href={''} onClick={changeForm}>Авторизуватись</a></p>}
+                        {isLoading ? <Spinner animation="border" variant="secondary" style={{marginLeft: "120px"}}/> : null}
                         <Button variant='outline-success' type='submit' className='align-self-end'>
                             {authState ? 'Увійти' : 'Зареєструватись'}
                         </Button>

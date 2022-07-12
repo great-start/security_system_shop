@@ -56,7 +56,7 @@ export class AuthService {
       const existingUser = await this.userService.findOneByEmail(userData.email);
 
       if (!existingUser) {
-        throw new UnauthorizedException('User does not exist');
+        throw new UnauthorizedException('Wrong password or email');
       }
 
       const isPasswordCorrect = await bcrypt.compare(userData.password, existingUser.password);
