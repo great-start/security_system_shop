@@ -38,6 +38,33 @@ export const signInAsync = createAsyncThunk<void, { email: string, password: str
     }
 )
 
+export const checkIsAuth = createAsyncThunk<void, void,{ rejectValue: ErrorsResponse}>(
+  'authSlice/checkIsAuth',
+  async (_:void,{dispatch, rejectWithValue }) => {
+      try {
+          await userService.checkAuth();
+          dispatch(setIsAuthTrue());
+          console.log('checking');
+      } catch (err) {
+          const error = err as AxiosError;
+          return rejectWithValue(error.response?.data as ErrorsResponse);
+      }
+  }
+)
+
+export const logOutAsync = createAsyncThunk<void, void,{ rejectValue: ErrorsResponse}>(
+  'authSlice/logOutAsync',
+  async (_:void,{ dispatch, rejectWithValue }) => {
+     try {
+      await userService.logOut();
+      dispatch(logout());
+     } catch (err) {
+      const error = err as AxiosError;
+       return rejectWithValue(error.response?.data as ErrorsResponse);
+     }
+  }
+)
+
 export const AuthSlice = createSlice({
     name: 'authSLice',
     initialState,
@@ -47,27 +74,38 @@ export const AuthSlice = createSlice({
             state.user = action.payload.user;
             state.isAuth = true;
         },
-        logout: (state, action) => {
-
+        logout: (state) => {
+          localStorage.removeItem('profile');
+          state.isAuth = false;
         },
+        setIsAuthTrue: (state) => {
+            state.isAuth = true;
+        }
     },
     extraReducers: (builder => {
-        builder.addCase(signInAsync.pending, (state, action) => {
-            state.isLoading = true;
-        });
-        builder.addCase(signInAsync.rejected, (state,action) => {
+        builder
+          .addCase(signInAsync.pending, (state, action) => {
+              state.isLoading = true;
+          })
+          .addCase(signInAsync.rejected, (state, action) => {
+              if (action.payload) {
+                  state.errors = action.payload?.message;
+                  state.isLoading = false;
+              }
+          })
+          .addCase(signInAsync.fulfilled, (state, action) => {
+              state.isLoading = false;
+          })
+          .addCase(checkIsAuth.rejected, (state, action) => {
             if (action.payload) {
-                state.errors = action.payload?.message;
-                state.isLoading = false;
+              console.log(action.payload?.message);
+              state.isAuth = false;
             }
-        });
-        builder.addCase(signInAsync.fulfilled, (state,action) => {
-            state.isLoading = false;
-        });
+          });
     })
 })
 
-export const { setCredentials, logout } = AuthSlice.actions;
+export const { setCredentials, logout, setIsAuthTrue } = AuthSlice.actions;
 
 const authReducer = AuthSlice.reducer;
 export default authReducer;

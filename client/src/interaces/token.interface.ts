@@ -1,5 +1,8 @@
 export interface IToken {
     accessToken: string,
     refreshToken: string,
-    user: {}
+    user: {
+        id: string;
+        email: string
+    }
 }

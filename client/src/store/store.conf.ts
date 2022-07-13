@@ -6,10 +6,10 @@ import basketReducer from './slice/basket.slice';
 import authReducer from './slice/auth.slice';
 
 const rootReducer = combineReducers({
+    authReducer,
     productReducer,
     categoryReducer,
     basketReducer,
-    authReducer,
 })
 
 export const store = configureStore({

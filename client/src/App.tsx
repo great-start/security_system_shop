@@ -3,7 +3,6 @@ import { Route, Routes } from 'react-router-dom';
 
 import { Install, Layout, Shop } from './components';
 import { AuthPage, MainPage, ProductDetails, Basket, AdminPage, PersonalPage } from './pages';
-import RequireAuth from './features/RequireAuth';
 
 const App: FC = () => {
     return (
@@ -21,10 +20,8 @@ const App: FC = () => {
                 <Route path={'auth'} element={<AuthPage />} />
 
                 {/*protected routes*/}
-                <Route element={<RequireAuth />}>
-                    <Route path={'personal'} element={<PersonalPage />} />
-                    <Route path={'admin'} element={<AdminPage />} />
-                </Route>
+                <Route path={'personal'} element={<PersonalPage />} />
+                <Route path={'admin'} element={<AdminPage />} />
             </Route>
         </Routes>
     );

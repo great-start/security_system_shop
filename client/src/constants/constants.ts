@@ -6,5 +6,7 @@ export const urls = {
     signIn: '/auth/sign-in',
     signUp: '/auth/sign-up',
     logout: '/auth/logout',
-    user: '/user'
+    authCheck: '/auth/check',
+    user: '/user',
+
 }

@@ -4,9 +4,7 @@ import {
   Body,
   Req,
   Res,
-  UseInterceptors,
-  ClassSerializerInterceptor,
-  UseGuards,
+  UseGuards, HttpStatus,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
@@ -82,5 +80,18 @@ export class AuthController {
   @Post('/refresh')
   refresh(@Req() req: IRequestExtended, @Res() res: Response) {
     return this.authService.logout(req, res);
+  }
+
+  @ApiOperation({
+    summary: 'User Auth check',
+    description: 'Check is user auth',
+  })
+  @ApiResponse({
+    status: 200,
+  })
+  @Post('/check')
+  async checkAuth(@Req() req: IRequestExtended, @Res() res: Response) {
+    await this.authService.checkAccess(req);
+    res.status(HttpStatus.OK).json({ message: 'Permission granted' });
   }
 }

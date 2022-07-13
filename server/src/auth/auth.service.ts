@@ -82,7 +82,6 @@ export class AuthService {
 
   async checkAccess(req: Request) {
     try {
-      console.log(req.headers);
       const accessToken = req.headers[constants.AUTHORIZATION].split(' ')[1];
 
       if (!accessToken) {
@@ -102,9 +101,9 @@ export class AuthService {
         throw new UnauthorizedException('Permission denied');
       }
 
-      return existingUser;
+      return;
     } catch (e) {
-      throw new UnauthorizedException({ message: e.message });
+      throw new HttpException(e.message, e.status);
     }
   }
 }

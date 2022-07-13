@@ -1,17 +1,20 @@
-import axios, {AxiosRequestConfig} from 'axios';
+import axios, { AxiosRequestConfig } from 'axios';
 
 import { baseURL } from '../constants';
+import { IToken } from '../interaces';
 
 export const API = axios.create({ baseURL });
 
-API.interceptors.request.use(function(config) {
-    const { accessToken } = JSON.parse(localStorage.getItem('profile') as string);
-    if (accessToken) {
-        config.headers = {
-            'authorization': `Bearer ${accessToken}`,
-        };
+API.interceptors.request.use((config) => {
+      if (localStorage.getItem('profile')) {
+          const { accessToken } = JSON.parse(localStorage.getItem('profile') as string) as IToken;
+          config.headers = {
+              Authorization: `Bearer ${accessToken}`,
+          };
         return config;
-    }
-    return config;
-
-});
+      }
+      return config;
+  }, (error) => {
+      console.log(error);
+  },
+);

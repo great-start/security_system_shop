@@ -9,7 +9,7 @@ export class LogoutGuard implements CanActivate {
     try {
       const req = context.switchToHttp().getRequest();
 
-      req.user = await this.authService.checkAccess(req);
+      await this.authService.checkAccess(req);
 
       return true;
     } catch (e) {
