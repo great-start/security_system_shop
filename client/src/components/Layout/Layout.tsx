@@ -7,14 +7,14 @@ import { checkIsAuth } from '../../store/slice/auth.slice';
 
 export const Layout: FC = () => {
 
-  const dispatch = useAppDispatch();
+    const dispatch = useAppDispatch();
 
-  useEffect(() => {
-    if (localStorage.getItem('profile')) {
-      dispatch(checkIsAuth());
-    }
-  },[])
-
+    useEffect(() => {
+        if (localStorage.getItem('profile')) {
+            dispatch(checkIsAuth());
+        }
+    },[])
+  
     return (
         <div>
             <Header/>
