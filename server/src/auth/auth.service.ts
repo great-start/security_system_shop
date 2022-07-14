@@ -31,7 +31,14 @@ export class AuthService {
 
       const { accessToken, refreshToken } = await this.tokenService.saveTokenPair(tokenPair);
 
-      return { accessToken, refreshToken };
+      return {
+        accessToken,
+        refreshToken,
+        user: {
+          id: savedUser.id,
+          email: savedUser.email,
+        },
+      };
     } catch (e) {
       throw new HttpException(e.message, e.status);
     }
@@ -45,7 +52,14 @@ export class AuthService {
 
       const { accessToken, refreshToken } = await this.tokenService.saveTokenPair(tokenPair);
 
-      return { accessToken, refreshToken, user: existingUser };
+      return {
+        accessToken,
+        refreshToken,
+        user: {
+          id: existingUser.id,
+          email: existingUser.email,
+        },
+      };
     } catch (e) {
       throw new HttpException(e.message, e.status);
     }

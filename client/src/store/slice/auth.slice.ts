@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { userService } from '../../services';
 import { AxiosError } from 'axios';
+import { IToken } from '../../interaces';
 
 interface IAuthState {
     user: {
@@ -12,7 +13,7 @@ interface IAuthState {
         [key: string]: string
     }];
     isLoading: boolean;
-
+    isSignInForm: boolean;
 }
 
 interface ErrorsResponse {
@@ -40,7 +41,8 @@ const initialState: IAuthState = {
     },
     isAuth: false,
     errors: null,
-    isLoading: false
+    isLoading: false,
+    isSignInForm: true,
 }
 
 export const signInAsync = createAsyncThunk<void, ISignIn, { rejectValue: ErrorsResponse}>(
@@ -76,7 +78,10 @@ export const checkIsAuth = createAsyncThunk<void, void,{ rejectValue: ErrorsResp
     async (_:void,{dispatch, rejectWithValue }) => {
         try {
             await userService.checkAuth();
-            dispatch(setIsAuthTrue());
+            if (localStorage.getItem('profile')) {
+                const data = JSON.parse(localStorage.getItem('profile') as string) as IToken;
+                dispatch(setCredentials({ data }));
+            }
             console.log('checking');
         } catch (err) {
             const error = err as AxiosError;
@@ -103,16 +108,15 @@ export const AuthSlice = createSlice({
     initialState,
     reducers: {
         setCredentials: (state, action) => {
-            console.log(action.payload.user);
-            state.user = action.payload.user;
+            state.user = action.payload.data.user;
             state.isAuth = true;
         },
         logout: (state) => {
             localStorage.removeItem('profile');
             state.isAuth = false;
         },
-        setIsAuthTrue: (state) => {
-            state.isAuth = true;
+        changeAuthForm: state => {
+            state.isSignInForm = !state.isSignInForm;
         }
     },
     extraReducers: (builder => {
@@ -150,7 +154,7 @@ export const AuthSlice = createSlice({
     })
 })
 
-export const { setCredentials, logout, setIsAuthTrue } = AuthSlice.actions;
+export const { setCredentials, logout, changeAuthForm } = AuthSlice.actions;
 
 const authReducer = AuthSlice.reducer;
 export default authReducer;
