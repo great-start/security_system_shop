@@ -5,7 +5,7 @@ import * as bcrypt from 'bcrypt';
 import { TokenService } from './token.service';
 import { SignInUserDto } from './dto/signIn.user.dto';
 import { Response } from 'express';
-import { IRequestExtended } from './interface/requestExtended.interface';
+import { IRequestExtended } from './models/requestExtended.interface';
 import { constants } from '../constants';
 import { JwtPayload } from 'jsonwebtoken';
 
@@ -112,12 +112,12 @@ export class AuthService {
       const existingUser = await this.userService.findOneByEmail(email);
 
       if (!existingUser) {
-        throw new UnauthorizedException('Permission denied');
+        throw new UnauthorizedException('Permission denied', 'Permision demied');
       }
 
-      return;
+      return existingUser;
     } catch (e) {
-      throw new HttpException(e.message, e.status);
+      throw new UnauthorizedException(e.response.error, e.message);
     }
   }
 }

@@ -1,14 +1,18 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, UseGuards } from '@nestjs/common';
 import { UserService } from './user.service';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { JwtCheckGuard } from '../auth/guards/jwt-check.guard';
+import { Role } from '../auth/models/roles.enum';
+import { Roles } from '../auth/decorators/roles.decorator';
+import { RolesGuard } from '../auth/guards/roles.guard';
 
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
+  @UseGuards(JwtCheckGuard, RolesGuard)
+  @Roles(Role.ADMIN)
   @Get()
-  @UseGuards(JwtAuthGuard)
   findAll() {
     return this.userService.findAll();
   }

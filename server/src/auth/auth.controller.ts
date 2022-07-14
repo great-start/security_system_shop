@@ -1,18 +1,11 @@
-import {
-  Controller,
-  Post,
-  Body,
-  Req,
-  Res,
-  UseGuards, HttpStatus,
-} from '@nestjs/common';
+import { Controller, Post, Body, Req, Res, UseGuards, HttpStatus } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { SignUpUserDto } from './dto/signUp.user.dto';
 import { SignInUserDto } from './dto/signIn.user.dto';
 import { Response } from 'express';
-import { IRequestExtended } from './interface/requestExtended.interface';
-import { LogoutGuard } from './guards/logout.guard';
+import { IRequestExtended } from './models/requestExtended.interface';
+import { JwtCheckGuard } from './guards/jwt-check.guard';
 
 @ApiTags('auth')
 @Controller('auth')
@@ -65,7 +58,7 @@ export class AuthController {
     status: 200,
   })
   @Post('/logout')
-  @UseGuards(LogoutGuard)
+  @UseGuards(JwtCheckGuard)
   logOut(@Req() req: IRequestExtended, @Res() res: Response) {
     return this.authService.logout(req, res);
   }

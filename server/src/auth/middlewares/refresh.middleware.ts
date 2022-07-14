@@ -2,7 +2,7 @@ import { Injectable, NestMiddleware, UnauthorizedException } from '@nestjs/commo
 import { TokenService } from '../token.service';
 import { NextFunction, Response } from 'express';
 import { UserService } from '../../user/user.service';
-import { IRequestExtended } from '../interface/requestExtended.interface';
+import { IRequestExtended } from '../models/requestExtended.interface';
 import { constants } from '../../constants';
 import { JwtPayload } from 'jsonwebtoken';
 
