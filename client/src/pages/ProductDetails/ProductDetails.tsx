@@ -2,7 +2,7 @@ import React, { FC, useEffect, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 import { productService } from '../../services';
-import { IProduct, Prod } from '../../interaces';
+import { IProduct, Prod } from '../../interfaces';
 import { baseURL } from '../../constants';
 import { Button, Card } from 'react-bootstrap';
 import { useAppDispatch } from '../../hooks';
@@ -36,8 +36,8 @@ export const ProductDetails: FC = () => {
             <div style={{ display: 'flex' }}>
                 <Card style={{ padding: '50px', marginTop: '30px' }}>
                     <img style={{ display: 'block', backgroundColor: 'grey' }}
-                         alt={product.name}
-                         src={`${baseURL}/${product.image}`} width={400} height={400} />
+                        alt={product.name}
+                        src={`${baseURL}/${product.image}`} width={400} height={400} />
                 </Card>
                 <div style={{ padding: '50px' }}>
                     <p>{product.title}</p>

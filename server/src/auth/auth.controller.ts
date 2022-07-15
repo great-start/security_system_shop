@@ -13,8 +13,8 @@ export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @ApiOperation({
-    summary: 'Sign up user using data',
-    description: 'Registration',
+    summary: 'Registration',
+    description: 'Sign up user using data',
   })
   @ApiResponse({
     status: 201,
@@ -32,8 +32,8 @@ export class AuthController {
   }
 
   @ApiOperation({
-    summary: 'Sign in user using email and password',
-    description: 'Sign in',
+    summary: 'Sign in',
+    description: 'Sign in user using email and password',
   })
   @ApiResponse({
     status: 200,
@@ -64,15 +64,16 @@ export class AuthController {
   }
 
   @ApiOperation({
-    summary: 'User LogOut',
-    description: 'LogOut',
+    summary: 'RefreshToken',
+    description: 'Refresh tokens using refresh token',
   })
   @ApiResponse({
     status: 200,
   })
   @Post('/refresh')
-  refresh(@Req() req: IRequestExtended, @Res() res: Response) {
-    return this.authService.logout(req, res);
+  @UseGuards(JwtCheckGuard)
+  refresh(@Req() req: IRequestExtended) {
+    return this.authService.updateRefreshToken(req);
   }
 
   @ApiOperation({

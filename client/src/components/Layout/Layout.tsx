@@ -10,9 +10,7 @@ export const Layout: FC = () => {
     const dispatch = useAppDispatch();
 
     useEffect(() => {
-        if (localStorage.getItem('profile')) {
-            dispatch(checkIsAuth());
-        }
+        dispatch(checkIsAuth());
     },[])
   
     return (

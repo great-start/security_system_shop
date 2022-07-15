@@ -17,20 +17,29 @@ export const AuthPage = () => {
     };
 
     const signIn = async (e: any) => {
-        e.preventDefault();
-        await dispatch(signInAsync({ email: e.target.email.value, password: e.target.password.value }));
-        navigate('/personal');
+        try {
+            e.preventDefault();
+            await dispatch(signInAsync({
+                email: e.target.email.value,
+                password: e.target.password.value
+            })).unwrap();
+            navigate('/personal');
+        } catch (e) {
+        }
     };
 
     const signUp = async (e: any) => {
-        e.preventDefault();
-        await dispatch(signUpAsync({
-            firstName: e.target.firstName.value,
-            lastName: e.target.lastName.value,
-            email: e.target.email.value,
-            password: e.target.password.value,
-        }));
-        navigate('/personal');
+        try {
+            e.preventDefault();
+            await dispatch(signUpAsync({
+                firstName: e.target.firstName.value,
+                lastName: e.target.lastName.value,
+                email: e.target.email.value,
+                password: e.target.password.value,
+            })).unwrap();
+            navigate('/personal');
+        } catch (e) {
+        }
     };
 
     return (

@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 import { categoryService, productService } from '../../services';
-import { IProduct } from '../../interaces';
+import { IProduct } from '../../interfaces';
 
 interface IProductState {
     products: IProduct[]

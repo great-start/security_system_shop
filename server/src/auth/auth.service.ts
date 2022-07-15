@@ -95,29 +95,51 @@ export class AuthService {
   }
 
   async checkAccess(req: Request) {
+    // check accessToken or refreshToken
     try {
-      const accessToken = req.headers[constants.AUTHORIZATION].split(' ')[1];
+      const token = req.headers[constants.AUTHORIZATION].split(' ')[1];
 
-      if (!accessToken) {
+      if (!token) {
         throw new UnauthorizedException('No token');
       }
 
-      const tokenPair = await this.tokenService.findTokenPair(accessToken);
+      const tokenPair = await this.tokenService.findTokenPair(token);
 
       if (!tokenPair) {
         throw new UnauthorizedException('Permission denied');
       }
 
-      const { email } = (await this.tokenService.verifyToken(accessToken)) as JwtPayload;
+      const { email } = (await this.tokenService.verifyToken(token)) as JwtPayload;
       const existingUser = await this.userService.findOneByEmail(email);
 
       if (!existingUser) {
-        throw new UnauthorizedException('Permission denied', 'Permision demied');
+        throw new UnauthorizedException('Permision demied');
       }
 
       return existingUser;
     } catch (e) {
-      throw new UnauthorizedException(e.response.error, e.message);
+      throw new UnauthorizedException(e.response?.error, e.message);
+    }
+  }
+
+  async updateRefreshToken(req: IRequestExtended) {
+    try {
+      await this.tokenService.deleteTokenPair(req.user);
+
+      const tokenPair = await this.tokenService.getTokenPair(req.user);
+
+      const { accessToken, refreshToken } = await this.tokenService.saveTokenPair(tokenPair);
+
+      return {
+        accessToken,
+        refreshToken,
+        user: {
+          id: req.user.id,
+          email: req.user.email,
+        },
+      };
+    } catch (e) {
+      throw new UnauthorizedException(e.response?.error, e.message);
     }
   }
 }

@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { IProduct } from '../../interaces';
+import { IProduct } from '../../interfaces';
 import { baseURL } from '../../constants';
 import css from './Product.module.css';
 import { Button } from 'react-bootstrap';
@@ -21,11 +21,11 @@ export const Product: FC<IProps> = ({ product}) => {
     return (
         <div className={css.product}>
             <img style={{ display: 'block', margin: 'auto', backgroundColor: 'grey' }}
-                 alt={product.name}
-                 src={`${baseURL}/${image}`} width={150} height={150} onClick={(e) => {
-                e.preventDefault();
-                navigate(`/product/${id}`, { state: product });
-            }} />
+                alt={product.name}
+                src={`${baseURL}/${image}`} width={150} height={150} onClick={(e) => {
+                    e.preventDefault();
+                    navigate(`/product/${id}`, { state: product });
+                }} />
             <div>
                 <p>{name}</p>
                 <p style={{ color: 'blue', fontSize: 'large' }}>{price} грн.</p>

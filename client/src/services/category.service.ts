@@ -1,7 +1,7 @@
 import { API } from './axios.service';
 
 import { urls } from '../constants';
-import { ICategory, IProduct } from '../interaces';
+import { ICategory, IProduct } from '../interfaces';
 
 export const categoryService = {
     getAll: () => API.get<ICategory[]>(urls.categories),

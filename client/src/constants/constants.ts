@@ -7,6 +7,6 @@ export const urls = {
     signUp: '/auth/sign-up',
     logout: '/auth/logout',
     authCheck: '/auth/check',
+    refresh: '/auth/refresh',
     user: '/user',
-
 }

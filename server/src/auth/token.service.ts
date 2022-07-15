@@ -10,14 +10,14 @@ export class TokenService {
   constructor(private readonly prismaService: PrismaService) {}
 
   public async getTokenPair(user: User) {
-    return this._generateTokenPair(user);
+    return TokenService._generateTokenPair(user);
   }
 
   public async saveTokenPair(tokenPair: ITokenPair) {
     return this.prismaService.token.create({ data: tokenPair });
   }
 
-  private _generateTokenPair(user: User) {
+  private static _generateTokenPair(user: User) {
     const payload = { userId: user.id, email: user.email };
     const accessToken = jwt.sign(payload, constants.JWT_SECRET_KEY, {
       expiresIn: constants.JWT_ACCESS_TIME,

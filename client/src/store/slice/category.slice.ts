@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { ICategory } from '../../interaces';
+import { ICategory } from '../../interfaces';
 import { categoryService } from '../../services';
 
 interface ICategoryState {
@@ -30,10 +30,10 @@ const categorySlice = createSlice({
             state.category = action.payload.data;
         }
     },
-    extraReducers: (builder) => {
-
-
-    },
+    // extraReducers: (builder) => {
+    //
+    //
+    // },
 })
 
 export const { setAllCategory } = categorySlice.actions;

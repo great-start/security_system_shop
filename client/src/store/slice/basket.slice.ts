@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { IProduct } from '../../interaces';
+import { IProduct } from '../../interfaces';
 
 interface IBasket {
     productSum: {
