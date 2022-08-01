@@ -29,9 +29,9 @@ export const Shop: FC = () => {
             <CategoryList />
             <div style={{display: 'flex', flexDirection: 'column', marginLeft: 20}}>
                 <p>Сортувати: </p>
-                    <div className={css.products}>
-                        {products && products.map(product => <Product key={product.id} product={product} />)}
-                    </div>
+                <div className={css.products}>
+                    {products && products.map(product => <Product key={product.id} product={product} />)}
+                </div>
             </div>
         </div>
     );

@@ -31,7 +31,7 @@ export const CategoryList: FC = () => {
                     }}
                     active={params.category === value.name}
                     // variant="secondary"
-                    >
+                >
                     {value.name}
                 </ListGroup.Item>)
             }
