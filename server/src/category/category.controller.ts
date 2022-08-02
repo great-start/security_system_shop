@@ -32,7 +32,6 @@ export class CategoryController {
     return this.categoryService.findAll();
   }
 
-  @Get(':category')
   @ApiOperation({ summary: 'Get products by category' })
   @ApiOkResponse({
     status: 200,
@@ -46,6 +45,7 @@ export class CategoryController {
       ],
     },
   })
+  @Get(':category')
   findProductsByCategory(@Param('category') category: string) {
     return this.categoryService.findProducts(category);
   }

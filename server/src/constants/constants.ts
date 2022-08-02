@@ -8,8 +8,8 @@ export const constants = {
   IMAGE_MAX_SIZE: 2 * 2 * 1024,
 
   JWT_SECRET_KEY: 'SECURITY_SHOP',
-  JWT_ACCESS_TIME: '5s',
-  JWT_REFRESH_TIME: '10s',
+  JWT_ACCESS_TIME: '10s',
+  JWT_REFRESH_TIME: '20s',
 
   AUTHORIZATION: 'authorization',
 };

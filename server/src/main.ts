@@ -32,7 +32,6 @@ async function bootstrap() {
     .setTitle('Backend documentation')
     .setDescription('The store API description')
     .setVersion('1.0')
-    .addTag('')
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
