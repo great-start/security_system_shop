@@ -1,10 +1,11 @@
-import { Body, Controller, Delete, Get, Param, Patch, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, UseGuards } from '@nestjs/common';
 import { UserService } from './user.service';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { JwtCheckGuard } from '../auth/guards/jwt-check.guard';
 import { Role } from '../auth/models/roles.enum';
 import { Roles } from '../auth/decorators/roles.decorator';
 import { RolesGuard } from '../auth/guards/roles.guard';
+import { IOrder } from './models/order.inteface';
 
 @Controller('user')
 export class UserController {
@@ -19,9 +20,16 @@ export class UserController {
 
   @UseGuards(JwtCheckGuard, RolesGuard)
   @Roles(Role.USER)
-  @Get(':id')
+  @Get('/:id')
   findOne(@Param('id') id: string) {
     // return this.userService.findOne(+id);
+  }
+
+  @UseGuards(JwtCheckGuard, RolesGuard)
+  @Roles(Role.USER)
+  @Post('/order')
+  makeAnOrder(@Body() order: IOrder) {
+    return this.userService.makeAnOrder(order);
   }
 
   @Patch(':id')

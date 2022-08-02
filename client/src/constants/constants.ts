@@ -9,4 +9,5 @@ export const urls = {
     authCheck: '/auth/check',
     refresh: '/auth/refresh',
     user: '/user',
+    order: '/user/order',
 }

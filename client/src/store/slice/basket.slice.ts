@@ -1,18 +1,35 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IProduct } from '../../interfaces';
+import { userService } from '../../services';
+import { AxiosError } from 'axios';
 
-interface IBasket {
+export interface IOrder {
+    productSum: {
+        [key: string]: number;
+    };
+    products: IProduct[];
+}
+
+export interface IBasket extends IOrder {
     productSum: {
         [key: string]: number;
     };
     products: IProduct[];
     sum: number;
+    orderStatus: boolean;
+}
+
+interface ErrorsResponse {
+    error: string;
+    message: [Record<string, any>];
+    statusCode: number;
 }
 
 const initialState: IBasket = {
     productSum: {},
     products: [],
-    sum: 0
+    sum: 0,
+    orderStatus: false,
 }
 
 const calculateSum = (state: IBasket) => {
@@ -21,6 +38,20 @@ const calculateSum = (state: IBasket) => {
         state.sum += product.price * state.productSum[product.id];
     })
 }
+
+export const makeAnOrderAsync = createAsyncThunk<void, IOrder, { rejectValue: ErrorsResponse}>(
+    'basketSlice/makeAnOrderAsync',
+    async ({productSum, products},{ dispatch, rejectWithValue }) => {
+        try {
+            await userService.makeAnOrder(productSum, products);
+            // dispatch(logout());
+        } catch (err) {
+            const error = err as AxiosError;
+            return rejectWithValue(error.response?.data as ErrorsResponse);
+        }
+    }
+)
+
 
 const basketSlice = createSlice({
     name: 'basketSlice',
@@ -47,6 +78,9 @@ const basketSlice = createSlice({
             state.products = state.products.filter(product => product.id !== action.payload.id);
             calculateSum(state);
         },
+        changeOrderStatus: (state) => {
+            state.orderStatus = true;
+        }
     }
 })
 

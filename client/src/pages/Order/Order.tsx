@@ -1,14 +1,19 @@
 import React from 'react';
 import { Button, Card } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
-import { useAppSelector } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 
 import css from './Order.module.css';
+import { makeAnOrderAsync } from '../../store';
 
 const Order = () => {
-
-    const navigate = useNavigate();
+  
     const { products, productSum, sum } = useAppSelector(state => state.basketReducer);
+    const dispatch = useAppDispatch();
+
+    const makeAnOrder = (e: any) => {
+        e.preventDefault();
+        dispatch(makeAnOrderAsync({ productSum, products }))
+    }
 
     return (
         <div>
@@ -56,10 +61,7 @@ const Order = () => {
                     </Card>
                     <Button variant="outline-success"
                         className={css.orderBtn}
-                        onClick={(e) => {
-                            e.preventDefault();
-                            navigate('/order');
-                        }}>Замовити</Button>
+                        onClick={(e) => makeAnOrder(e)}>Замовити</Button>
                 </div>
             </div>
         </div>
