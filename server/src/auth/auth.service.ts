@@ -8,6 +8,8 @@ import { Response } from 'express';
 import { IRequestExtended } from './models/requestExtended.interface';
 import { constants } from '../constants';
 import { JwtPayload } from 'jsonwebtoken';
+import { isEmail } from 'class-validator';
+import { GoogleAuthProfileDto } from './dto/google.auth.profile.dto';
 
 @Injectable()
 export class AuthService {
@@ -60,6 +62,35 @@ export class AuthService {
           email: existingUser.email,
         },
       };
+    } catch (e) {
+      throw new HttpException(e.message, e.status);
+    }
+  }
+
+  async authGoogle(googleUser: GoogleAuthProfileDto, res: Response) {
+    try {
+      let user = await this.userService.findOneByEmail(googleUser.email);
+
+      if (!user) {
+        user = await this.userService.createFromGoogle(googleUser);
+      }
+
+      const tokenPair = await this.tokenService.getTokenPair(user);
+
+      const { accessToken, refreshToken } = await this.tokenService.saveTokenPair(tokenPair);
+
+      const authDataParams = `accessToken=${accessToken}&refreshToken=${refreshToken}&id=${user.id}&email=${user.email}`;
+
+      res.redirect(`http://localhost:3000/google-auth?${authDataParams}`);
+
+      // return {
+      //   accessToken,
+      //   refreshToken,
+      //   user: {
+      //     id: user.id,
+      //     email: user.email,
+      //   },
+      // };
     } catch (e) {
       throw new HttpException(e.message, e.status);
     }

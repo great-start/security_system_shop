@@ -1,11 +1,13 @@
-import { Controller, Post, Body, Req, Res, UseGuards, HttpStatus } from '@nestjs/common';
+import { Controller, Post, Body, Req, Res, UseGuards, HttpStatus, Get } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { SignUpUserDto } from './dto/signUp.user.dto';
 import { SignInUserDto } from './dto/signIn.user.dto';
-import { Response } from 'express';
+import { Request, Response } from 'express';
 import { IRequestExtended } from './models/requestExtended.interface';
 import { JwtCheckGuard } from './guards/jwt-check.guard';
+import { AuthGuard } from '@nestjs/passport';
+import { GoogleAuthProfileDto } from './dto/google.auth.profile.dto';
 
 @ApiTags('auth')
 @Controller('auth')
@@ -48,6 +50,16 @@ export class AuthController {
   @Post('/sign-in')
   signIn(@Body() authUser: SignInUserDto) {
     return this.authService.signIn(authUser);
+  }
+
+  @Get('/google')
+  @UseGuards(AuthGuard('google'))
+  authGoogle() {}
+
+  @Get('/google/callback')
+  @UseGuards(AuthGuard('google'))
+  googleAuthResponse(@Req() req: IRequestExtended, @Res() res: Response) {
+    return this.authService.authGoogle(req.user, res);
   }
 
   @ApiOperation({

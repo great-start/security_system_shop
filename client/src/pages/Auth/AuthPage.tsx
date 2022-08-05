@@ -4,6 +4,7 @@ import css from './Auth.module.css';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { changeAuthForm, signInAsync, signUpAsync } from '../../store/slice/auth.slice';
 import { Navigate, useNavigate} from 'react-router-dom';
+import axios from 'axios';
 
 export const AuthPage = () => {
 
@@ -42,17 +43,21 @@ export const AuthPage = () => {
         }
     };
 
+    async function googleAuth(e: any) {
+        e.preventDefault();
+        const googleAuthUrl = 'http://localhost:5000/auth/google';
+        const newWindow = window.open(googleAuthUrl, 'blank', 'width=500, height=600');
+        navigate('/personal');
+    }
+
     return (
         isAuth ? <Navigate to={'/personal'} replace={true} /> :
             <Container className={css.wrap}>
                 <Card className={css.card}>
                     <Card.Title style={{ margin: 'auto', marginBottom: '20px' }}>{isSignInForm ? 'Sign in' : 'Sign up'}</Card.Title>
-                    <Form
-                        className={css.form}
-                        onSubmit={(e) => {
-                            isSignInForm ? signIn(e) : signUp(e);
-                        }}
-                    >
+                    <Form className={css.form} onSubmit={(e) => {
+                        isSignInForm ? signIn(e) : signUp(e);
+                    }}>
                         { !isSignInForm && <div style={{display: 'flex', gap: '20px'}}>
                             <Form.Group className='mb-3' controlId='firstName'>
                                 <Form.Label>Ім`я</Form.Label>
@@ -82,28 +87,29 @@ export const AuthPage = () => {
                         {/*    </Form.Group>*/}
                         {/*}*/}
                         <Container className={'d-flex align-items-center justify-content-between p-0'}>
-                            {isSignInForm ? (
-                                <p className='align-self-end' style={{ margin: '0' }}>
-                  Не зареєстровані?
+                            {isSignInForm ? 
+                                (<p className='align-self-end' style={{ margin: '0' }}>
+                                      Не зареєстровані?
                                     <a href={''} onClick={changeForm}>
-                                        {' '}
-                    Зареєструватись
+                                        {' '}Зареєструватись
+                                    </a>
+                                </p>) : (<p className='align-self-end' style={{ margin: '0' }}>
+                                    <a href={''} onClick={changeForm}>
+                                            Авторизуватись
                                     </a>
                                 </p>
-                            ) : (
-                                <p className='align-self-end' style={{ margin: '0' }}>
-                                    <a href={''} onClick={changeForm}>
-                    Авторизуватись
-                                    </a>
-                                </p>
-                            )}
-                            {isLoading ? (
-                                <Spinner animation='border' variant='secondary' style={{ marginLeft: '120px' }} />
-                            ) : null}
+                                )}
+                            {isLoading ? 
+                                (<Spinner animation='border' variant='secondary' style={{ marginLeft: '120px' }} />)
+                                : null}
                             <Button variant='outline-success' type='submit' className='align-self-end'>
                                 {isSignInForm ? 'Увійти' : 'Зареєструватись'}
                             </Button>
                         </Container>
+                        <Button variant='outline-success' type='submit' className='align-self-end mt-3'
+                            onClick={googleAuth}>
+                            GOOGLE+
+                        </Button>
                     </Form>
                 </Card>
             </Container>

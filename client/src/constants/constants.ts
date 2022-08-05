@@ -5,9 +5,10 @@ export const urls = {
     categories: '/category',
     signIn: '/auth/sign-in',
     signUp: '/auth/sign-up',
+    googleAuth: '/auth/google',
     logout: '/auth/logout',
     authCheck: '/auth/check',
     refresh: '/auth/refresh',
     user: '/user',
-    order: '/user/order',
+    order: '/user/order'
 }

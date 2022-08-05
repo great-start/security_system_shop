@@ -3,6 +3,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { PrismaService } from '../prisma.service';
 import { SignUpUserDto } from '../auth/dto/signUp.user.dto';
 import { IOrder } from './models/order.inteface';
+import { GoogleAuthProfileDto } from '../auth/dto/google.auth.profile.dto';
 
 @Injectable()
 export class UserService {
@@ -34,5 +35,14 @@ export class UserService {
 
   makeAnOrder(order: IOrder) {
     console.log(order);
+  }
+
+  async createFromGoogle(user: GoogleAuthProfileDto) {
+    return this.prismaService.user.create({
+      data: {
+        email: user.email,
+        firstName: user.firstName,
+      },
+    });
   }
 }

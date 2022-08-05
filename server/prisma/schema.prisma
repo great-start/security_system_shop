@@ -12,10 +12,10 @@ datasource db {
 
 model User {
   id        String   @id @default(uuid())
-  firstName String
-  lastName  String
+  firstName String?
+  lastName  String?
   email     String   @unique
-  password  String
+  password  String?
   createdAt DateTime @default(now())
   role      Roles    @default(USER)
   Basket    Basket[]
