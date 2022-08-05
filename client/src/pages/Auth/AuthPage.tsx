@@ -1,10 +1,10 @@
 import React from 'react';
 import { Button, Card, Container, Form, Spinner } from 'react-bootstrap';
+import GoogleButton from 'react-google-button';
 import css from './Auth.module.css';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { changeAuthForm, signInAsync, signUpAsync } from '../../store/slice/auth.slice';
 import { Navigate, useNavigate} from 'react-router-dom';
-import axios from 'axios';
 
 export const AuthPage = () => {
 
@@ -43,11 +43,16 @@ export const AuthPage = () => {
         }
     };
 
-    async function googleAuth(e: any) {
+    const googleAuth = async (e: any) => {
         e.preventDefault();
         const googleAuthUrl = 'http://localhost:5000/auth/google';
         const newWindow = window.open(googleAuthUrl, 'blank', 'width=500, height=600');
-        navigate('/personal');
+
+        setInterval(() => {
+            if (newWindow && newWindow?.closed) {
+                window.location.reload();
+            }
+        }, 1000);
     }
 
     return (
@@ -106,10 +111,10 @@ export const AuthPage = () => {
                                 {isSignInForm ? 'Увійти' : 'Зареєструватись'}
                             </Button>
                         </Container>
-                        <Button variant='outline-success' type='submit' className='align-self-end mt-3'
-                            onClick={googleAuth}>
-                            GOOGLE+
-                        </Button>
+                        <GoogleButton 
+                            className='align-self-end mt-3'
+                            // label='GOOGLE sign in'
+                            onClick={googleAuth}/>
                     </Form>
                 </Card>
             </Container>

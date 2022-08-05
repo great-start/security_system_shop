@@ -118,6 +118,19 @@ export const AuthSlice = createSlice({
         },
         changeAuthForm: state => {
             state.isSignInForm = !state.isSignInForm;
+        },
+        setCredentialsAfterGoogleAuth: (state, action) => {
+            state.isAuth = true;
+            const params = new URLSearchParams(action.payload);
+            const accessToken = params.get('accessToken');
+            const refreshToken = params.get('refreshToken');
+            const id = params.get('id');
+            const email = params.get('email');
+            localStorage.setItem('profile', JSON.stringify(
+                {accessToken, refreshToken, user: {
+                    id, email
+                }}));
+            // state.user = action.payload.data.user;
         }
     },
     extraReducers: (builder => {
@@ -161,7 +174,7 @@ export const AuthSlice = createSlice({
     })
 })
 
-export const { setCredentials, logout, changeAuthForm } = AuthSlice.actions;
+export const { setCredentials, logout, changeAuthForm, setCredentialsAfterGoogleAuth } = AuthSlice.actions;
 
 const authReducer = AuthSlice.reducer;
 export default authReducer;

@@ -12,5 +12,4 @@ export const userService = {
     getAll: () => API.get<any>(urls.user),
     makeAnOrder: (productSum: { [p: string]: number }, products: IProduct[]) =>
         API.post<Partial<IBasket>>(urls.order, { productSum, products }),
-    googleAuth: () => API.get(urls.googleAuth),
 }

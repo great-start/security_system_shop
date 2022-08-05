@@ -1,21 +1,24 @@
 import React, { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
+import { useAppDispatch } from '../../hooks';
+import { setCredentialsAfterGoogleAuth } from '../../store/slice/auth.slice';
 
 const GoogleAuth = () => {
 
-    const { accessToken } = useParams();
-    console.log(accessToken);
-    console.log('asdasdasd');
+    const location = useLocation();
+    const dispatch = useAppDispatch();
 
-    // useEffect(() => {
-    //
-    // },[])
-  
-  
-  
+    useEffect(() => {
+        async function setCredentials () {
+            await dispatch(setCredentialsAfterGoogleAuth(location.search));
+        }
+
+        setCredentials().then(() => window.close());
+    },[])
+
     return (
         <div>
-      
+            'Thanks you for logging in'
         </div>
     );
 };

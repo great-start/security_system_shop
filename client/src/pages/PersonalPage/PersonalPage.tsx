@@ -10,6 +10,7 @@ export const PersonalPage = () => {
     const [key, setKey] = useState('home');
     const { isAuth } = useAppSelector(state => state.authReducer);
 
+    console.log(isAuth);
     return (
         isAuth ?
             <Tabs
