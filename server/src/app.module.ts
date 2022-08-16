@@ -7,14 +7,21 @@ import { TypeModule } from './type/type.module';
 import { CategoryModule } from './category/category.module';
 import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
+import { ConfigModule } from '@nestjs/config';
+import { CurrencyModule } from './currency/currency.module';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      envFilePath: '.env.example',
+      isGlobal: true,
+    }),
     ProductModule,
     TypeModule,
     CategoryModule,
     AuthModule,
     UserModule,
+    CurrencyModule,
     // ServeStaticModule.forRoot({
     //   rootPath: join(__dirname, '..', 'src', 'images'),
     //   serveRoot: join(__dirname, '..', 'src', 'images'),

@@ -4,6 +4,7 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { join } from 'path';
 import { BadRequestException, ValidationPipe } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
@@ -41,7 +42,16 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
 
-  await app.listen(process.env.PORT);
+  const configService = app.get(ConfigService);
+  const PORT = configService.get('PORT');
+  const PROTOCOL = configService.get('PROTOCOL');
+  const HOST = configService.get('HOST');
+  const SWAGGER_URL = configService.get('SWAGGER_URL');
+
+  await app.listen(process.env.PORT, () => {
+    console.log(`Server started at ${PROTOCOL}://${HOST}:${PORT}`);
+    console.log(`Swagger address ${PROTOCOL}://${HOST}:${PORT}/${SWAGGER_URL}`);
+  });
 }
 bootstrap();
 

@@ -1,3 +1,17 @@
+.header {
+    background: rgba(123, 171, 231, 0.23);
+}
+.exchangeRate {
+    display: flex;
+    justify-content: end;
+    column-gap: 20px;
+}
+.exchangeRate > p {
+    display: block;
+    color: #395dc4;
+}
+
+
 .navLink {
     display: flex;
     column-gap: 20px;
