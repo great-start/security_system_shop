@@ -32,12 +32,10 @@ export const Header = () => {
 
     return (
         <div className={css.header}>
-            {/*{exchangeRate &&*/}
             <Container className={css.exchangeRate}>
-                <p style={{ display: 'block', margin: '0px', padding: '0px'}}>{exchangeRate ? `USD ${exchangeRate[0].buy}`: null}</p>
-                <p style={{ display: 'block', margin: '0px', padding: '0px'}}>{exchangeRate ? `EUR ${exchangeRate[1].buy}`: null}</p>
+                <p style={{ display: 'block', margin: '0px', padding: '0px'}}>{exchangeRate ? `USD ${exchangeRate[0].buy.slice(0,5)}`: null}</p>
+                <p style={{ display: 'block', margin: '0px', padding: '0px'}}>{exchangeRate ? `EUR ${exchangeRate[1].buy.slice(0,5)}`: null}</p>
             </Container>
-            {/*}*/}
             <Navbar style={{ backgroundColor: 'rgba(123, 171, 231, 0.23)', display: 'flex', flexDirection: 'column' }}>
                 <Container className='my-2'>
                     <Nav className={css.navLink}>

@@ -4,7 +4,7 @@
 .exchangeRate {
     display: flex;
     justify-content: end;
-    column-gap: 20px;
+    column-gap: 40px;
 }
 .exchangeRate > p {
     display: block;

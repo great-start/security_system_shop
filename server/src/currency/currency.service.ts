@@ -14,8 +14,6 @@ export class CurrencyService {
       this.configService.get('EXCHANGE_RATE_URL'),
     );
 
-    console.log(data);
-
     return data;
   }
 }
