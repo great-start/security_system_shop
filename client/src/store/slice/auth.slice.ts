@@ -9,20 +9,24 @@ interface IAuthState {
         email: string
     };
     isAuth: boolean;
-    errors: null | [{
-        [key: string]: string
-    }];
+    errors: null | [ Record<string, any> ];
+    error401: null | string;
     isLoading: boolean;
     isSignInForm: boolean;
 }
 
 interface ErrorsResponse {
     error: string;
-    message: [Record<string, any>];
+    message: [ Record<string, any> ];
     statusCode: number;
 }
 
-interface ISignUp {
+interface Error401Response {
+    message: string;
+    statusCode: number;
+}
+
+export interface ISignUp {
     firstName: string;
     lastName: string;
     email: string;
@@ -41,11 +45,12 @@ const initialState: IAuthState = {
     },
     isAuth: false,
     errors: null,
+    error401: null,
     isLoading: false,
     isSignInForm: true,
 }
 
-export const signInAsync = createAsyncThunk<void, ISignIn, { rejectValue: ErrorsResponse}>(
+export const signInAsync = createAsyncThunk<void, ISignIn, { rejectValue: ErrorsResponse | Error401Response }>(
     'authSlice/signInAsync',
     async ({ email, password }, { dispatch,rejectWithValue }) => {
         try {
@@ -54,7 +59,7 @@ export const signInAsync = createAsyncThunk<void, ISignIn, { rejectValue: Errors
             dispatch(setCredentials({ data }));
         } catch (err) {
             const error = err as AxiosError;
-            return rejectWithValue(error.response?.data as ErrorsResponse);
+            return rejectWithValue(error.response?.data as ErrorsResponse | Error401Response);
         }
     }
 )
@@ -63,7 +68,7 @@ export const signUpAsync = createAsyncThunk<void, ISignUp, { rejectValue: Errors
     'authSlice/signUpAsync',
     async ({ firstName, lastName,email,password}, { dispatch,rejectWithValue }) => {
         try {
-            const { data } = await userService.signUp(firstName, lastName, email, password);
+            const { data } = await userService.signUp({ firstName, lastName, email, password });
             localStorage.setItem('profile', JSON.stringify(data));
             dispatch(setCredentials({ data }));
         } catch (err) {
@@ -140,7 +145,14 @@ export const AuthSlice = createSlice({
             })
             .addCase(signInAsync.rejected, (state, action) => {
                 if (action.payload) {
-                    state.errors = action.payload?.message;
+                    if (action.payload.statusCode !== 401) {
+                        state.errors = action.payload?.message as [Record<string, any>];
+                        state.error401 = null;
+                        state.isLoading = false;
+                        return;
+                    }
+                    state.errors = null;
+                    state.error401 = action.payload?.message as string;
                     state.isLoading = false;
                 }
             })
@@ -164,7 +176,7 @@ export const AuthSlice = createSlice({
             })
             .addCase(signUpAsync.rejected, (state, action) => {
                 if (action.payload) {
-                    state.errors = action.payload?.message;
+                    state.errors = action.payload?.message as [Record<string, any>];
                     state.isLoading = false;
                 }
             })

@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { deleteProductInBasket, minusProduct, plusProduct } from '../../store';
 
 export const Basket = () => {
-    const { products, sum, productSum } = useAppSelector((state) => state.basketReducer);
+    const { products, sum, productsQuantity } = useAppSelector((state) => state.basketReducer);
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
@@ -29,7 +29,7 @@ export const Basket = () => {
                     >
               -
                     </Button>
-                    <div style={{ alignSelf: 'center', marginRight: '10px' }}>{productSum[product.id]}</div>
+                    <div style={{ alignSelf: 'center', marginRight: '10px' }}>{productsQuantity[product.id]}</div>
                     <Button
                         variant={'outline-secondary'}
                         style={{ alignSelf: 'center', marginRight: '10px', border: 'none' }}
@@ -41,7 +41,7 @@ export const Basket = () => {
               +
                     </Button>
                     <div style={{ alignSelf: 'center', marginRight: '10px' }}>
-                        {productSum[product.id] * product.price} грн.
+                        {productsQuantity[product.id] * product.price} грн.
                     </div>
 
                     <Button

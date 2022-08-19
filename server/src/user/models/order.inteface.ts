@@ -1,7 +1,7 @@
 import { IProduct } from 'src/product/models/product.interface';
 
 export interface IOrder {
-  productSum: {
+  productsQuantity: {
     [key: string]: number;
   };
   products: IProduct[];

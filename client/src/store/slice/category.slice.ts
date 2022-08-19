@@ -11,7 +11,7 @@ const initialState: ICategoryState = {
 }
 
 export const getAllCategoryAsync = createAsyncThunk(
-    'carSlice/getCategoryAsync',
+    'categorySlice/getCategoryAsync',
     async (_,{dispatch}) => {
         try {
             const { data } = await categoryService.getAll();
@@ -23,7 +23,7 @@ export const getAllCategoryAsync = createAsyncThunk(
 )
 
 const categorySlice = createSlice({
-    name: 'carSlice',
+    name: 'categorySlice',
     initialState,
     reducers: {
         setAllCategory: (state, action) => {

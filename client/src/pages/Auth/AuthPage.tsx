@@ -5,11 +5,12 @@ import css from './Auth.module.css';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { changeAuthForm, signInAsync, signUpAsync } from '../../store/slice/auth.slice';
 import { Navigate, useNavigate} from 'react-router-dom';
+import { urls } from '../../constants';
 
 export const AuthPage = () => {
 
     const dispatch = useAppDispatch();
-    const { isLoading, errors, isAuth, isSignInForm } = useAppSelector((state) => state.authReducer);
+    const { isLoading, errors, error401, isAuth, isSignInForm } = useAppSelector((state) => state.authReducer);
     const navigate = useNavigate();
 
     const changeForm = (e: any) => {
@@ -45,8 +46,7 @@ export const AuthPage = () => {
 
     const googleAuth = async (e: any) => {
         e.preventDefault();
-        const googleAuthUrl = 'http://localhost:5000/auth/google';
-        const newWindow = window.open(googleAuthUrl, 'blank', 'width=500, height=600');
+        const newWindow = window.open(urls.GOOGLE_AUTH_URL, 'blank', 'width=500, height=600');
 
         setInterval(() => {
             if (newWindow && newWindow?.closed) {
@@ -107,6 +107,8 @@ export const AuthPage = () => {
                             {isLoading ? 
                                 (<Spinner animation='border' variant='secondary' style={{ marginLeft: '120px' }} />)
                                 : null}
+                            {error401 ?
+                                <Form.Text style={{ color: 'chocolate' }}>Нажаль невірний пароль або email</Form.Text> : null}
                             <Button variant='outline-success' type='submit' className='align-self-end'>
                                 {isSignInForm ? 'Увійти' : 'Зареєструватись'}
                             </Button>

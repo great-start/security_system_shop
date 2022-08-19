@@ -1,9 +1,10 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { PrismaService } from '../prisma.service';
 import { SignUpUserDto } from '../auth/dto/signUp.user.dto';
 import { IOrder } from './models/order.inteface';
 import { GoogleAuthProfileDto } from '../auth/dto/google.auth.profile.dto';
+import { IRequestExtended } from '../auth/models/requestExtended.interface';
 
 @Injectable()
 export class UserService {
@@ -33,10 +34,6 @@ export class UserService {
     return `This action removes a #${id} user`;
   }
 
-  makeAnOrder(order: IOrder) {
-    console.log(order);
-  }
-
   async createFromGoogle(user: GoogleAuthProfileDto) {
     return this.prismaService.user.create({
       data: {
@@ -44,5 +41,56 @@ export class UserService {
         firstName: user.firstName,
       },
     });
+  }
+
+  async makeAnOrder(order: IOrder, req: IRequestExtended) {
+    try {
+      const { productsQuantity, products } = order;
+      const user = req.user;
+
+      const { id } = await this.prismaService.basket.create({
+        data: {
+          userId: user.id,
+          status: 'ordered',
+        },
+      });
+
+      for (const product in productsQuantity) {
+        await this.prismaService.basket_item.create({
+          data: {
+            basketId: id,
+            productId: product,
+            quantity: productsQuantity[product],
+          },
+        });
+      }
+
+      return {
+        message: 'Замовлення прийняте в обробку',
+      };
+    } catch (e) {
+      throw new HttpException('Server Error', HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
+
+  async getAllOrders(req: IRequestExtended) {
+    try {
+      const { id } = req.user;
+
+      const basket = await this.prismaService.basket.findMany({
+        where: {
+          userId: id,
+        },
+        select: {
+          id: true,
+          status: true,
+          createdAt: true,
+        },
+      });
+
+      return basket;
+    } catch (e) {
+      throw new HttpException('Server Error', HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 }

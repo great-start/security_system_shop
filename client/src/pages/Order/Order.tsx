@@ -7,12 +7,12 @@ import { makeAnOrderAsync } from '../../store';
 
 const Order = () => {
   
-    const { products, productSum, sum } = useAppSelector(state => state.basketReducer);
+    const { products, productsQuantity, sum } = useAppSelector(state => state.basketReducer);
     const dispatch = useAppDispatch();
 
     const makeAnOrder = (e: any) => {
         e.preventDefault();
-        dispatch(makeAnOrderAsync({ productSum, products }))
+        dispatch(makeAnOrderAsync({ productsQuantity, products }))
     }
 
     return (
@@ -48,10 +48,10 @@ const Order = () => {
                             <Card className="d-flex flex-row border-none" key={product.id}>
                                 <Card.Body className="border-none">{product.name}</Card.Body>
                                 <div style={{ alignSelf: 'center', marginRight: '20px' }}>
-                                    {productSum[product.id]}шт.
+                                    {productsQuantity[product.id]}шт.
                                 </div>
                                 <div style={{ alignSelf: 'center', marginRight: '10px' }}>
-                                    {productSum[product.id] * product.price} грн.
+                                    {productsQuantity[product.id] * product.price} грн.
                                 </div>
                             </Card>
                         ))}

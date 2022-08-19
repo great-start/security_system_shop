@@ -4,16 +4,12 @@ import { userService } from '../../services';
 import { AxiosError } from 'axios';
 
 export interface IOrder {
-    productSum: {
-        [key: string]: number;
-    };
+    productsQuantity: Record<string, number>;
     products: IProduct[];
 }
 
 export interface IBasket extends IOrder {
-    productSum: {
-        [key: string]: number;
-    };
+    productsQuantity: Record<string, number>;
     products: IProduct[];
     sum: number;
     orderStatus: boolean;
@@ -26,7 +22,7 @@ interface ErrorsResponse {
 }
 
 const initialState: IBasket = {
-    productSum: {},
+    productsQuantity: {},
     products: [],
     sum: 0,
     orderStatus: false,
@@ -35,15 +31,15 @@ const initialState: IBasket = {
 const calculateSum = (state: IBasket) => {
     state.sum = 0;
     state.products.forEach(product => {
-        state.sum += product.price * state.productSum[product.id];
+        state.sum += product.price * state.productsQuantity[product.id];
     })
 }
 
 export const makeAnOrderAsync = createAsyncThunk<void, IOrder, { rejectValue: ErrorsResponse}>(
     'basketSlice/makeAnOrderAsync',
-    async ({productSum, products},{ dispatch, rejectWithValue }) => {
+    async ( { productsQuantity, products},{ dispatch, rejectWithValue }) => {
         try {
-            await userService.makeAnOrder(productSum, products);
+            await userService.makeAnOrder({ productsQuantity, products });
             // dispatch(logout());
         } catch (err) {
             const error = err as AxiosError;
@@ -60,18 +56,18 @@ const basketSlice = createSlice({
         setProductToBasket: (state, action: PayloadAction<IProduct>) => {
             if (!state.products.some(item => item.id === action.payload.id)) {
                 state.products.push(action.payload);
-                state.productSum[action.payload.id] = 1;
+                state.productsQuantity[action.payload.id] = 1;
             } else {
-                state.productSum[action.payload.id] += 1;
+                state.productsQuantity[action.payload.id] += 1;
             }
             calculateSum(state);
         },
         plusProduct: (state, action: PayloadAction<IProduct>) => {
-            state.productSum[action.payload.id] += 1;
+            state.productsQuantity[action.payload.id] += 1;
             calculateSum(state);
         },
         minusProduct: (state, action:PayloadAction<IProduct>) => {
-            state.productSum[action.payload.id] ? state.productSum[action.payload.id] -= 1 : deleteProductInBasket(action.payload);
+            state.productsQuantity[action.payload.id] ? state.productsQuantity[action.payload.id] -= 1 : deleteProductInBasket(action.payload);
             calculateSum(state);
         },
         deleteProductInBasket: (state, action: PayloadAction<IProduct>) => {

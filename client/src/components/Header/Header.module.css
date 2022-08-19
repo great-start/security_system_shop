@@ -4,11 +4,14 @@
 .exchangeRate {
     display: flex;
     justify-content: end;
-    column-gap: 40px;
+    column-gap: 30px;
 }
+
 .exchangeRate > p {
     display: block;
     color: #395dc4;
+    margin: 0;
+    padding: 0;
 }
 
 
