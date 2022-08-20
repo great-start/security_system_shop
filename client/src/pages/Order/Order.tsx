@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { Button, Card } from 'react-bootstrap';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 
 import css from './Order.module.css';
 import { makeAnOrderAsync } from '../../store';
 
-const Order = () => {
+export const Order: FC = () => {
   
     const { products, productsQuantity, sum } = useAppSelector(state => state.basketReducer);
     const dispatch = useAppDispatch();
@@ -67,5 +67,3 @@ const Order = () => {
         </div>
     );
 };
-
-export default Order;

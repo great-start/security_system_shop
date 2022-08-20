@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { CategoryList, Install } from '../../components';
 
-export const MainPage = () => {
+export const MainPage: FC = () => {
     return (
         <div className="d-flex">
             <CategoryList />

@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { FC, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useAppDispatch } from '../../hooks';
 import { setCredentialsAfterGoogleAuth } from '../../store';
 
-const GoogleAuth = () => {
+export const GoogleAuth: FC = () => {
 
     const location = useLocation();
     const dispatch = useAppDispatch();
@@ -22,5 +22,3 @@ const GoogleAuth = () => {
         </div>
     );
 };
-
-export default GoogleAuth;

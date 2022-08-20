@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import Navbar from 'react-bootstrap/Navbar';
 import { Button, Container, Nav, Spinner } from 'react-bootstrap';
 import { NavLink, useNavigate } from 'react-router-dom';
 import css from './Header.module.css';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { logOutAsync } from '../../store/slice/auth.slice';
+import { logOutAsync } from '../../store';
 import { urls } from '../../constants';
 import { API } from '../../services';
 import { IExchangeRate } from '../../interfaces';
 
-export const Header = () => {
+export const Header: FC = () => {
 
     const { products, sum } = useAppSelector(state => state.basketReducer);
     const { isAuth, user, isLoading } = useAppSelector(state => state.authReducer);

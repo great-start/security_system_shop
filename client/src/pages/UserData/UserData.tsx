@@ -1,11 +1,10 @@
 import React, { FC } from 'react';
+import { Container } from 'react-bootstrap';
 
-const UserData:FC = () => {
+export const UserData: FC = () => {
     return (
-        <div>
+        <Container>
           UserData
-        </div>
+        </Container>
     );
 };
-
-export default UserData;

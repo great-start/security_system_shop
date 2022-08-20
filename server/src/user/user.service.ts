@@ -77,18 +77,59 @@ export class UserService {
     try {
       const { id } = req.user;
 
-      const basket = await this.prismaService.basket.findMany({
+      let changedOrders = [];
+
+      await this.prismaService.basket
+        .findMany({
+          where: {
+            userId: id,
+          },
+          include: {
+            Product: {
+              select: {
+                quantity: true,
+                product: {
+                  select: {
+                    id: true,
+                    name: true,
+                    image: true,
+                    title: true,
+                    price: true,
+                  },
+                },
+              },
+            },
+          },
+        })
+        .then((orders) => {
+          orders.forEach((element) => {
+            const formattedDate = new Intl.DateTimeFormat('de-DE', {
+              day: '2-digit',
+              month: '2-digit',
+              year: 'numeric',
+            }).format(element.createdAt);
+            element = Object.assign(element, { orderTime: formattedDate });
+          });
+          changedOrders = orders;
+        });
+
+      return changedOrders;
+    } catch (e) {
+      throw new HttpException('Server Error', HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
+
+  async canselOrder(id: number) {
+    try {
+      await this.prismaService.basket.delete({
         where: {
-          userId: id,
-        },
-        select: {
-          id: true,
-          status: true,
-          createdAt: true,
+          id,
         },
       });
 
-      return basket;
+      return {
+        message: 'Order canceled',
+      };
     } catch (e) {
       throw new HttpException('Server Error', HttpStatus.INTERNAL_SERVER_ERROR);
     }

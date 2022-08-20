@@ -1,11 +1,10 @@
 import React, { FC } from 'react';
+import { Container } from 'react-bootstrap';
 
-const UserInstallations:FC = () => {
+export const UserInstallations: FC = () => {
     return (
-        <div>
+        <Container>
       Монтажні роботи
-        </div>
+        </Container>
     );
 };
-
-export default UserInstallations;

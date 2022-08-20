@@ -10,8 +10,9 @@ export const urls = {
     authCheck: '/auth/check',
     refresh: '/auth/refresh',
     user: '/user',
+    getAllOrders: '/user/order',
     makeOrder: '/user/make-order',
-    getAllOrders: '/user/get-orders',
+    canselOrder: '/user/order',
     exchangeRates: '/exchange-rate',
     GOOGLE_AUTH_URL: 'http://localhost:5000/auth/google'
 }

@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { Button, Card, Modal } from 'react-bootstrap';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import css from './Basket.module.css';
 import { useNavigate } from 'react-router-dom';
 import { deleteProductInBasket, minusProduct, plusProduct } from '../../store';
 
-export const Basket = () => {
+export const Basket: FC = () => {
     const { products, sum, productsQuantity } = useAppSelector((state) => state.basketReducer);
     const dispatch = useAppDispatch();
     const navigate = useNavigate();

@@ -28,25 +28,27 @@ export class UserController {
 
   @UseGuards(JwtCheckGuard, RolesGuard)
   @Roles(Role.USER)
-  @Get('get-orders')
+  @Get('order')
   getAllOrders(@Req() req: IRequestExtended) {
     return this.userService.getAllOrders(req);
   }
 
-  @UseGuards(JwtCheckGuard, RolesGuard)
-  @Roles(Role.USER)
-  @Get('/:id')
-  findOne(@Param('id') id: string) {
-    // return this.userService.findOne(+id);
-  }
+  // @UseGuards(JwtCheckGuard, RolesGuard)
+  // @Roles(Role.USER)
+  // @Get('/:id')
+  // findOne(@Param('id') id: string) {
+  //   // return this.userService.findOne(+id);
+  // }
 
   // @Patch(':id')
   // update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
   //   return this.userService.update(+id, updateUserDto);
   // }
   //
-  // @Delete(':id')
-  // remove(@Param('id') id: string) {
-  //   return this.userService.remove(+id);
-  // }
+  @UseGuards(JwtCheckGuard, RolesGuard)
+  @Roles(Role.USER)
+  @Delete('order/:id')
+  canselOrder(@Param('id') id: string) {
+    return this.userService.canselOrder(+id);
+  }
 }

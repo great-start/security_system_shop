@@ -14,4 +14,5 @@ export const userService = {
     makeAnOrder: ( { productsQuantity, products }: IOrder ) =>
         API.post<string>(urls.makeOrder, { productsQuantity, products }),
     getAllOrders: () => API.get(urls.getAllOrders),
+    canselOrder: (id: string) => API.delete(`${urls.canselOrder}/${id}`)
 }

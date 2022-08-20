@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { FC } from 'react';
 
-export const AdminPage = () => {
+export const AdminPage: FC = () => {
     return (
         <div>
            AdminPage

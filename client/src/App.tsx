@@ -2,12 +2,19 @@ import React, { FC } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
 import { Install, Layout, Shop } from './components';
-import { AuthPage, MainPage, ProductDetails, Basket, AdminPage, PersonalPage } from './pages';
-import Order from './pages/Order/Order';
-import GoogleAuth from './pages/GoogleAuth/GoogleAuth';
-import UserData from './pages/UserData/UserData';
-import UserInstallations from './pages/UserInstallations/UserInstallations';
-import UserOrders from './pages/UserOrders/UserOrders';
+import {
+    AuthPage,
+    MainPage,
+    ProductDetails,
+    Basket,
+    AdminPage,
+    PersonalPage,
+    GoogleAuth,
+    Order,
+    UserData,
+    UserInstallations,
+    UserOrders,
+} from './pages';
 
 const App: FC = () => {
     return (

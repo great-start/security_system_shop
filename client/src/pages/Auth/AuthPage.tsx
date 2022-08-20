@@ -1,13 +1,13 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { Button, Card, Container, Form, Spinner } from 'react-bootstrap';
 import GoogleButton from 'react-google-button';
 import css from './Auth.module.css';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { changeAuthForm, signInAsync, signUpAsync } from '../../store/slice/auth.slice';
+import { changeAuthForm, signInAsync, signUpAsync } from '../../store';
 import { Navigate, useNavigate} from 'react-router-dom';
 import { urls } from '../../constants';
 
-export const AuthPage = () => {
+export const AuthPage: FC = () => {
 
     const dispatch = useAppDispatch();
     const { isLoading, errors, error401, isAuth, isSignInForm } = useAppSelector((state) => state.authReducer);

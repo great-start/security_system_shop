@@ -1,10 +1,26 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { userService } from '../../services';
+import { IProduct } from '../../interfaces';
 
+interface IOrder {
+    id: number;
+    status: string;
+    orderTime: string;
+    Product: [
+        {  product: IProduct;
+            quantity: number
+        }
+    ]
+}
 
+interface IOrderState {
+    orders: IOrder[] | null;
+    isLoading: boolean
+}
 
-const initialState = {
-    orders: [],
+const initialState: IOrderState = {
+    orders: null,
+    isLoading: true
 }
 
 export const getUserOrdersAsync = createAsyncThunk(
@@ -12,7 +28,20 @@ export const getUserOrdersAsync = createAsyncThunk(
     async (_,{ dispatch} ) => {
         try {
             const { data } = await userService.getAllOrders();
-            dispatch(setAllOrders({data}))                   
+            dispatch(setAllOrders({ data }))
+        } catch (e) {
+            console.log(e);
+        }
+    }
+)
+
+export const canselOrderAsync = createAsyncThunk(
+    'personalDataSlice/canselOrderAsync',
+    async (id: string,{ dispatch} ) => {
+        try {
+            await userService.canselOrder(id);
+            const { data } = await userService.getAllOrders();
+            dispatch(setAllOrders({ data }))
         } catch (e) {
             console.log(e);
         }
@@ -24,6 +53,7 @@ const personalDataSlice = createSlice({
     initialState,
     reducers: {
         setAllOrders: (state, action) => {
+            state.isLoading = false;
             state.orders = action.payload.data;
         }
     },
