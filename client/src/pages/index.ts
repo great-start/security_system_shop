@@ -6,3 +6,8 @@ export * from './Basket/Basket';
 export * from './Install/Install';
 export * from './PersonalPage/PersonalPage';
 export * from './AdminPage/AdminPage';
+export * from './GoogleAuth/GoogleAuth';
+export * from './Basket/Basket';
+export * from './UserData/UserData';
+export * from './UserInstallations/UserInstallations';
+export * from './UserOrders/UserOrders';

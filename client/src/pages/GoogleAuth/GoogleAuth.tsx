@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useAppDispatch } from '../../hooks';
-import { setCredentialsAfterGoogleAuth } from '../../store/slice/auth.slice';
+import { setCredentialsAfterGoogleAuth } from '../../store';
 
 const GoogleAuth = () => {
 

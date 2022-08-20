@@ -32,7 +32,7 @@ model Token {
 }
 
 model Basket {
-  id        String        @id @default(uuid())
+  id        Int           @id @default(autoincrement())
   user      User          @relation(fields: [userId], references: [id])
   userId    String
   status    String
@@ -43,7 +43,7 @@ model Basket {
 model Basket_item {
   id        String  @id @default(cuid())
   basket    Basket  @relation(fields: [basketId], references: [id])
-  basketId  String
+  basketId  Int
   product   Product @relation(fields: [productId], references: [id])
   productId String
   quantity  Int     @default(1)

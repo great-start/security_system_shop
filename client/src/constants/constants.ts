@@ -15,3 +15,9 @@ export const urls = {
     exchangeRates: '/exchange-rate',
     GOOGLE_AUTH_URL: 'http://localhost:5000/auth/google'
 }
+
+export const page = {
+    userData: 'userData',
+    orders: 'orders',
+    installations: 'installations',
+}

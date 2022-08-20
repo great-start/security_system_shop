@@ -57,7 +57,7 @@ export const Header = () => {
                         <Button style={{ color: 'black' }} className='ml-10' variant={'outline-secondary'}
                             onClick={e => {
                                 e.preventDefault();
-                                navigate('/personal');
+                                navigate('/personal/userData');
                             }}>Кабінет</Button>
                         {isAuth &&
               <Button style={{ color: 'black' }} className='ml-10' variant={'outline-secondary'}

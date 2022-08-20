@@ -3,7 +3,7 @@ import { Outlet } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
 import { Header } from '../Header/Header';
 import { useAppDispatch } from '../../hooks';
-import { checkIsAuth } from '../../store/slice/auth.slice';
+import { checkIsAuth } from '../../store';
 
 export const Layout: FC = () => {
 
