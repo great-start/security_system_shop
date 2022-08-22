@@ -2,8 +2,9 @@ import React, { FC, useEffect } from 'react';
 import { Accordion, Button, Container, FormText, ListGroup, Spinner } from 'react-bootstrap';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { canselOrderAsync, getUserOrdersAsync } from '../../store';
+import { canselOrderAsync, getUserOrdersAsync, IOrderData } from '../../store';
 import css from './UserOrders.module.css';
+
 
 export const UserOrders: FC = () => {
   const { orders, isLoading } = useAppSelector((state) => state.personalDataReducer);
@@ -17,7 +18,14 @@ export const UserOrders: FC = () => {
     dispatch(canselOrderAsync(String(id)));
   };
 
-  console.log(orders);
+
+  const sum = (order: IOrderData) => {
+    let sum = 0;
+    order.Product.map(item => {
+      sum += item.product.price * item.quantity;
+    });
+    return sum;
+  }
 
   return !isLoading ? (
     <Accordion alwaysOpen>
@@ -40,14 +48,14 @@ export const UserOrders: FC = () => {
                             <FormText>{item.product.name}</FormText>
                           </Container>
                           <Container>
-                            <FormText>{item.product.price*item.quantity} грн.</FormText>
+                            <FormText>{item.product.price * item.quantity} грн.</FormText>
                             <FormText>{item.quantity} шт.</FormText>
                           </Container>
                         </Container>
                       </ListGroup.Item>
                     ))}
                 </ListGroup>
-                <Container>
+                <div className={css.orderFooter}>
                   <Button
                     variant={'outline-secondary'}
                     style={{ marginTop: '10px' }}
@@ -55,7 +63,8 @@ export const UserOrders: FC = () => {
                   >
                   Відмінити
                   </Button>
-                </Container>
+                  <FormText>Загальна сумма {sum(order)} грн.</FormText>
+                </div>
               </Container>
             </Accordion.Body>
           </Accordion.Item>

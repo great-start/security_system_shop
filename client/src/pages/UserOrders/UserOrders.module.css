@@ -19,3 +19,13 @@
     justify-content: center;
     align-items: end;
 }
+
+.orderFooter {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.orderFooter > small {
+    color: #395dc4;
+}

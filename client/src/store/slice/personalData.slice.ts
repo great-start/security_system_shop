@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { userService } from '../../services';
 import { IProduct } from '../../interfaces';
 
-interface IOrder {
+export interface IOrderData {
     id: number;
     status: string;
     orderTime: string;
@@ -14,7 +14,7 @@ interface IOrder {
 }
 
 interface IOrderState {
-    orders: IOrder[] | null;
+    orders: IOrderData[] | null;
     isLoading: boolean
 }
 
