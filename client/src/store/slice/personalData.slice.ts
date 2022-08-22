@@ -14,10 +14,10 @@ export interface IOrderData {
 }
 
 interface IPersonalData {
-  firstName: string;
-  lastName: string;
-  email: string;
-  password: string;
+   firstName: string;
+   lastName: string;
+   email: string;
+   password: string;
 }
 
 interface IOrderState {
@@ -26,9 +26,9 @@ interface IOrderState {
     isLoading: boolean
 }
 
-const initialState: IOrderState = {
-    personalData: null,
-    orders: null,
+const initialState: IOrderState = { 
+    personalData: null, 
+    orders: null, 
     isLoading: true
 }
 
