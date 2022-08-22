@@ -9,6 +9,8 @@ import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
 import { ConfigModule } from '@nestjs/config';
 import { CurrencyModule } from './currency/currency.module';
+import { AdminModule } from './admin/admin.module';
+import { AdminModule } from './admin/admin.module';
 
 @Module({
   imports: [
@@ -22,6 +24,7 @@ import { CurrencyModule } from './currency/currency.module';
     AuthModule,
     UserModule,
     CurrencyModule,
+    AdminModule,
     // ServeStaticModule.forRoot({
     //   rootPath: join(__dirname, '..', 'src', 'images'),
     //   serveRoot: join(__dirname, '..', 'src', 'images'),

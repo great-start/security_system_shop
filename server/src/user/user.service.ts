@@ -10,9 +10,9 @@ import { IRequestExtended } from '../auth/models/requestExtended.interface';
 export class UserService {
   constructor(private readonly prismaService: PrismaService) {}
 
-  async findAll() {
-    return this.prismaService.user.findMany();
-  }
+  // async findAll() {
+  //   return this.prismaService.user.findMany();
+  // }
 
   async findOneByEmail(email: string) {
     return this.prismaService.user.findUnique({
@@ -26,13 +26,13 @@ export class UserService {
     return this.prismaService.user.create({ data: user });
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} user`;
-  }
+  // update(id: number, updateUserDto: UpdateUserDto) {
+  //   return `This action updates a #${id} user`;
+  // }
+  //
+  // remove(id: number) {
+  //   return `This action removes a #${id} user`;
+  // }
 
   async createFromGoogle(user: GoogleAuthProfileDto) {
     return this.prismaService.user.create({
@@ -73,7 +73,7 @@ export class UserService {
     }
   }
 
-  async getAllOrders(req: IRequestExtended) {
+  async getOrders(req: IRequestExtended) {
     try {
       const { id } = req.user;
 

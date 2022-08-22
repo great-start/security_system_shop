@@ -13,13 +13,6 @@ export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @UseGuards(JwtCheckGuard, RolesGuard)
-  @Roles(Role.ADMIN)
-  @Get()
-  findAll() {
-    return this.userService.findAll();
-  }
-
-  @UseGuards(JwtCheckGuard, RolesGuard)
   @Roles(Role.USER)
   @Post('make-order')
   makeAnOrder(@Body() order: IOrder, @Req() req: IRequestExtended) {
@@ -29,9 +22,18 @@ export class UserController {
   @UseGuards(JwtCheckGuard, RolesGuard)
   @Roles(Role.USER)
   @Get('order')
-  getAllOrders(@Req() req: IRequestExtended) {
-    return this.userService.getAllOrders(req);
+  getOrders(@Req() req: IRequestExtended) {
+    return this.userService.getOrders(req);
   }
+
+  @UseGuards(JwtCheckGuard, RolesGuard)
+  @Roles(Role.USER)
+  @Get('order')
+  getOrders(@Req() req: IRequestExtended) {
+    return this.userService.getOrders(req);
+  }
+
+
 
   // @UseGuards(JwtCheckGuard, RolesGuard)
   // @Roles(Role.USER)
