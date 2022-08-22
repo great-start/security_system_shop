@@ -133,8 +133,6 @@ export class AuthService {
   async checkAccess(req: Request) {
     // check accessToken or refreshToken
     try {
-      console.log(req.headers);
-
       const Bearer = req.headers[constants.AUTHORIZATION].split(' ')[0];
       const token = req.headers[constants.AUTHORIZATION].split(' ')[1];
 

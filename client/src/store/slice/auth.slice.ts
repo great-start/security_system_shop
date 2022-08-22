@@ -120,6 +120,8 @@ export const AuthSlice = createSlice({
     logout: (state) => {
       localStorage.removeItem('profile');
       state.isAuth = false;
+      state.errors = null;
+      state.error401 = null;
     },
     changeAuthForm: state => {
       state.isSignInForm = !state.isSignInForm;
