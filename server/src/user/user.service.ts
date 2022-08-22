@@ -5,6 +5,9 @@ import { SignUpUserDto } from '../auth/dto/signUp.user.dto';
 import { IOrder } from './models/order.inteface';
 import { GoogleAuthProfileDto } from '../auth/dto/google.auth.profile.dto';
 import { IRequestExtended } from '../auth/models/requestExtended.interface';
+import e from 'express';
+
+export { Response } from 'express';
 
 @Injectable()
 export class UserService {
@@ -135,7 +138,37 @@ export class UserService {
     }
   }
 
-  async getPersonalData(req: IRequestExtended) {
-    const { id } = req.user;
+  async getPersonalData(req: IRequestExtended, res: e.Response) {
+    try {
+      const { id } = req.user;
+
+      setTimeout(async () => {
+        await this.prismaService.user
+          .findUnique({
+            where: {
+              id,
+            },
+            select: {
+              firstName: true,
+              lastName: true,
+              createdAt: true,
+              email: true,
+            },
+          })
+          .then((data) => {
+            Object.assign(data, {
+              createdAt: new Intl.DateTimeFormat('de-DE', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric',
+              }).format(data.createdAt),
+            });
+
+            res.status(HttpStatus.OK).json(data);
+          });
+      }, 1500);
+    } catch (e) {
+      throw new HttpException('Server Error', HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 }

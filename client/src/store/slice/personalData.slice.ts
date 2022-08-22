@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { userService } from '../../services';
 import { IProduct } from '../../interfaces';
+import { AxiosError } from 'axios';
 
 export interface IOrderData {
     id: number;
@@ -10,68 +11,98 @@ export interface IOrderData {
         {  product: IProduct;
            quantity: number
         }
-    ]
+    ],
 }
 
 interface IPersonalData {
-   firstName: string;
-   lastName: string;
-   email: string;
-   password: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
 }
 
 interface IOrderState {
-    personalData: null | IPersonalData;
-    orders: IOrderData[] | null;
-    isLoading: boolean
+  personalData: IPersonalData | null;
+  orders: IOrderData[] | null;
+  isLoading: boolean,
+  error: string | null;
 }
 
 const initialState: IOrderState = { 
-    personalData: null, 
-    orders: null, 
-    isLoading: true
+  personalData: null, 
+  orders: null, 
+  isLoading: false,
+  error: null,
 }
 
 export const getUserOrdersAsync = createAsyncThunk(
-    'personalDataSlice/getAllOrders',
-    async (_,{ dispatch} ) => {
-        try {
-            const { data } = await userService.getAllOrders();
-            dispatch(setAllOrders({ data }))
-        } catch (e) {
-            console.log(e);
-        }
+  'personalDataSlice/getUserOrdersAsync',
+  async (_,{ dispatch} ) => {
+    try {
+      const { data } = await userService.getAllOrders();
+      dispatch(setAllOrders({ data }))
+    } catch (e) {
+      console.log(e);
     }
+  }
 )
 
 export const canselOrderAsync = createAsyncThunk(
-    'personalDataSlice/canselOrderAsync',
-    async (id: string,{ dispatch} ) => {
-        try {
-            await userService.canselOrder(id);
-            const { data } = await userService.getAllOrders();
-            dispatch(setAllOrders({ data }))
-        } catch (e) {
-            console.log(e);
-        }
+  'personalDataSlice/canselOrderAsync',
+  async (id: string,{ dispatch} ) => {
+    try {
+      await userService.canselOrder(id);
+      const { data } = await userService.getAllOrders();
+      dispatch(setAllOrders({ data }));
+    } catch (e) {
+      console.log(e);
     }
+  }
+)
+
+export const getPersonalDataAsync = createAsyncThunk<void, void, { rejectValue: string }>(
+  'personalDataSlice/getPersonalDataAsync',
+  async (_, { dispatch, rejectWithValue } ) => {
+    try {
+      const { data } = await userService.getPersonalData();
+      dispatch(setPersonalData({ data }));
+    } catch (err) {
+      const error = err as AxiosError;
+      return rejectWithValue(error.response?.data as string);
+    }
+  }
 )
 
 const personalDataSlice = createSlice({
-    name: 'personalDataSlice',
-    initialState,
-    reducers: {
-        setAllOrders: (state, action) => {
-            state.isLoading = false;
-            state.orders = action.payload.data;
-        }
+  name: 'personalDataSlice',
+  initialState,
+
+  reducers: {
+    setAllOrders: (state, action) => {
+      state.isLoading = false;
+      state.orders = action.payload.data;
     },
-    // extraReducers: builder => {
-    //
-    // }
+    setPersonalData: (state, action) => {
+      state.isLoading = false;
+      state.personalData = action.payload.data;
+    },
+  },
+
+  extraReducers: builder => {
+    builder.addCase(getPersonalDataAsync.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(getPersonalDataAsync.fulfilled, (state) => {
+      state.isLoading = false;
+      });
+    builder.addCase(getPersonalDataAsync.rejected, (state,action) => {
+      state.isLoading = false;
+      state.error = action.error as string;
+    })
+  }
 })
 
-export const { setAllOrders } = personalDataSlice.actions;
+export const { setAllOrders, setPersonalData } = personalDataSlice.actions;
 
 const personalDataReducer = personalDataSlice.reducer;
 export default personalDataReducer;

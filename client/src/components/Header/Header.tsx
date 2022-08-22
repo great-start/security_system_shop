@@ -60,7 +60,7 @@ export const Header: FC = () => {
           </Nav>
           <Nav className="ml-auto gap-3">
             {isLoading ? (
-              <Spinner animation="border" variant="secondary" style={{ marginLeft: '120px' }} />
+              <Spinner animation="grow" variant="primary" style={{ marginLeft: '120px' }} />
             ) : null}
             <div className="m-auto" style={{ marginRight: 50, color: 'rgba(15,71,128,0.6)' }}>
               {isAuth && user.email}

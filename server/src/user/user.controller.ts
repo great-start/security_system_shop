@@ -1,6 +1,7 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Req, Res, UseGuards } from '@nestjs/common';
+import { Response } from 'express';
+
 import { UserService } from './user.service';
-import { UpdateUserDto } from './dto/update-user.dto';
 import { JwtCheckGuard } from '../auth/guards/jwt-check.guard';
 import { Role } from '../auth/models/roles.enum';
 import { Roles } from '../auth/decorators/roles.decorator';
@@ -29,8 +30,8 @@ export class UserController {
   @UseGuards(JwtCheckGuard, RolesGuard)
   @Roles(Role.USER)
   @Get('personal')
-  getPersonalData(@Req() req: IRequestExtended) {
-    return this.userService.getPersonalData(req);
+  getPersonalData(@Req() req: IRequestExtended, @Res() res: Response) {
+    return this.userService.getPersonalData(req, res);
   }
 
   // @UseGuards(JwtCheckGuard, RolesGuard)
