@@ -1,6 +1,7 @@
 import React, { FC, useEffect } from 'react';
+import { Accordion, Button, Container, FormText, ListGroup, Spinner } from 'react-bootstrap';
+
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { Accordion, Button, Container, ListGroup, Spinner } from 'react-bootstrap';
 import { canselOrderAsync, getUserOrdersAsync } from '../../store';
 import css from './UserOrders.module.css';
 
@@ -15,6 +16,8 @@ export const UserOrders: FC = () => {
   const canselOrder = (id: number) => {
     dispatch(canselOrderAsync(String(id)));
   };
+
+  console.log(orders);
 
   return !isLoading ? (
     <Accordion alwaysOpen>
@@ -31,17 +34,28 @@ export const UserOrders: FC = () => {
                   {order.Product &&
                     order.Product.map((item) => (
                       <ListGroup.Item key={item.product.id}>
-                        {item.product.name} {item.quantity}
+                        <Container className={css.item}>
+                          <Container>
+                            <FormText>{item.product.image}</FormText>
+                            <FormText>{item.product.name}</FormText>
+                          </Container>
+                          <Container>
+                            <FormText>{item.product.price*item.quantity} грн.</FormText>
+                            <FormText>{item.quantity} шт.</FormText>
+                          </Container>
+                        </Container>
                       </ListGroup.Item>
                     ))}
                 </ListGroup>
-                <Button
-                  variant={'outline-secondary'}
-                  style={{ marginTop: '10px' }}
-                  onClick={() => canselOrder(order.id)}
-                >
+                <Container>
+                  <Button
+                    variant={'outline-secondary'}
+                    style={{ marginTop: '10px' }}
+                    onClick={() => canselOrder(order.id)}
+                  >
                   Відмінити
-                </Button>
+                  </Button>
+                </Container>
               </Container>
             </Accordion.Body>
           </Accordion.Item>

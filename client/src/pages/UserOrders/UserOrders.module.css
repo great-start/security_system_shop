@@ -2,3 +2,20 @@
     color: #395dc4;
     margin: 0 10px;
 }
+
+.item {
+    display: flex;
+}
+
+.item > div:nth-child(1) {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+}
+
+.item > div:nth-child(2) {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: end;
+}

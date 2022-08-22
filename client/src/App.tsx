@@ -20,6 +20,7 @@ const App: FC = () => {
   return (
     <Routes>
       <Route path={'/'} element={<Layout />}>
+
         {/*public routes*/}
         <Route index element={<MainPage />} />
         <Route path={'shop'} element={<Shop />}>
