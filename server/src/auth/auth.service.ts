@@ -1,14 +1,14 @@
 import { HttpException, HttpStatus, Injectable, UnauthorizedException } from '@nestjs/common';
-import { SignUpUserDto } from './dto/signUp.user.dto';
-import { UserService } from '../user/user.service';
 import * as bcrypt from 'bcrypt';
+import { JwtPayload } from 'jsonwebtoken';
+import { Response } from 'express';
+
 import { TokenService } from './token.service';
 import { SignInUserDto } from './dto/signIn.user.dto';
-import { Response } from 'express';
 import { IRequestExtended } from './models/requestExtended.interface';
 import { constants } from '../constants';
-import { JwtPayload } from 'jsonwebtoken';
-import { isEmail } from 'class-validator';
+import { SignUpUserDto } from './dto/signUp.user.dto';
+import { UserService } from '../user/user.service';
 import { GoogleAuthProfileDto } from './dto/google.auth.profile.dto';
 
 @Injectable()
@@ -20,14 +20,18 @@ export class AuthService {
 
   async signUp(user: SignUpUserDto) {
     try {
-      const existingUser = await this.userService.findOneByEmail(user.email);
+      const existingUser = await this.userService.findOneByEmail(user.email.toLowerCase());
 
       if (existingUser) {
         throw new HttpException('User already exist', HttpStatus.BAD_REQUEST);
       }
 
       const hashPass = await bcrypt.hash(user.password, 7);
-      const savedUser = await this.userService.saveUserToDB({ ...user, password: hashPass });
+      const savedUser = await this.userService.saveUserToDB({
+        ...user,
+        email: user.email.toLowerCase(),
+        password: hashPass,
+      });
 
       const tokenPair = await this.tokenService.getTokenPair(savedUser);
 
@@ -98,7 +102,7 @@ export class AuthService {
 
   private async _validateUser(userData: SignInUserDto) {
     try {
-      const existingUser = await this.userService.findOneByEmail(userData.email);
+      const existingUser = await this.userService.findOneByEmail(userData.email.toLowerCase());
 
       if (!existingUser) {
         throw new UnauthorizedException('Wrong password or email');
@@ -119,6 +123,7 @@ export class AuthService {
   async logout(req: IRequestExtended, res: Response) {
     try {
       await this.tokenService.deleteTokenPair(req.user);
+
       res.status(HttpStatus.OK).json({ message: 'You are logout' });
     } catch (e) {
       throw new HttpException(e.message, e.status);
