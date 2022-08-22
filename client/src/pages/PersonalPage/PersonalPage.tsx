@@ -10,7 +10,7 @@ import { UserInstallations } from '../UserInstallations/UserInstallations';
 import './PersonalPage.css';
 
 export const PersonalPage: FC = () => {
-  const [key, setKey] = useState(page.userData);
+  const [ key, setKey ] = useState(page.userData);
   const { isAuth, isLoading } = useAppSelector((state) => state.authReducer);
   const navigate = useNavigate();
   const { pathname } = useLocation();
@@ -29,8 +29,10 @@ export const PersonalPage: FC = () => {
       navigate(page.installations);
       setKey(page.installations);
       break;
+    default:
+      navigate(page.userData);
+      setKey(page.userData);
     }
-    navigate(page.userData);
   }, []);
 
   const changePage = (k: string | null) => {
@@ -49,9 +51,6 @@ export const PersonalPage: FC = () => {
       break;
     }
   };
-
-  if (isLoading)
-    return <Spinner animation="border" variant="success" style={{ marginLeft: '120px' }} />;
 
   return isLoading ? (
     <Spinner animation="border" variant="success" style={{ marginLeft: '120px' }} />
