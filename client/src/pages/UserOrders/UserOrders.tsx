@@ -57,11 +57,11 @@ export const UserOrders: FC = () => {
                 </ListGroup>
                 <div className={css.orderFooter}>
                   <Button
-                    variant={'outline-secondary'}
+                    variant={'secondary'}
                     style={{ marginTop: '10px' }}
                     onClick={() => canselOrder(order.id)}
                   >
-                  Відмінити
+                  Скасувати замовлення
                   </Button>
                   <FormText>Загальна сумма {sum(order)} грн.</FormText>
                 </div>
