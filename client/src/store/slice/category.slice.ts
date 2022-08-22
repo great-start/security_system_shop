@@ -7,33 +7,33 @@ interface ICategoryState {
 }
 
 const initialState: ICategoryState = {
-    category: [],
+  category: [],
 }
 
 export const getAllCategoryAsync = createAsyncThunk(
-    'categorySlice/getCategoryAsync',
-    async (_,{dispatch}) => {
-        try {
-            const { data } = await categoryService.getAll();
-            dispatch(setAllCategory({ data }));
-        } catch (e) {
+  'categorySlice/getCategoryAsync',
+  async (_,{dispatch}) => {
+    try {
+      const { data } = await categoryService.getAll();
+      dispatch(setAllCategory({ data }));
+    } catch (e) {
 
-        }
     }
+  }
 )
 
 const categorySlice = createSlice({
-    name: 'categorySlice',
-    initialState,
-    reducers: {
-        setAllCategory: (state, action) => {
-            state.category = action.payload.data;
-        }
-    },
-    // extraReducers: (builder) => {
-    //
-    //
-    // },
+  name: 'categorySlice',
+  initialState,
+  reducers: {
+    setAllCategory: (state, action) => {
+      state.category = action.payload.data;
+    }
+  },
+  // extraReducers: (builder) => {
+  //
+  //
+  // },
 })
 
 export const { setAllCategory } = categorySlice.actions;

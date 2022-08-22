@@ -6,19 +6,18 @@ import { useAppDispatch } from '../../hooks';
 import { checkIsAuth } from '../../store';
 
 export const Layout: FC = () => {
+  const dispatch = useAppDispatch();
 
-    const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(checkIsAuth());
+  }, []);
 
-    useEffect(() => {
-        dispatch(checkIsAuth());
-    },[])
-  
-    return (
-        <div>
-            <Header/>
-            <Container className="mt-5">
-                <Outlet/>
-            </Container>
-        </div>
-    );
+  return (
+    <div>
+      <Header />
+      <Container className="mt-5">
+        <Outlet />
+      </Container>
+    </div>
+  );
 };
