@@ -3,12 +3,12 @@ import { Container } from 'react-bootstrap';
 import { useAppDispatch } from '../../hooks';
 
 export const UserData: FC = () => {
-  const dispatch = useAppDispatch();
+    const dispatch = useAppDispatch();
 
 
-  // useEffect(() => {
-  //
-  // },[])
+    // useEffect(() => {
+    //
+    // },[])
 
-  return <Container>UserData</Container>;
+    return <Container>UserData</Container>;
 };
