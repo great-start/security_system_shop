@@ -8,17 +8,26 @@ export interface IOrderData {
     orderTime: string;
     Product: [
         {  product: IProduct;
-            quantity: number
+           quantity: number
         }
     ]
 }
 
+interface IPersonalData {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+}
+
 interface IOrderState {
+    personalData: null | IPersonalData;
     orders: IOrderData[] | null;
     isLoading: boolean
 }
 
 const initialState: IOrderState = {
+  personalData: null,
   orders: null,
   isLoading: true
 }

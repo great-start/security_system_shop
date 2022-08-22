@@ -26,7 +26,7 @@ interface Error401Response {
     statusCode: number;
 }
 
-export interface ISignUp {
+export interface ISignUp extends ISignIn {
     firstName: string;
     lastName: string;
     email: string;
