@@ -134,4 +134,8 @@ export class UserService {
       throw new HttpException('Server Error', HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
+
+  async getPersonalData(req: IRequestExtended) {
+    const { id } = req.user;
+  }
 }

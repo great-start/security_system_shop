@@ -28,12 +28,10 @@ export class UserController {
 
   @UseGuards(JwtCheckGuard, RolesGuard)
   @Roles(Role.USER)
-  @Get('order')
-  getOrders(@Req() req: IRequestExtended) {
-    return this.userService.getOrders(req);
+  @Get('personal')
+  getPersonalData(@Req() req: IRequestExtended) {
+    return this.userService.getPersonalData(req);
   }
-
-
 
   // @UseGuards(JwtCheckGuard, RolesGuard)
   // @Roles(Role.USER)
