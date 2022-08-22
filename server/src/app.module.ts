@@ -10,7 +10,6 @@ import { UserModule } from './user/user.module';
 import { ConfigModule } from '@nestjs/config';
 import { CurrencyModule } from './currency/currency.module';
 import { AdminModule } from './admin/admin.module';
-import { AdminModule } from './admin/admin.module';
 
 @Module({
   imports: [

@@ -133,6 +133,8 @@ export class AuthService {
   async checkAccess(req: Request) {
     // check accessToken or refreshToken
     try {
+      console.log(req.headers);
+
       const token = req.headers[constants.AUTHORIZATION].split(' ')[1];
 
       if (!token) {
