@@ -6,9 +6,9 @@ export const UserData: FC = () => {
   const dispatch = useAppDispatch();
 
 
-  useEffect(() => {
-
-  },[])
+  // useEffect(() => {
+  //
+  // },[])
 
   return <Container>UserData</Container>;
 };

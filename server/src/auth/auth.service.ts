@@ -135,9 +135,10 @@ export class AuthService {
     try {
       console.log(req.headers);
 
+      const Bearer = req.headers[constants.AUTHORIZATION].split(' ')[0];
       const token = req.headers[constants.AUTHORIZATION].split(' ')[1];
 
-      if (!token) {
+      if (!req.headers[constants.AUTHORIZATION] || !token || !Bearer) {
         throw new UnauthorizedException('No token');
       }
 
