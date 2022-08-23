@@ -34,30 +34,30 @@ export const UserData: FC = () => {
                 <Form.Group controlId="formBasicEmail">
                   <Form.Control type="email" placeholder="Enter email" />
                 </Form.Group>
-                :personalData?.firstName}</ListGroup.Item>
+                : personalData?.firstName }</ListGroup.Item>
             <ListGroup.Item variant='light'>
               <span>Прізвище: </span>
               {personalDataChange ?
                 <Form.Group controlId="formBasicEmail">
                   <Form.Control type="email" placeholder="Enter email" />
                 </Form.Group>
-                :personalData?.lastName}</ListGroup.Item>
+                : personalData?.lastName }</ListGroup.Item>
             <ListGroup.Item variant='light'>
               <span>Пошта: </span>
-              {personalData?.email}</ListGroup.Item>
+              { personalData?.email }</ListGroup.Item>
             <ListGroup.Item variant='light'>
               <span>Телефон: </span>
             </ListGroup.Item>
           </ListGroup>
         </div>
         <div>
-          <div>Дата створення акаунту:</div>
-          <p>{personalData?.createdAt}</p>
+          <div>Дата створення акаунту: </div>
+          <p>{ personalData?.createdAt }</p>
         </div>
       </div>
       <div className={css.personalDataChange}>
         <Button variant={'outline-success'} onClick={(e) => changePersonalData(e)}>
-          {personalDataChange ? 'Зберегти зміни' : 'Змінити персональні дані'  }
+          { personalDataChange ? 'Зберегти зміни' : 'Змінити персональні дані'  }
         </Button>
       </div>
     </div>
