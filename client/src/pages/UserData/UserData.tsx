@@ -17,15 +17,15 @@ export const UserData: FC = () => {
     dispatch(getPersonalDataAsync());
   }, []);
 
-  console.log(personalData);
+  // console.log(personalData);
 
   const changePersonalData = (e: any) => {
     e.preventDefault();
 
-    if (personalData) {
+    if (personalDataChange) {
       dispatch(changePersonalDataAsync({
-        firstName: firstNameField?.current?.value || personalData.firstName,
-        lastName: lastNameField?.current?.value || personalData.lastName
+        firstName: firstNameField?.current?.value || personalData?.firstName,
+        lastName: lastNameField?.current?.value || personalData?.lastName
       }))
     }
     setPersonalDataChange(!personalDataChange);
