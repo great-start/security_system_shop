@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useEffect, useRef, useState } from 'react';
 import { Button, Container, Form, ListGroup, Spinner } from 'react-bootstrap';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
@@ -8,6 +8,8 @@ import css from './UserData.module.css';
 export const UserData: FC = () => {
 
   const [personalDataChange, setPersonalDataChange] = useState(false);
+  const firstNameField = useRef<HTMLInputElement>(null);
+  const lastNameField = useRef<HTMLInputElement>(null);
   const dispatch = useAppDispatch();
   const { personalData, isLoading } = useAppSelector(state => state.personalDataReducer);
 
@@ -17,13 +19,12 @@ export const UserData: FC = () => {
 
   console.log(personalData);
 
-  const changePersonalData = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const changePersonalData = (e: any) => {
     e.preventDefault();
 
-    console.log(e);
-    // if (personalData) {
-    //   dispatch()
-    // }
+    if (personalData) {
+      dispatch()
+    }
     setPersonalDataChange(!personalDataChange);
 
   }
@@ -36,15 +37,15 @@ export const UserData: FC = () => {
             <ListGroup.Item variant='light'>
               <span>Ім'я: </span>
               {personalDataChange ?
-                <Form.Group controlId="firstName" className={css.personalDataChangeFormFields}>
-                  <Form.Control type="email" placeholder={personalData?.firstName} />
+                <Form.Group className={css.personalDataChangeFormFields}>
+                  <Form.Control ref={firstNameField} type='email' placeholder={personalData?.firstName} />
                 </Form.Group>
                 : <div> {personalData?.firstName} </div> }</ListGroup.Item>
             <ListGroup.Item variant='light'>
               <span>Прізвище: </span>
-              {personalDataChange ?
-                <Form.Group controlId="lastName" className={css.personalDataChangeFormFields}>
-                  <Form.Control type="email" placeholder={personalData?.lastName} />
+              { personalDataChange ?
+                <Form.Group className={css.personalDataChangeFormFields}>
+                  <Form.Control ref={lastNameField} type="email" placeholder={personalData?.lastName} />
                 </Form.Group>
                 : <div> {personalData?.lastName} </div> }</ListGroup.Item>
             <ListGroup.Item variant='light'>

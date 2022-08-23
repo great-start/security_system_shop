@@ -14,7 +14,7 @@ export interface IOrderData {
     ],
 }
 
-interface IPersonalData {
+export interface IPersonalData {
   firstName: string;
   lastName: string;
   email: string;
@@ -65,6 +65,19 @@ export const getPersonalDataAsync = createAsyncThunk<void, void, { rejectValue: 
   async (_, { dispatch, rejectWithValue } ) => {
     try {
       const { data } = await userService.getPersonalData();
+      dispatch(setPersonalData({ data }));
+    } catch (err) {
+      const error = err as AxiosError;
+      return rejectWithValue(error.response?.data as string);
+    }
+  }
+)
+
+export const changePersonalDataAsync = createAsyncThunk<void, Partial<IPersonalData>, { rejectValue: string }>(
+  'personalDataSlice/changePersonalDataAsync',
+  async ({ firstName, lastName}, { dispatch, rejectWithValue } ) => {
+    try {
+      const { data } = await userService.changePersonalData({ firstName, lastName });
       dispatch(setPersonalData({ data }));
     } catch (err) {
       const error = err as AxiosError;

@@ -1,7 +1,7 @@
 import { API } from './axios.service';
 import { urls } from '../constants';
 import { ITokenData } from '../interfaces';
-import { IOrder } from '../store';
+import { IOrder, IPersonalData } from '../store';
 import { ISignUp } from '../store';
 
 export const userService = {
@@ -17,4 +17,5 @@ export const userService = {
   getAllOrders: () => API.get(urls.getAllOrders),
   canselOrder: (id: string) => API.delete(`${urls.canselOrder}/${id}`),
   getPersonalData: () => API.get(urls.personalData),
+  changePersonalData: ({ firstName, lastName }: Partial<IPersonalData>) => API.patch(urls.personalData)
 };
