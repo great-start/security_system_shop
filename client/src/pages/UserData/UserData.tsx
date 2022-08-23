@@ -19,6 +19,11 @@ export const UserData: FC = () => {
 
   const changePersonalData = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
+
+    console.log(e);
+    // if (personalData) {
+    //   dispatch()
+    // }
     setPersonalDataChange(!personalDataChange);
 
   }
@@ -31,14 +36,14 @@ export const UserData: FC = () => {
             <ListGroup.Item variant='light'>
               <span>Ім'я: </span>
               {personalDataChange ?
-                <Form.Group controlId="formBasicEmail" className={css.personalDataChangeFormFields}>
+                <Form.Group controlId="firstName" className={css.personalDataChangeFormFields}>
                   <Form.Control type="email" placeholder={personalData?.firstName} />
                 </Form.Group>
                 : <div> {personalData?.firstName} </div> }</ListGroup.Item>
             <ListGroup.Item variant='light'>
               <span>Прізвище: </span>
               {personalDataChange ?
-                <Form.Group controlId="formBasicEmail" className={css.personalDataChangeFormFields}>
+                <Form.Group controlId="lastName" className={css.personalDataChangeFormFields}>
                   <Form.Control type="email" placeholder={personalData?.lastName} />
                 </Form.Group>
                 : <div> {personalData?.lastName} </div> }</ListGroup.Item>
