@@ -5,8 +5,17 @@
 
 .userDataFields > div {
     display: flex;
+    height: 40px;
 }
 
+.personalDataChangeFormFields {
+    width: 100px;
+    height: 30px;
+}
+
+.personalDataChangeFormFields > input {
+    padding: 0 10px;
+}
 
 .userDataFields > div > span {
     color: #5d5d5d;

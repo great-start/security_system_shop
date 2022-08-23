@@ -31,15 +31,15 @@ export const UserData: FC = () => {
             <ListGroup.Item variant='light'>
               <span>Ім'я: </span>
               {personalDataChange ?
-                <Form.Group controlId="formBasicEmail">
-                  <Form.Control type="email" placeholder="Enter email" />
+                <Form.Group controlId="formBasicEmail" className={css.personalDataChangeFormFields}>
+                  <Form.Control type="email" placeholder="" />
                 </Form.Group>
                 : <div> {personalData?.firstName} </div> }</ListGroup.Item>
             <ListGroup.Item variant='light'>
               <span>Прізвище: </span>
               {personalDataChange ?
-                <Form.Group controlId="formBasicEmail">
-                  <Form.Control type="email" placeholder="Enter email" />
+                <Form.Group controlId="formBasicEmail" className={css.personalDataChangeFormFields}>
+                  <Form.Control type="email" placeholder="" />
                 </Form.Group>
                 : <div> {personalData?.lastName} </div> }</ListGroup.Item>
             <ListGroup.Item variant='light'>
