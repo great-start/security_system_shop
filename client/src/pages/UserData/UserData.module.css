@@ -7,9 +7,10 @@
     color: #5d5d5d;
     font-weight: bold;
     margin-right: 20px;
+    min-width: 250px;
 }
 
-.userData :nth-child(2) {
+.userData > :nth-child(2) {
     color: #5d5d5d;
     display: flex;
     flex-direction: column;

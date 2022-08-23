@@ -20,16 +20,16 @@ export const UserData: FC = () => {
       <div>
         <ListGroup variant='flush' className={css.userDataFields}>
           <ListGroup.Item variant='light'>
-            <span>Ім'я:</span>
+            <span>Ім'я: </span>
             {personalData?.firstName}</ListGroup.Item>
           <ListGroup.Item variant='light'>
-            <span>Прізвище:</span>
+            <span>Прізвище: </span>
             {personalData?.lastName}</ListGroup.Item>
           <ListGroup.Item variant='light'>
-            <span>Пошта:</span>
+            <span>Пошта: </span>
             {personalData?.email}</ListGroup.Item>
           <ListGroup.Item variant='light'>
-            <span>Porta ac consectetur ac</span>
+            <span>Телефон: </span>
           </ListGroup.Item>
         </ListGroup>
       </div>
