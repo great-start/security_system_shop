@@ -6,11 +6,11 @@ export class UpdateUserDto {
   @IsString()
   @IsNotEmpty()
   @Length(3, 50)
-  firstName: string;
+  firstName?: string;
 
   @ApiProperty({ example: 'Sidorov', description: 'user lastName' })
   @IsString()
   @IsNotEmpty()
   @Length(3, 50)
-  lastName: string;
+  lastName?: string;
 }

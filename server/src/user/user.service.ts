@@ -176,15 +176,13 @@ export class UserService {
     try {
       const { id } = req.user;
 
-      console.log(data);
-
       const user = await this.prismaService.user.update({
         where: {
           id,
         },
         data: {
-          firstName: data.firstName,
-          lastName: data.lastName,
+          firstName: data?.firstName,
+          lastName: data?.lastName,
         },
       });
 
