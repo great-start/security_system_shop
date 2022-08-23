@@ -16,10 +16,10 @@ export const UserData: FC = () => {
   return ( !isLoading ?
     <Container>
       <ListGroup variant="flush">
-        <ListGroup.Item>Cras justo odio</ListGroup.Item>
-        <ListGroup.Item>Dapibus ac facilisis in</ListGroup.Item>
-        <ListGroup.Item>Morbi leo risus</ListGroup.Item>
-        <ListGroup.Item>Porta ac consectetur ac</ListGroup.Item>
+        <ListGroup.Item variant="light">Cras justo odio</ListGroup.Item>
+        <ListGroup.Item variant="light">Dapibus ac facilisis in</ListGroup.Item>
+        <ListGroup.Item variant="light">Morbi leo risus</ListGroup.Item>
+        <ListGroup.Item variant="light">Porta ac consectetur ac</ListGroup.Item>
       </ListGroup>
       {personalData?.firstName}
     </Container>
