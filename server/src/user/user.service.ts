@@ -176,8 +176,9 @@ export class UserService {
       const user = req.user;
 
 
-    } catch (e) {
 
+    } catch (e) {
+      throw new HttpException('Server Error', HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 }
