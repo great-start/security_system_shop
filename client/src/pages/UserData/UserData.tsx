@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useState } from 'react';
-import { Button, Container, ListGroup, Spinner } from 'react-bootstrap';
+import { Button, Container, Form, ListGroup, Spinner } from 'react-bootstrap';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getPersonalDataAsync } from '../../store';
@@ -30,10 +30,18 @@ export const UserData: FC = () => {
           <ListGroup variant='flush' className={css.userDataFields}>
             <ListGroup.Item variant='light'>
               <span>Ім'я: </span>
-              {!personalDataChange && personalData?.firstName}</ListGroup.Item>
+              {personalDataChange ?
+                <Form.Group controlId="formBasicEmail">
+                  <Form.Control type="email" placeholder="Enter email" />
+                // </Form.Group>
+                :personalData?.firstName}</ListGroup.Item>
             <ListGroup.Item variant='light'>
               <span>Прізвище: </span>
-              {!personalDataChange && personalData?.lastName}</ListGroup.Item>
+              {personalDataChange ?
+                <Form.Group controlId="formBasicEmail">
+                  <Form.Control type="email" placeholder="Enter email" />
+                </Form.Group>
+                :personalData?.lastName}</ListGroup.Item>
             <ListGroup.Item variant='light'>
               <span>Пошта: </span>
               {personalData?.email}</ListGroup.Item>
