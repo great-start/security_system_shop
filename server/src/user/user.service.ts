@@ -171,12 +171,21 @@ export class UserService {
     }
   }
 
-  changePersonalData(req: IRequestExtended, res: e.Response) {
+  async changePersonalData(req: IRequestExtended, data, res: e.Response) {
     try {
-      const user = req.user;
+      const { id } = req.user;
 
+      const user = await this.prismaService.user.update({
+        where: {
+          id,
+        },
+        data: {
+          firstName: data.firstName,
+          lastName: data.lastName,
+        },
+      });
 
-
+      console.log(user);
     } catch (e) {
       throw new HttpException('Server Error', HttpStatus.INTERNAL_SERVER_ERROR);
     }

@@ -37,8 +37,8 @@ export class UserController {
   @UseGuards(JwtCheckGuard, RolesGuard)
   @Roles(Role.USER)
   @Patch('personal')
-  changePersonalData(@Req() req: IRequestExtended, @Res() res: Response) {
-    return this.userService.changePersonalData(req, res);
+  changePersonalData(@Req() req: IRequestExtended, @Body() data, @Res() res: Response) {
+    return this.userService.changePersonalData(req, data, res);
   }
 
   // @UseGuards(JwtCheckGuard, RolesGuard)
