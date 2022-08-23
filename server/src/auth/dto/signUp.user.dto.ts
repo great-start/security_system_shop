@@ -5,13 +5,13 @@ export class SignUpUserDto {
   @ApiProperty({ example: 'Vanya', description: 'user firstName' })
   @IsString()
   @IsNotEmpty()
-  @Length(3)
+  @Length(3, 50)
   firstName: string;
 
   @ApiProperty({ example: 'Sidorov', description: 'user lastName' })
   @IsString()
   @IsNotEmpty()
-  @Length(3)
+  @Length(3, 50)
   lastName: string;
 
   @ApiProperty({ example: 'vanyaSidorov@gmail.com', description: 'user email' })
