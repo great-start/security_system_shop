@@ -80,7 +80,7 @@ export const Header: FC = () => {
             <Button
               style={{ color: 'black' }}
               className="ml-10"
-              variant={'outline-secondary'}
+              variant={'outline-primary'}
               onClick={(e) => {
                 e.preventDefault();
                 navigate('/personal/userData');
