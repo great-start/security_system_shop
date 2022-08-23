@@ -19,7 +19,7 @@ export const UserData: FC = () => {
 
   const changePersonalData = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    setPersonalDataChange(true);
+    setPersonalDataChange(!personalDataChange);
 
   }
 
@@ -33,7 +33,7 @@ export const UserData: FC = () => {
               {personalDataChange ?
                 <Form.Group controlId="formBasicEmail">
                   <Form.Control type="email" placeholder="Enter email" />
-                // </Form.Group>
+                </Form.Group>
                 :personalData?.firstName}</ListGroup.Item>
             <ListGroup.Item variant='light'>
               <span>Прізвище: </span>
@@ -57,7 +57,7 @@ export const UserData: FC = () => {
       </div>
       <div className={css.personalDataChange}>
         <Button variant={'outline-success'} onClick={(e) => changePersonalData(e)}>
-          Змінити персональні дані
+          {personalDataChange ? 'Зберегти зміни' : 'Змінити персональні дані'  }
         </Button>
       </div>
     </div>
