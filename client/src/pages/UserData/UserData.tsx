@@ -24,8 +24,8 @@ export const UserData: FC = () => {
 
     if (personalData) {
       dispatch(changePersonalDataAsync({
-        firstName: firstNameField?.current?.value,
-        lastName: lastNameField?.current?.value
+        firstName: firstNameField?.current?.value || personalData.firstName,
+        lastName: lastNameField?.current?.value || personalData.lastName
       }))
     }
     setPersonalDataChange(!personalDataChange);
