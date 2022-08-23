@@ -23,7 +23,9 @@ export const UserData: FC = () => {
         <ListGroup.Item variant='light'>Porta ac consectetur ac</ListGroup.Item>
       </ListGroup>
       </Container>
-      {personalData?.firstName}
+      <Container>
+        {personalData?.createdAt}
+      </Container>
     </Container>
    : <Spinner animation={'grow'} variant="primary" />);
 };
