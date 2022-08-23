@@ -166,7 +166,7 @@ export class UserService {
 
             res.status(HttpStatus.OK).json(data);
           });
-      }, 1500);
+      }, 1000);
     } catch (e) {
       throw new HttpException('Server Error', HttpStatus.INTERNAL_SERVER_ERROR);
     }
