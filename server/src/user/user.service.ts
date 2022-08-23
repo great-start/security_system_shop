@@ -172,6 +172,12 @@ export class UserService {
   }
 
   changePersonalData(req: IRequestExtended, res: e.Response) {
-    
+    try {
+      const user = req.user;
+
+
+    } catch (e) {
+
+    }
   }
 }
