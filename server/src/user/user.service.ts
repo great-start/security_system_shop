@@ -5,6 +5,7 @@ import { IOrder } from './models/order.inteface';
 import { GoogleAuthProfileDto } from '../auth/dto/google.auth.profile.dto';
 import { IRequestExtended } from '../auth/models/requestExtended.interface';
 import e from 'express';
+import { UpdateUserDto } from './dto/update-user.dto';
 
 export { Response } from 'express';
 
@@ -171,7 +172,7 @@ export class UserService {
     }
   }
 
-  async changePersonalData(req: IRequestExtended, data, res: e.Response) {
+  async changePersonalData(req: IRequestExtended, data: Partial<UpdateUserDto>, res: e.Response) {
     try {
       const { id } = req.user;
 

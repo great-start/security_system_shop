@@ -8,6 +8,7 @@ import { Roles } from '../auth/decorators/roles.decorator';
 import { RolesGuard } from '../auth/guards/roles.guard';
 import { IOrder } from './models/order.inteface';
 import { IRequestExtended } from '../auth/models/requestExtended.interface';
+import { UpdateUserDto } from './dto/update-user.dto';
 
 @Controller('user')
 export class UserController {
@@ -37,7 +38,11 @@ export class UserController {
   @UseGuards(JwtCheckGuard, RolesGuard)
   @Roles(Role.USER)
   @Patch('personal')
-  changePersonalData(@Req() req: IRequestExtended, @Body() data, @Res() res: Response) {
+  changePersonalData(
+    @Req() req: IRequestExtended,
+    @Body() data: Partial<UpdateUserDto>,
+    @Res() res: Response,
+  ) {
     return this.userService.changePersonalData(req, data, res);
   }
 
