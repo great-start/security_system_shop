@@ -40,7 +40,7 @@ export class UserController {
   @Patch('personal')
   changePersonalData(
     @Req() req: IRequestExtended,
-    @Body() data: Partial<UpdateUserDto>,
+    @Body() data: UpdateUserDto,
     @Res() res: Response,
   ) {
     return this.userService.changePersonalData(req, data, res);

@@ -172,7 +172,7 @@ export class UserService {
     }
   }
 
-  async changePersonalData(req: IRequestExtended, data: Partial<UpdateUserDto>, res: e.Response) {
+  async changePersonalData(req: IRequestExtended, data: UpdateUserDto, res: e.Response) {
     try {
       const { id } = req.user;
 
