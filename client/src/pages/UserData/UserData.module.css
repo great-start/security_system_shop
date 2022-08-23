@@ -1,3 +1,9 @@
 .userData {
     display: flex;
+    justify-content: space-between;
+}
+
+.userDataFields > span {
+    color: black;
+    font-weight: bold;
 }

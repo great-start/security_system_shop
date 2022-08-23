@@ -19,15 +19,23 @@ export const UserData: FC = () => {
     <div className={css.userData}>
       <div>
         <ListGroup variant='flush'>
-        <ListGroup.Item variant='light'>Ім'я: {personalData?.firstName}</ListGroup.Item>
-        <ListGroup.Item variant='light'>Прізвище: {personalData?.lastName}</ListGroup.Item>
-        <ListGroup.Item variant='light'>Пошта: {personalData?.email}</ListGroup.Item>
-        <ListGroup.Item variant='light'>Porta ac consectetur ac</ListGroup.Item>
-      </ListGroup>
+          <ListGroup.Item variant='light' className={css.userDataFields}>
+            <span>Ім'я:</span>
+            {personalData?.firstName}</ListGroup.Item>
+          <ListGroup.Item variant='light'>
+            <span>Прізвище:</span>
+            {personalData?.lastName}</ListGroup.Item>
+          <ListGroup.Item variant='light'>
+            <span>Пошта:</span>
+            {personalData?.email}</ListGroup.Item>
+          <ListGroup.Item variant='light'>
+            <span>Porta ac consectetur ac</span>
+          </ListGroup.Item>
+        </ListGroup>
       </div>
-      <Container>
+      <div>
         {personalData?.createdAt}
-      </Container>
+      </div>
     </div>
    : <Spinner animation={'grow'} variant="primary" />);
 };
