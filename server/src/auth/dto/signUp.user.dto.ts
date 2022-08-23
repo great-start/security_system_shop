@@ -23,5 +23,5 @@ export class SignUpUserDto {
   @IsString()
   @IsNotEmpty()
   @Length(6)
-  password: string;
+  readonly password: string;
 }
