@@ -18,8 +18,8 @@ export const UserData: FC = () => {
   return ( !isLoading ?
     <div className={css.userData}>
       <div>
-        <ListGroup variant='flush'>
-          <ListGroup.Item variant='light' className={css.userDataFields}>
+        <ListGroup variant='flush' className={css.userDataFields}>
+          <ListGroup.Item variant='light'>
             <span>Ім'я:</span>
             {personalData?.firstName}</ListGroup.Item>
           <ListGroup.Item variant='light'>
@@ -34,7 +34,8 @@ export const UserData: FC = () => {
         </ListGroup>
       </div>
       <div>
-        {personalData?.createdAt}
+        <div>Дата створення акаунту:</div>
+        <div>{personalData?.createdAt}</div>
       </div>
     </div>
    : <Spinner animation={'grow'} variant="primary" />);
