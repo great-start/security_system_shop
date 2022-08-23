@@ -4,10 +4,8 @@ import { SignUpUserDto } from '../auth/dto/signUp.user.dto';
 import { IOrder } from './models/order.inteface';
 import { GoogleAuthProfileDto } from '../auth/dto/google.auth.profile.dto';
 import { IRequestExtended } from '../auth/models/requestExtended.interface';
-import e from 'express';
+import express from 'express';
 import { UpdateUserDto } from './dto/update-user.dto';
-
-export { Response } from 'express';
 
 @Injectable()
 export class UserService {
@@ -138,7 +136,7 @@ export class UserService {
     }
   }
 
-  async getPersonalData(req: IRequestExtended, res: e.Response) {
+  async getPersonalData(req: IRequestExtended, res: express.Response) {
     try {
       const { id } = req.user;
 
@@ -172,12 +170,12 @@ export class UserService {
     }
   }
 
-  async changePersonalData(req: IRequestExtended, data: UpdateUserDto) {
+  async changePersonalData(req: IRequestExtended, data: UpdateUserDto, res: express.Response) {
     try {
       const { id } = req.user;
 
       setTimeout(async () => {
-        return await this.prismaService.user.update({
+        const updatedUser = await this.prismaService.user.update({
           where: {
             id,
           },
@@ -186,6 +184,8 @@ export class UserService {
             lastName: data.lastName,
           },
         });
+
+        res.status(HttpStatus.OK).json(updatedUser);
       }, 1500);
     } catch (e) {
       throw new HttpException('Server Error', HttpStatus.INTERNAL_SERVER_ERROR);

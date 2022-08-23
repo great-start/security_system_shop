@@ -77,9 +77,7 @@ export const changePersonalDataAsync = createAsyncThunk<void, Partial<IPersonalD
   'personalDataSlice/changePersonalDataAsync',
   async ({ firstName, lastName}, { dispatch, rejectWithValue } ) => {
     try {
-      console.log('before_______________')
       const { data } = await userService.changePersonalData({ firstName, lastName });
-      console.log(data, "_____________________");
       dispatch(setPersonalData({ data }));
     } catch (err) {
       const error = err as AxiosError;

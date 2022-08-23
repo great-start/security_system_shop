@@ -17,7 +17,7 @@ export const UserData: FC = () => {
     dispatch(getPersonalDataAsync());
   }, []);
 
-  // console.log(personalData);
+  console.log(personalData);
 
   const changePersonalData = (e: any) => {
     e.preventDefault();

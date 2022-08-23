@@ -1,4 +1,15 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, Req, Res, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+  Req,
+  Res,
+  UseGuards,
+} from '@nestjs/common';
 import { Response } from 'express';
 
 import { UserService } from './user.service';
@@ -38,11 +49,8 @@ export class UserController {
   @UseGuards(JwtCheckGuard, RolesGuard)
   @Roles(Role.USER)
   @Patch('personal')
-  changePersonalData(
-    @Req() req: IRequestExtended,
-    @Body() data: UpdateUserDto
-  ) {
-    return this.userService.changePersonalData(req, data);
+  changePersonalData(@Req() req: IRequestExtended, @Body() data: UpdateUserDto, @Res() res: Response) {
+    return this.userService.changePersonalData(req, data, res);
   }
 
   // @UseGuards(JwtCheckGuard, RolesGuard)
