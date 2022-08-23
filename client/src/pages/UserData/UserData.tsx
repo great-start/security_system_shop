@@ -34,14 +34,14 @@ export const UserData: FC = () => {
                 <Form.Group controlId="formBasicEmail">
                   <Form.Control type="email" placeholder="Enter email" />
                 </Form.Group>
-                : personalData?.firstName }</ListGroup.Item>
+                : <div> {personalData?.firstName} </div> }</ListGroup.Item>
             <ListGroup.Item variant='light'>
               <span>Прізвище: </span>
               {personalDataChange ?
                 <Form.Group controlId="formBasicEmail">
                   <Form.Control type="email" placeholder="Enter email" />
                 </Form.Group>
-                : personalData?.lastName }</ListGroup.Item>
+                : <div> {personalData?.lastName} </div> }</ListGroup.Item>
             <ListGroup.Item variant='light'>
               <span>Пошта: </span>
               { personalData?.email }</ListGroup.Item>
