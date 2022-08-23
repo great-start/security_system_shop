@@ -170,4 +170,8 @@ export class UserService {
       throw new HttpException('Server Error', HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
+
+  changePersonalData(req: IRequestExtended, res: e.Response) {
+    
+  }
 }

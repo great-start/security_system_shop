@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post, Req, Res, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Req, Res, UseGuards } from '@nestjs/common';
 import { Response } from 'express';
 
 import { UserService } from './user.service';
@@ -32,6 +32,13 @@ export class UserController {
   @Get('personal')
   getPersonalData(@Req() req: IRequestExtended, @Res() res: Response) {
     return this.userService.getPersonalData(req, res);
+  }
+
+  @UseGuards(JwtCheckGuard, RolesGuard)
+  @Roles(Role.USER)
+  @Patch('personal')
+  changePersonalData(@Req() req: IRequestExtended, @Res() res: Response) {
+    return this.userService.changePersonalData(req, res);
   }
 
   // @UseGuards(JwtCheckGuard, RolesGuard)
