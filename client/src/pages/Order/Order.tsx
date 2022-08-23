@@ -17,7 +17,13 @@ export const Order: FC = () => {
   return (
     <div>
       <h2 style={{ textAlign: 'center', marginBottom: '20px' }}>Оформлення замовлення</h2>
-      <div style={{ display: 'flex', gap: '100px', justifyContent: 'space-between' }}>
+      <div
+        style={{
+          display: 'flex',
+          gap: '100px',
+          justifyContent: 'space-between',
+        }}
+      >
         <div style={{ width: '100%' }}>
           <Card border="info" style={{ width: '100%' }}>
             <Card.Header>Авторизація</Card.Header>

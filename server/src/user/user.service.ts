@@ -6,6 +6,7 @@ import { GoogleAuthProfileDto } from '../auth/dto/google.auth.profile.dto';
 import { IRequestExtended } from '../auth/models/requestExtended.interface';
 import express from 'express';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { User } from '@prisma/client';
 
 @Injectable()
 export class UserService {
@@ -150,24 +151,36 @@ export class UserService {
               firstName: true,
               lastName: true,
               createdAt: true,
+              updatedAt: true,
               email: true,
             },
           })
           .then((data) => {
-            Object.assign(data, {
-              createdAt: new Intl.DateTimeFormat('de-DE', {
-                day: '2-digit',
-                month: '2-digit',
-                year: 'numeric',
-              }).format(data.createdAt),
-            });
+            const personalFormattedUserData = this.formatData(data);
 
-            res.status(HttpStatus.OK).json(data);
+            res.status(HttpStatus.OK).json(personalFormattedUserData);
           });
       }, 1000);
     } catch (e) {
       throw new HttpException('Server Error', HttpStatus.INTERNAL_SERVER_ERROR);
     }
+  }
+
+  formatData(user: Partial<User>): Partial<User> {
+    return Object.assign(user, {
+      createdAt: new Intl.DateTimeFormat('de-DE', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+      }).format(user.createdAt),
+      updatedAt: new Intl.DateTimeFormat('de-DE', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+      }).format(user.updatedAt),
+    });
   }
 
   async changePersonalData(req: IRequestExtended, data: UpdateUserDto, res: express.Response) {
@@ -183,10 +196,19 @@ export class UserService {
             firstName: data.firstName,
             lastName: data.lastName,
           },
+          select: {
+            firstName: true,
+            lastName: true,
+            createdAt: true,
+            updatedAt: true,
+            email: true,
+          },
         });
 
-        res.status(HttpStatus.OK).json(updatedUser);
-      }, 1500);
+        const updatedUserWithFormatData = this.formatData(updatedUser);
+
+        res.status(HttpStatus.OK).json(updatedUserWithFormatData);
+      }, 1000);
     } catch (e) {
       throw new HttpException('Server Error', HttpStatus.INTERNAL_SERVER_ERROR);
     }

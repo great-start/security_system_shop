@@ -22,7 +22,11 @@ export const Basket: FC = () => {
             <Card.Body className="border-none">{product.name}</Card.Body>
             <Button
               variant={'outline-secondary'}
-              style={{ alignSelf: 'center', marginRight: '10px', border: 'none' }}
+              style={{
+                alignSelf: 'center',
+                marginRight: '10px',
+                border: 'none',
+              }}
               onClick={(e) => {
                 e.preventDefault();
                 dispatch(minusProduct(product));
@@ -35,7 +39,11 @@ export const Basket: FC = () => {
             </div>
             <Button
               variant={'outline-secondary'}
-              style={{ alignSelf: 'center', marginRight: '10px', border: 'none' }}
+              style={{
+                alignSelf: 'center',
+                marginRight: '10px',
+                border: 'none',
+              }}
               onClick={(e) => {
                 e.preventDefault();
                 dispatch(plusProduct(product));
@@ -49,7 +57,11 @@ export const Basket: FC = () => {
 
             <Button
               variant="outline-secondary"
-              style={{ alignSelf: 'center', marginRight: '10px', border: 'none' }}
+              style={{
+                alignSelf: 'center',
+                marginRight: '10px',
+                border: 'none',
+              }}
               onClick={(e) => {
                 e.preventDefault();
                 dispatch(deleteProductInBasket(product));
@@ -70,7 +82,14 @@ export const Basket: FC = () => {
           </Card>
         ))}
 
-      <p style={{ alignSelf: 'end', marginRight: '10px', marginTop: '10px', fontWeight: 'bold' }}>
+      <p
+        style={{
+          alignSelf: 'end',
+          marginRight: '10px',
+          marginTop: '10px',
+          fontWeight: 'bold',
+        }}
+      >
         Загальна сумма покупки: {sum} грн.
       </p>
 

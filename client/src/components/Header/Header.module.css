@@ -1,34 +1,33 @@
 .header {
-    background: rgba(123, 171, 231, 0.23);
+  background: rgba(123, 171, 231, 0.23);
 }
 .exchangeRate {
-    display: flex;
-    justify-content: end;
-    column-gap: 30px;
+  display: flex;
+  justify-content: end;
+  column-gap: 30px;
 }
 
 .exchangeRate > p {
-    display: block;
-    color: #395dc4;
-    margin: 0;
-    padding: 0;
+  display: block;
+  color: #395dc4;
+  margin: 0;
+  padding: 0;
 }
 
-
 .navLink {
-    display: flex;
-    column-gap: 20px;
+  display: flex;
+  column-gap: 20px;
 }
 
 .navLink a {
-    color: black;
-    text-decoration: none;
+  color: black;
+  text-decoration: none;
 }
 
 .navLink a:hover {
-    color: lightslategray;
+  color: lightslategray;
 }
 
-.navLink a[class=active] {
-    color: lightslategray;
+.navLink a[class='active'] {
+  color: lightslategray;
 }

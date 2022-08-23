@@ -4,14 +4,10 @@ import { IProduct } from '../../interfaces';
 import { AxiosError } from 'axios';
 
 export interface IOrderData {
-    id: number;
-    status: string;
-    orderTime: string;
-    Product: [
-        {  product: IProduct;
-           quantity: number
-        }
-    ],
+  id: number;
+  status: string;
+  orderTime: string;
+  Product: [{ product: IProduct; quantity: number }];
 }
 
 export interface IPersonalData {
@@ -19,37 +15,38 @@ export interface IPersonalData {
   lastName: string;
   email: string;
   createdAt: string;
+  updatedAt: string;
 }
 
 interface IOrderState {
   personalData: IPersonalData | null;
   orders: IOrderData[] | null;
-  isLoading: boolean,
+  isLoading: boolean;
   error: string | null;
 }
 
-const initialState: IOrderState = { 
-  personalData: null, 
-  orders: null, 
+const initialState: IOrderState = {
+  personalData: null,
+  orders: null,
   isLoading: false,
   error: null,
-}
+};
 
 export const getUserOrdersAsync = createAsyncThunk(
   'personalDataSlice/getUserOrdersAsync',
-  async (_,{ dispatch} ) => {
+  async (_, { dispatch }) => {
     try {
       const { data } = await userService.getAllOrders();
-      dispatch(setAllOrders({ data }))
+      dispatch(setAllOrders({ data }));
     } catch (e) {
       console.log(e);
     }
-  }
-)
+  },
+);
 
 export const canselOrderAsync = createAsyncThunk(
   'personalDataSlice/canselOrderAsync',
-  async (id: string,{ dispatch} ) => {
+  async (id: string, { dispatch }) => {
     try {
       await userService.canselOrder(id);
       const { data } = await userService.getAllOrders();
@@ -57,12 +54,12 @@ export const canselOrderAsync = createAsyncThunk(
     } catch (e) {
       console.log(e);
     }
-  }
-)
+  },
+);
 
 export const getPersonalDataAsync = createAsyncThunk<void, void, { rejectValue: string }>(
   'personalDataSlice/getPersonalDataAsync',
-  async (_, { dispatch, rejectWithValue } ) => {
+  async (_, { dispatch, rejectWithValue }) => {
     try {
       const { data } = await userService.getPersonalData();
       dispatch(setPersonalData({ data }));
@@ -70,12 +67,16 @@ export const getPersonalDataAsync = createAsyncThunk<void, void, { rejectValue: 
       const error = err as AxiosError;
       return rejectWithValue(error.response?.data as string);
     }
-  }
-)
+  },
+);
 
-export const changePersonalDataAsync = createAsyncThunk<void, Partial<IPersonalData>, { rejectValue: string }>(
+export const changePersonalDataAsync = createAsyncThunk<
+  void,
+  Partial<IPersonalData>,
+  { rejectValue: string }
+>(
   'personalDataSlice/changePersonalDataAsync',
-  async ({ firstName, lastName}, { dispatch, rejectWithValue } ) => {
+  async ({ firstName, lastName }, { dispatch, rejectWithValue }) => {
     try {
       const { data } = await userService.changePersonalData({ firstName, lastName });
       dispatch(setPersonalData({ data }));
@@ -83,8 +84,8 @@ export const changePersonalDataAsync = createAsyncThunk<void, Partial<IPersonalD
       const error = err as AxiosError;
       return rejectWithValue(error.response?.data as string);
     }
-  }
-)
+  },
+);
 
 const personalDataSlice = createSlice({
   name: 'personalDataSlice',
@@ -101,14 +102,14 @@ const personalDataSlice = createSlice({
     },
   },
 
-  extraReducers: builder => {
+  extraReducers: (builder) => {
     builder.addCase(getPersonalDataAsync.pending, (state) => {
       state.isLoading = true;
     });
     builder.addCase(getPersonalDataAsync.fulfilled, (state) => {
       state.isLoading = false;
-      });
-    builder.addCase(getPersonalDataAsync.rejected, (state,action) => {
+    });
+    builder.addCase(getPersonalDataAsync.rejected, (state, action) => {
       state.isLoading = false;
       state.error = action.error as string;
     });
@@ -117,9 +118,9 @@ const personalDataSlice = createSlice({
     });
     builder.addCase(changePersonalDataAsync.fulfilled, (state) => {
       state.isLoading = false;
-    })
-  }
-})
+    });
+  },
+});
 
 export const { setAllOrders, setPersonalData } = personalDataSlice.actions;
 

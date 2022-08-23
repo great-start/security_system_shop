@@ -47,7 +47,11 @@ export const Header: FC = () => {
             <NavLink
               to={'/'}
               className={css.navLink}
-              style={{ marginRight: 50, color: 'rgba(5,71,129,0.6)', fontSize: 'large' }}
+              style={{
+                marginRight: 50,
+                color: 'rgba(5,71,129,0.6)',
+                fontSize: 'large',
+              }}
             >
               SECSYSTEMS
             </NavLink>
@@ -60,7 +64,7 @@ export const Header: FC = () => {
           </Nav>
           <Nav className="ml-auto gap-3">
             {isLoading ? (
-              <Spinner animation="grow" variant="primary" style={{ marginLeft: '120px' }} />
+              <Spinner animation="grow" variant="success" style={{ marginLeft: '120px' }} />
             ) : null}
             <div className="m-auto" style={{ marginRight: 50, color: 'rgba(15,71,128,0.6)' }}>
               {isAuth && user.email}
@@ -80,7 +84,7 @@ export const Header: FC = () => {
             <Button
               style={{ color: 'black' }}
               className="ml-10"
-              variant={'outline-primary'}
+              variant={'outline-success'}
               onClick={(e) => {
                 e.preventDefault();
                 navigate('/personal/userData');
