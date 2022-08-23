@@ -15,12 +15,14 @@ export const UserData: FC = () => {
 
   return ( !isLoading ?
     <Container>
-      <ListGroup variant="flush">
-        <ListGroup.Item variant="primary">Cras justo odio</ListGroup.Item>
-        <ListGroup.Item variant="info">Dapibus ac facilisis in</ListGroup.Item>
-        <ListGroup.Item variant="secondary">Morbi leo risus</ListGroup.Item>
-        <ListGroup.Item variant="success">Porta ac consectetur ac</ListGroup.Item>
+      <Container>
+        <ListGroup variant='flush'>
+        <ListGroup.Item variant='light'>Ім'я: {personalData?.firstName}</ListGroup.Item>
+        <ListGroup.Item variant='light'>Прізвище: {personalData?.lastName}</ListGroup.Item>
+        <ListGroup.Item variant='light'>Пошта: {personalData?.email}</ListGroup.Item>
+        <ListGroup.Item variant='light'>Porta ac consectetur ac</ListGroup.Item>
       </ListGroup>
+      </Container>
       {personalData?.firstName}
     </Container>
    : <Spinner animation={'grow'} variant="primary" />);
