@@ -111,6 +111,12 @@ const personalDataSlice = createSlice({
     builder.addCase(getPersonalDataAsync.rejected, (state,action) => {
       state.isLoading = false;
       state.error = action.error as string;
+    });
+    builder.addCase(changePersonalDataAsync.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(changePersonalDataAsync.fulfilled, (state) => {
+      state.isLoading = false;
     })
   }
 })

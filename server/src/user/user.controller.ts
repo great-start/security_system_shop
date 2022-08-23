@@ -49,7 +49,11 @@ export class UserController {
   @UseGuards(JwtCheckGuard, RolesGuard)
   @Roles(Role.USER)
   @Patch('personal')
-  changePersonalData(@Req() req: IRequestExtended, @Body() data: UpdateUserDto, @Res() res: Response) {
+  changePersonalData(
+    @Req() req: IRequestExtended,
+    @Body() data: UpdateUserDto,
+    @Res() res: Response,
+  ) {
     return this.userService.changePersonalData(req, data, res);
   }
 
