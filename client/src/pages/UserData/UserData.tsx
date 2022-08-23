@@ -1,7 +1,9 @@
 import React, { FC, useEffect } from 'react';
 import { Container, ListGroup, Spinner } from 'react-bootstrap';
+
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getPersonalDataAsync } from '../../store';
+import css from './UserData.module.css';
 
 export const UserData: FC = () => {
   const dispatch = useAppDispatch();
@@ -14,7 +16,7 @@ export const UserData: FC = () => {
   console.log(personalData);
 
   return ( !isLoading ?
-    <div >
+    <div className={css.userData}>
       <div>
         <ListGroup variant='flush'>
         <ListGroup.Item variant='light'>Ім'я: {personalData?.firstName}</ListGroup.Item>
