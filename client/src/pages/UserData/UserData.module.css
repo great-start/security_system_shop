@@ -9,7 +9,12 @@
     margin-right: 20px;
 }
 
-.userData:nth-child(2) {
+.userData :nth-child(2) {
+    color: #5d5d5d;
     display: flex;
-    align-items: end;
+    flex-direction: column;
+}
+
+.userData :nth-child(2) :nth-child(2) {
+    text-align: end;
 }

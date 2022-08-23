@@ -35,7 +35,7 @@ export const UserData: FC = () => {
       </div>
       <div>
         <div>Дата створення акаунту: </div>
-        <div>{personalData?.createdAt}</div>
+        <p>{personalData?.createdAt}</p>
       </div>
     </div>
    : <Spinner animation={'grow'} variant="primary" />);
