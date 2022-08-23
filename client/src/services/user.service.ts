@@ -17,5 +17,6 @@ export const userService = {
   getAllOrders: () => API.get(urls.getAllOrders),
   canselOrder: (id: string) => API.delete(`${urls.canselOrder}/${id}`),
   getPersonalData: () => API.get(urls.personalData),
-  changePersonalData: ({ firstName, lastName }: Partial<IPersonalData>) => API.patch(urls.personalData)
+  changePersonalData: ({ firstName, lastName }: Partial<IPersonalData>) =>
+    API.patch(urls.personalData, { firstName, lastName})
 };
