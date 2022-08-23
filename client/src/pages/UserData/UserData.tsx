@@ -14,15 +14,15 @@ export const UserData: FC = () => {
   console.log(personalData);
 
   return ( !isLoading ?
-    <div>
-      <Container>
+    <div >
+      <div>
         <ListGroup variant='flush'>
         <ListGroup.Item variant='light'>Ім'я: {personalData?.firstName}</ListGroup.Item>
         <ListGroup.Item variant='light'>Прізвище: {personalData?.lastName}</ListGroup.Item>
         <ListGroup.Item variant='light'>Пошта: {personalData?.email}</ListGroup.Item>
         <ListGroup.Item variant='light'>Porta ac consectetur ac</ListGroup.Item>
       </ListGroup>
-      </Container>
+      </div>
       <Container>
         {personalData?.createdAt}
       </Container>
