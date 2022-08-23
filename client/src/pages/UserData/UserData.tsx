@@ -34,7 +34,7 @@ export const UserData: FC = () => {
         </ListGroup>
       </div>
       <div>
-        <div>Дата створення акаунту:</div>
+        <div>Дата створення акаунту: </div>
         <div>{personalData?.createdAt}</div>
       </div>
     </div>
