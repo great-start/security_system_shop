@@ -14,7 +14,7 @@ export const UserData: FC = () => {
   console.log(personalData);
 
   return ( !isLoading ?
-    <Container>
+    <div>
       <Container>
         <ListGroup variant='flush'>
         <ListGroup.Item variant='light'>Ім'я: {personalData?.firstName}</ListGroup.Item>
@@ -26,7 +26,7 @@ export const UserData: FC = () => {
       <Container>
         {personalData?.createdAt}
       </Container>
-    </Container>
+    </div>
    : <Spinner animation={'grow'} variant="primary" />);
 };
 
