@@ -2,7 +2,7 @@ import React, { FC, useEffect, useRef, useState } from 'react';
 import { Button, Container, Form, ListGroup, Spinner } from 'react-bootstrap';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { getPersonalDataAsync } from '../../store';
+import { changePersonalDataAsync, getPersonalDataAsync } from '../../store';
 import css from './UserData.module.css';
 
 export const UserData: FC = () => {
@@ -23,10 +23,12 @@ export const UserData: FC = () => {
     e.preventDefault();
 
     if (personalData) {
-      dispatch()
+      dispatch(changePersonalDataAsync({
+        firstName: firstNameField?.current?.value,
+        lastName: lastNameField?.current?.value
+      }))
     }
     setPersonalDataChange(!personalDataChange);
-
   }
 
   return ( !isLoading ?
