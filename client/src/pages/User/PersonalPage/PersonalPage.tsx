@@ -11,9 +11,11 @@ import './PersonalPage.css';
 
 export const PersonalPage: FC = () => {
   const [key, setKey] = useState(page.userData);
-  const { isAuth, isLoading } = useAppSelector((state) => state.authReducer);
+  const { isAuth, isLoading, isAdmin } = useAppSelector((state) => state.authReducer);
   const navigate = useNavigate();
   const { pathname } = useLocation();
+
+  isAdmin ? navigate('/admin') : null;
 
   useEffect(() => {
     switch (pathname.split('/')[2]) {

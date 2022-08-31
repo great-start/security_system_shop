@@ -116,15 +116,18 @@ export const AuthSlice = createSlice({
   initialState,
   reducers: {
     setCredentials: (state, action) => {
-      console.log(action.payload.data.user);
       state.user = action.payload.data.user;
       state.isAuth = true;
+      if (action.payload.data.user.role === 'ADMIN') {
+        state.isAdmin = true;
+      }
     },
     logout: (state) => {
       localStorage.removeItem('profile');
       state.isAuth = false;
       state.errors = null;
       state.error401 = null;
+      state.isAdmin = false;
     },
     changeAuthForm: (state) => {
       state.isSignInForm = !state.isSignInForm;

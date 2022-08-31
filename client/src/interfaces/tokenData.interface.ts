@@ -4,5 +4,6 @@ export interface ITokenData {
   user: {
     id: string;
     email: string;
+    role: string;
   };
 }

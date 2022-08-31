@@ -1,11 +1,11 @@
 import React, { FC, useEffect, useState } from 'react';
 import { Spinner, Tab, Tabs } from 'react-bootstrap';
 import { adminPages, page } from '../../../constants';
-import { UserData } from '../../User/UserData/UserData';
-import { UserOrders } from '../../User/UserOrders/UserOrders';
-import { UserInstallations } from '../../User/UserInstallations/UserInstallations';
 import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { useAppSelector } from '../../../hooks';
+import { AdminData } from '../AdminData/AdminData';
+import { ManageCategoriesTypes } from '../ManageCategoriesTypes/ManageCategoriesTypes';
+import { Statistic } from '../Statistic/Statistic';
 
 export const AdminPage: FC = () => {
   const [key, setKey] = useState(adminPages.adminData);
@@ -44,6 +44,8 @@ export const AdminPage: FC = () => {
     }
   };
 
+  console.log(isAuth);
+
   return isLoading ? (
     <Spinner animation="border" variant="success" style={{ marginLeft: '120px' }} />
   ) : isAuth ? (
@@ -55,14 +57,14 @@ export const AdminPage: FC = () => {
       }}
       className="tabs"
     >
-      <Tab eventKey={page.userData} title="Особист дані">
-        {key !== page.orders && key !== page.installations && <UserData />}
+      <Tab eventKey={adminPages.adminData} title="Особист дані">
+        {key !== adminPages.categories_types && key !== adminPages.statistic && <AdminData />}
       </Tab>
-      <Tab eventKey={page.orders} title="Категорії та товари">
-        {key !== page.userData && key !== page.installations && <UserOrders />}
+      <Tab eventKey={adminPages.categories_types} title="Категорії та товари">
+        {key !== adminPages.adminData && key !== adminPages.statistic && <ManageCategoriesTypes />}
       </Tab>
-      <Tab eventKey={page.installations} title="Статистика">
-        {key !== page.userData && key !== page.orders && <UserInstallations />}
+      <Tab eventKey={adminPages.statistic} title="Статистика">
+        {key !== adminPages.categories_types && key !== adminPages.adminData && <Statistic />}
       </Tab>
     </Tabs>
   ) : (
