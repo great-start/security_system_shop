@@ -24,8 +24,12 @@ export const page = {
   installations: 'installations',
 };
 
-export const adminPages = {
-  userData: 'adminData',
-  orders: 'categories-types',
-  installations: 'statistic',
+export const adminPages: IPages = {
+  adminData: 'adminData',
+  categories_types: 'categories-types',
+  statistic: 'statistic',
 };
+
+interface IPages {
+  [index: string]: string;
+}

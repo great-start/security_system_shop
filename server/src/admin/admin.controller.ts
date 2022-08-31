@@ -12,8 +12,8 @@ export class AdminController {
   @UseGuards(JwtCheckGuard, RolesGuard)
   @Roles(Role.ADMIN)
   @Get()
-  findAll() {
-    // return this.userService.findAll();
+  getPersonalData() {
+    return this.adminService.getPersonalData();
   }
 
   // @Post()
