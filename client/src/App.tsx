@@ -48,8 +48,6 @@ const App: FC = () => {
           <Route path={'categories-types'} element={<ManageCategoriesTypes />} />
           <Route path={'statistic'} element={<Statistic />} />
         </Route>
-
-        <Route path={'*'} element={<Layout />} />
       </Route>
     </Routes>
   );

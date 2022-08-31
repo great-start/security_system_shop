@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useRef, useState } from 'react';
-import { Button, Container, Form, ListGroup, Spinner } from 'react-bootstrap';
+import { Button, Form, ListGroup, Spinner } from 'react-bootstrap';
 
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { changePersonalDataAsync, getPersonalDataAsync } from '../../../store';
@@ -15,8 +15,6 @@ export const UserData: FC = () => {
   useEffect(() => {
     dispatch(getPersonalDataAsync());
   }, []);
-
-  console.log(personalData);
 
   const changePersonalData = (e: any) => {
     e.preventDefault();

@@ -58,7 +58,7 @@ export const PersonalPage: FC = () => {
 
   return isLoading ? (
     <Spinner animation="border" variant="success" style={{ marginLeft: '120px' }} />
-  ) : isAuth ? (
+  ) : isAuth || !isAdmin ? (
     <Tabs
       id="controlled-tab-example"
       activeKey={key}

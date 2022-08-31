@@ -22,16 +22,6 @@ export const AdminPage: FC = () => {
       return;
     }
     navigate(adminPages.adminData);
-
-    // switch (pathname.split('/')[2]) {
-    //   case adminPages[pathname.split('/')[2]]:
-    //     navigate(adminPages[pathname.split('/')[2]]);
-    //     setKey(adminPages[pathname.split('/')[2]]);
-    //     break;
-    //   default:
-    //     navigate(adminPages.adminData);
-    //     setKey(adminPages.adminData);
-    // }
   }, []);
 
   const changePage = (k: string | null) => {
