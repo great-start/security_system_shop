@@ -14,6 +14,9 @@ import {
   UserData,
   UserInstallations,
   UserOrders,
+  AdminData,
+  ManageCategoriesTypes,
+  Statistic,
 } from './pages';
 
 const App: FC = () => {
@@ -41,9 +44,9 @@ const App: FC = () => {
 
         {/*protected admin routes*/}
         <Route path={'admin'} element={<AdminPage />}>
-          <Route path={'adminData'} element={<UserData />} />
-          <Route path={'categories-types'} element={<UserInstallations />} />
-          <Route path={'statistic'} element={<UserOrders />} />
+          <Route path={'adminData'} element={<AdminData />} />
+          <Route path={'categories-types'} element={<ManageCategoriesTypes />} />
+          <Route path={'statistic'} element={<Statistic />} />
         </Route>
       </Route>
     </Routes>

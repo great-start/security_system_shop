@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
 
-export const AdminPage: FC = () => {
+export const AdminData: FC = () => {
   return <div>AdminData</div>;
 };
