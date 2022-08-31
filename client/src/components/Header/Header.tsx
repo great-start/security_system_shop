@@ -44,15 +44,7 @@ export const Header: FC = () => {
       >
         <Container className="my-2">
           <Nav className={css.navLink}>
-            <NavLink
-              to={'/'}
-              className={css.navLink}
-              style={{
-                marginRight: 50,
-                color: 'rgba(5,71,129,0.6)',
-                fontSize: 'large',
-              }}
-            >
+            <NavLink to={'/'} className={css.logo}>
               SECSYSTEMS
             </NavLink>
             <NavLink to={'/shop'} className={css.isActive ? css.activeClassName : undefined}>

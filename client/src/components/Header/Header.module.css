@@ -14,9 +14,16 @@
   padding: 0;
 }
 
+.navLink a.logo {
+  margin-right: 80px;
+  color: #384f8d;
+  font-size: 1.3em;
+}
+
 .navLink {
   display: flex;
   column-gap: 20px;
+  align-items: center;
 }
 
 .navLink a {

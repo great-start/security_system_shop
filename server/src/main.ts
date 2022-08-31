@@ -48,7 +48,7 @@ async function bootstrap() {
   const HOST = configService.get('HOST');
   const SWAGGER_URL = configService.get('SWAGGER_URL');
 
-  await app.listen(process.env.PORT, () => {
+  await app.listen(PORT, () => {
     console.log(`Server started at ${PROTOCOL}://${HOST}:${PORT}`);
     console.log(`Swagger address ${PROTOCOL}://${HOST}:${PORT}/${SWAGGER_URL}`);
   });
