@@ -26,7 +26,7 @@ export const page: IPages = {
 
 export const adminPages: IPages = {
   adminData: 'adminData',
-  categories_types: 'categories-types',
+  storeManagement: 'storeManagement',
   statistic: 'statistic',
 };
 

@@ -39,7 +39,7 @@ export const PersonalPage: FC = () => {
     }
   }, []);
 
-  const changePage = (k: string | null) => {
+  const changePage = (k: string) => {
     switch (k) {
       case page.userData:
         navigate(page.userData);
@@ -56,18 +56,20 @@ export const PersonalPage: FC = () => {
     }
   };
 
+  console.log(isAuth, isLoading, isAdmin);
+
   return isLoading ? (
     <Spinner animation="border" variant="success" style={{ marginLeft: '120px' }} />
-  ) : isAuth || !isAdmin ? (
+  ) : isAuth && !isAdmin ? (
     <Tabs
       id="controlled-tab-example"
       activeKey={key}
       onSelect={(k) => {
-        changePage(k);
+        changePage(k as string);
       }}
       className="tabs"
     >
-      <Tab eventKey={page.userData} title="Особист дані">
+      <Tab eventKey={page.userData} title="Особисті дані">
         {key !== page.orders && key !== page.installations && <UserData />}
       </Tab>
       <Tab eventKey={page.orders} title="Замовлення">

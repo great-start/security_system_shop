@@ -1,19 +1,17 @@
 import React, { FC, useEffect, useState } from 'react';
 import { Spinner, Tab, Tabs } from 'react-bootstrap';
-import { adminPages, page } from '../../../constants';
+import { adminPages } from '../../../constants';
 import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { useAppSelector } from '../../../hooks';
 import { AdminData } from '../AdminData/AdminData';
-import { ManageCategoriesTypes } from '../ManageCategoriesTypes/ManageCategoriesTypes';
 import { Statistic } from '../Statistic/Statistic';
+import { StoreManagement } from '../ManageProducts/StoreManagement';
 
 export const AdminPage: FC = () => {
   const [key, setKey] = useState(adminPages.adminData);
   const { isAuth, isLoading } = useAppSelector((state) => state.authReducer);
   const navigate = useNavigate();
   const { pathname } = useLocation();
-
-  console.log(isAuth);
 
   useEffect(() => {
     const path = pathname.split('/')[2] || null;
@@ -24,21 +22,11 @@ export const AdminPage: FC = () => {
     navigate(adminPages.adminData);
   }, []);
 
-  const changePage = (k: string | null) => {
-    console.log(k);
+  const changePage = (k: string) => {
     switch (k) {
-      case page.userData:
-        navigate(page.userData);
-        setKey(page.userData);
-        break;
-      case page.orders:
-        navigate(page.orders);
-        setKey(page.orders);
-        break;
-      case page.installations:
-        navigate(page.installations);
-        setKey(page.installations);
-        break;
+      case adminPages[k as string]:
+        navigate(adminPages[k as string]);
+        setKey(adminPages[k as string]);
     }
   };
 
@@ -49,18 +37,18 @@ export const AdminPage: FC = () => {
       id="controlled-tab-example"
       activeKey={key}
       onSelect={(k) => {
-        changePage(k);
+        changePage(k as string);
       }}
       className="tabs"
     >
       <Tab eventKey={adminPages.adminData} title="Особист дані">
-        {key !== adminPages.categories_types && key !== adminPages.statistic && <AdminData />}
+        {key !== adminPages.storeManagement && key !== adminPages.statistic && <AdminData />}
       </Tab>
-      <Tab eventKey={adminPages.categories_types} title="Категорії та товари">
-        {key !== adminPages.adminData && key !== adminPages.statistic && <ManageCategoriesTypes />}
+      <Tab eventKey={adminPages.storeManagement} title="Категорії та товари">
+        {key !== adminPages.adminData && key !== adminPages.statistic && <StoreManagement />}
       </Tab>
       <Tab eventKey={adminPages.statistic} title="Статистика">
-        {key !== adminPages.categories_types && key !== adminPages.adminData && <Statistic />}
+        {key !== adminPages.storeManagement && key !== adminPages.adminData && <Statistic />}
       </Tab>
     </Tabs>
   ) : (
