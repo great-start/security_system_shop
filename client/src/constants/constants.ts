@@ -23,3 +23,9 @@ export const page = {
   orders: 'orders',
   installations: 'installations',
 };
+
+export const adminPages = {
+  userData: 'adminData',
+  orders: 'categories-types',
+  installations: 'statistic',
+};

@@ -1,8 +1,8 @@
 import React, { FC, useEffect, useRef, useState } from 'react';
 import { Button, Container, Form, ListGroup, Spinner } from 'react-bootstrap';
 
-import { useAppDispatch, useAppSelector } from '../../hooks';
-import { changePersonalDataAsync, getPersonalDataAsync } from '../../store';
+import { useAppDispatch, useAppSelector } from '../../../hooks';
+import { changePersonalDataAsync, getPersonalDataAsync } from '../../../store';
 import css from './UserData.module.css';
 
 export const UserData: FC = () => {

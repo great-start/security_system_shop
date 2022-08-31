@@ -1,15 +1,13 @@
 import React, { FC, useEffect, useState } from 'react';
-import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { Spinner, Tab, Tabs } from 'react-bootstrap';
+import { page } from '../../../constants';
+import { UserData } from '../../User/UserData/UserData';
+import { UserOrders } from '../../User/UserOrders/UserOrders';
+import { UserInstallations } from '../../User/UserInstallations/UserInstallations';
+import { Navigate, useLocation, useNavigate } from 'react-router-dom';
+import { useAppSelector } from '../../../hooks';
 
-import { useAppSelector } from '../../hooks';
-import { page } from '../../constants';
-import { UserData } from '../UserData/UserData';
-import { UserOrders } from '../UserOrders/UserOrders';
-import { UserInstallations } from '../UserInstallations/UserInstallations';
-import './PersonalPage.css';
-
-export const PersonalPage: FC = () => {
+export const AdminPage: FC = () => {
   const [key, setKey] = useState(page.userData);
   const { isAuth, isLoading } = useAppSelector((state) => state.authReducer);
   const navigate = useNavigate();
@@ -66,10 +64,10 @@ export const PersonalPage: FC = () => {
       <Tab eventKey={page.userData} title="Особист дані">
         {key !== page.orders && key !== page.installations && <UserData />}
       </Tab>
-      <Tab eventKey={page.orders} title="Замовлення">
+      <Tab eventKey={page.orders} title="Категорії та товари">
         {key !== page.userData && key !== page.installations && <UserOrders />}
       </Tab>
-      <Tab eventKey={page.installations} title="Роботи">
+      <Tab eventKey={page.installations} title="Статистика">
         {key !== page.userData && key !== page.orders && <UserInstallations />}
       </Tab>
     </Tabs>

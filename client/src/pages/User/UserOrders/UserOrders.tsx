@@ -1,8 +1,8 @@
 import React, { FC, useEffect } from 'react';
 import { Accordion, Button, Container, FormText, ListGroup, Spinner } from 'react-bootstrap';
 
-import { useAppDispatch, useAppSelector } from '../../hooks';
-import { canselOrderAsync, getUserOrdersAsync, IOrderData } from '../../store';
+import { useAppDispatch, useAppSelector } from '../../../hooks';
+import { canselOrderAsync, getUserOrdersAsync, IOrderData } from '../../../store';
 import css from './UserOrders.module.css';
 
 export const UserOrders: FC = () => {
