@@ -40,7 +40,11 @@ const App: FC = () => {
         </Route>
 
         {/*protected admin routes*/}
-        <Route path={'admin'} element={<AdminPage />} />
+        <Route path={'admin'} element={<AdminPage />}>
+          <Route path={'adminData'} element={<UserData />} />
+          <Route path={'categories-types'} element={<UserInstallations />} />
+          <Route path={'statistic'} element={<UserOrders />} />
+        </Route>
       </Route>
     </Routes>
   );
