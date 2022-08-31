@@ -13,17 +13,25 @@ export const AdminPage: FC = () => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
 
+  console.log(isAuth);
+
   useEffect(() => {
-    const path = pathname.split('/')[2];
-    switch (path) {
-      case adminPages[path]:
-        navigate(adminPages[path]);
-        setKey(adminPages[path]);
-        break;
-      default:
-        navigate(adminPages.adminData);
-        setKey(adminPages.adminData);
+    const path = pathname.split('/')[2] || null;
+    if (path) {
+      Object.keys(adminPages).includes(path) ? navigate(adminPages[path]) : null;
+      return;
     }
+    navigate(adminPages.adminData);
+
+    // switch (pathname.split('/')[2]) {
+    //   case adminPages[pathname.split('/')[2]]:
+    //     navigate(adminPages[pathname.split('/')[2]]);
+    //     setKey(adminPages[pathname.split('/')[2]]);
+    //     break;
+    //   default:
+    //     navigate(adminPages.adminData);
+    //     setKey(adminPages.adminData);
+    // }
   }, []);
 
   const changePage = (k: string | null) => {
@@ -43,8 +51,6 @@ export const AdminPage: FC = () => {
         break;
     }
   };
-
-  console.log(isAuth);
 
   return isLoading ? (
     <Spinner animation="border" variant="success" style={{ marginLeft: '120px' }} />

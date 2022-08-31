@@ -15,9 +15,11 @@ export const PersonalPage: FC = () => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
 
-  isAdmin ? navigate('/admin') : null;
-
   useEffect(() => {
+    if (isAdmin) {
+      navigate('/admin');
+      return;
+    }
     switch (pathname.split('/')[2]) {
       case page.userData:
         navigate(page.userData);
