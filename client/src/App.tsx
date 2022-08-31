@@ -32,12 +32,14 @@ const App: FC = () => {
         <Route path={'google-auth'} element={<GoogleAuth />} />
         <Route path={'order'} element={<Order />} />
 
-        {/*protected routes*/}
+        {/*protected user routes*/}
         <Route path={'personal'} element={<PersonalPage />}>
           <Route path={'userData'} element={<UserData />} />
           <Route path={'installations'} element={<UserInstallations />} />
           <Route path={'orders'} element={<UserOrders />} />
         </Route>
+
+        {/*protected admin routes*/}
         <Route path={'admin'} element={<AdminPage />} />
       </Route>
     </Routes>
