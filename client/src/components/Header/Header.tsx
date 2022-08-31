@@ -11,7 +11,7 @@ import { IExchangeRate } from '../../interfaces';
 
 export const Header: FC = () => {
   const { products, sum } = useAppSelector((state) => state.basketReducer);
-  const { isAuth, user, isLoading, isAdmin } = useAppSelector((state) => state.authReducer);
+  const { isAuth, user, isLoading } = useAppSelector((state) => state.authReducer);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const [exchangeRate, setExchangeRate] = useState<IExchangeRate | null>(null);
@@ -79,7 +79,7 @@ export const Header: FC = () => {
               variant={'outline-success'}
               onClick={(e) => {
                 e.preventDefault();
-                navigate(isAdmin ? '/admin' : '/personal');
+                navigate('/personal');
               }}
             >
               Кабінет

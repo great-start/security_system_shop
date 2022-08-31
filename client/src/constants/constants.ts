@@ -3,6 +3,7 @@ export const baseURL = 'http://localhost:5000';
 export const urls = {
   product: '/product',
   categories: '/category',
+  auth: '/auth',
   signIn: '/auth/sign-in',
   signUp: '/auth/sign-up',
   googleAuth: '/auth/google',
@@ -18,13 +19,10 @@ export const urls = {
   GOOGLE_AUTH_URL: 'http://localhost:5000/auth/google',
 };
 
-export const page: IPages = {
+export const protectedPages: IPages = {
   userData: 'userData',
   orders: 'orders',
   installations: 'installations',
-};
-
-export const adminPages: IPages = {
   adminData: 'adminData',
   storeManagement: 'storeManagement',
   statistic: 'statistic',

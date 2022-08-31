@@ -1,14 +1,12 @@
 import React, { FC } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
-import { Install, Layout, Shop } from './components';
+import { Install, Layout, PersonalPage, Shop } from './components';
 import {
   AuthPage,
   MainPage,
   ProductDetails,
   Basket,
-  AdminPage,
-  PersonalPage,
   GoogleAuth,
   Order,
   UserData,
@@ -37,13 +35,11 @@ const App: FC = () => {
 
         {/*protected user routes*/}
         <Route path={'personal'} element={<PersonalPage />}>
+          {/* user */}
           <Route path={'userData'} element={<UserData />} />
           <Route path={'installations'} element={<UserInstallations />} />
           <Route path={'orders'} element={<UserOrders />} />
-        </Route>
-
-        {/*protected admin routes*/}
-        <Route path={'admin'} element={<AdminPage />}>
+          {/* admin */}
           <Route path={'adminData'} element={<AdminData />} />
           <Route path={'storeManagement'} element={<StoreManagement />} />
           <Route path={'statistic'} element={<Statistic />} />
