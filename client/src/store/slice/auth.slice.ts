@@ -9,6 +9,7 @@ interface IAuthState {
     id: string;
     email: string;
   };
+  isAdmin: boolean;
   isAuth: boolean;
   errors: null | [Record<string, any>];
   error401: null | string;
@@ -44,6 +45,7 @@ const initialState: IAuthState = {
     id: '',
     email: '',
   },
+  isAdmin: false,
   isAuth: false,
   errors: null,
   error401: null,
@@ -89,9 +91,7 @@ export const checkIsAuth = createAsyncThunk<void, void, { rejectValue: ErrorsRes
         const data = JSON.parse(localStorage.getItem('profile') as string) as ITokenData;
         dispatch(setCredentials({ data }));
       }
-      console.log('checking pass');
     } catch (err) {
-      console.log('errors ________________________________');
       const error = err as AxiosError;
       return rejectWithValue(error.response?.data as ErrorsResponse);
     }
@@ -116,6 +116,7 @@ export const AuthSlice = createSlice({
   initialState,
   reducers: {
     setCredentials: (state, action) => {
+      console.log(action.payload.data.user);
       state.user = action.payload.data.user;
       state.isAuth = true;
     },

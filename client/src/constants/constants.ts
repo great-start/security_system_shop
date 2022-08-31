@@ -18,7 +18,7 @@ export const urls = {
   GOOGLE_AUTH_URL: 'http://localhost:5000/auth/google',
 };
 
-export const page = {
+export const page: IPages = {
   userData: 'userData',
   orders: 'orders',
   installations: 'installations',

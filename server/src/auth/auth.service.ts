@@ -64,6 +64,7 @@ export class AuthService {
         user: {
           id: existingUser.id,
           email: existingUser.email,
+          role: existingUser.role,
         },
       };
     } catch (e) {
