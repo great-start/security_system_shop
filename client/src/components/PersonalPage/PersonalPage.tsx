@@ -19,6 +19,8 @@ export const PersonalPage: FC = () => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
 
+  console.log(isAuth, isLoading, isAdmin);
+
   useEffect(() => {
     const path = pathname.split('/')[2] || null;
     if (path && Object.keys(protectedPages).includes(path)) {
