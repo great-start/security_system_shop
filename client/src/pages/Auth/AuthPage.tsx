@@ -4,7 +4,6 @@ import css from './Auth.module.css';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { changeAuthForm, signInAsync, signUpAsync } from '../../store';
 import { Navigate, useNavigate } from 'react-router-dom';
-import { urls } from '../../constants';
 import GoogleLogin from 'react-google-login';
 
 export const AuthPage: FC = () => {
