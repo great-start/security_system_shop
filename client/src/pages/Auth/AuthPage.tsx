@@ -47,8 +47,9 @@ export const AuthPage: FC = () => {
     } catch (e) {}
   };
 
-  const googleAuth = async (e: any) => {
-    e.preventDefault();
+  const googleAuth = async (responce: any) => {
+    console.log(responce);
+    // e.preventDefault();
   };
 
   return isAuth ? (
@@ -129,7 +130,7 @@ export const AuthPage: FC = () => {
               onSuccess={googleAuth}
               // onFailure={handleLogin}
               render={(renderProps) => <GoogleButton onClick={renderProps.onClick} />}
-            />
+            ></GoogleLogin>
           </Container>
         </Form>
       </Card>
