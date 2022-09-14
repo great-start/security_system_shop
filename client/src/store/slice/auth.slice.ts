@@ -111,6 +111,20 @@ export const logOutAsync = createAsyncThunk<void, void, { rejectValue: ErrorsRes
   },
 );
 
+export const googleAuthAsync = createAsyncThunk<void, void, { rejectValue: ErrorsResponse }>(
+  'authSlice/googleAuthAsync',
+  async (_: void, { dispatch, rejectWithValue }) => {
+    try {
+      const googleData = await userService.googleAuth();
+      console.log(googleData);
+      // dispatch(logout());
+    } catch (err) {
+      const error = err as AxiosError;
+      return rejectWithValue(error.response?.data as ErrorsResponse);
+    }
+  },
+);
+
 export const AuthSlice = createSlice({
   name: 'authSLice',
   initialState,

@@ -1,11 +1,11 @@
 import React, { FC } from 'react';
 import { Button, Card, Container, Form, Spinner } from 'react-bootstrap';
-import GoogleButton from 'react-google-button';
 import css from './Auth.module.css';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { changeAuthForm, signInAsync, signUpAsync } from '../../store';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { urls } from '../../constants';
+import GoogleLogin from 'react-google-login';
 
 export const AuthPage: FC = () => {
   const dispatch = useAppDispatch();
@@ -49,13 +49,6 @@ export const AuthPage: FC = () => {
 
   const googleAuth = async (e: any) => {
     e.preventDefault();
-    const newWindow = window.open(urls.GOOGLE_AUTH_URL, 'blank', 'width=500, height=600');
-
-    setInterval(() => {
-      if (newWindow && newWindow?.closed) {
-        window.location.reload();
-      }
-    }, 1000);
   };
 
   return isAuth ? (
@@ -130,10 +123,12 @@ export const AuthPage: FC = () => {
               {isSignInForm ? 'Увійти' : 'Зареєструватись'}
             </Button>
           </Container>
-          <GoogleButton
-            className="align-self-end mt-3"
-            // label='GOOGLE sign in'
-            onClick={googleAuth}
+          <GoogleLogin
+            clientId={'810053192176-d0chn9j3l1qplkoniu7tsbr1r4idqqra.apps.googleusercontent.com'}
+            // buttonText="Log in with Google"
+            onSuccess={googleAuth}
+            // onFailure={handleLogin}
+            // cookiePolicy={'single_host_origin'}
           />
         </Form>
       </Card>
