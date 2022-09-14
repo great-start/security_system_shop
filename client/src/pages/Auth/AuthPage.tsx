@@ -5,6 +5,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { changeAuthForm, signInAsync, signUpAsync } from '../../store';
 import { Navigate, useNavigate } from 'react-router-dom';
 import GoogleLogin from 'react-google-login';
+import GoogleButton from 'react-google-button';
 
 export const AuthPage: FC = () => {
   const dispatch = useAppDispatch();
@@ -118,17 +119,18 @@ export const AuthPage: FC = () => {
             {error401 ? (
               <Form.Text style={{ color: 'chocolate' }}>Нажаль невірний пароль або email</Form.Text>
             ) : null}
-            <Button variant="outline-success" type="submit" className="align-self-end">
+            <Button variant="success" type="submit" className="align-self-end">
               {isSignInForm ? 'Увійти' : 'Зареєструватись'}
             </Button>
           </Container>
-          <GoogleLogin
-            clientId={'810053192176-d0chn9j3l1qplkoniu7tsbr1r4idqqra.apps.googleusercontent.com'}
-            // buttonText="Log in with Google"
-            onSuccess={googleAuth}
-            // onFailure={handleLogin}
-            // cookiePolicy={'single_host_origin'}
-          />
+          <Container className={css.googleButton}>
+            <GoogleLogin
+              clientId={String(process.env.GOOGLE_CLIENT_ID)}
+              onSuccess={googleAuth}
+              // onFailure={handleLogin}
+              render={(renderProps) => <GoogleButton onClick={renderProps.onClick} />}
+            />
+          </Container>
         </Form>
       </Card>
     </Container>
