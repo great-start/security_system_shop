@@ -5,10 +5,15 @@ import { UserService } from '../../user/user.service';
 import { IRequestExtended } from '../models/requestExtended.interface';
 import { constants } from '../../constants';
 import { JwtPayload } from 'jsonwebtoken';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class RefreshMiddleware implements NestMiddleware {
-  constructor(private tokenService: TokenService, private userService: UserService) {}
+  constructor(
+    private readonly tokenService: TokenService,
+    private readonly userService: UserService,
+    private readonly configService: ConfigService,
+  ) {}
 
   async use(req: IRequestExtended, res: Response, next: NextFunction) {
     try {
@@ -26,7 +31,7 @@ export class RefreshMiddleware implements NestMiddleware {
 
       const { email } = (await this.tokenService.verifyToken(
         refreshToken,
-        constants.JWT_SECRET_KEY,
+        this.configService.get('JWT_SECRET_KEY'),
       )) as JwtPayload;
       const existingUser = await this.userService.findOneByEmail(email);
 

@@ -1,6 +1,6 @@
 import { HttpException, HttpStatus, Injectable, UnauthorizedException } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
-import { JwtPayload,  } from 'jsonwebtoken';
+import { JwtPayload } from 'jsonwebtoken';
 import { Response } from 'express';
 
 import { TokenService } from './token.service';
@@ -73,35 +73,30 @@ export class AuthService {
     }
   }
 
-  async googleAuth(req: Request) {
-    const googleToken = req.body;
-
-    this.tokenService.verifyToken(googleToken, this.configService.get('GOOGLE_CLIENT_SECRET'))
-
-
+  async googleAuth({ googleToken }) {
     try {
-      let user = await this.userService.findOneByEmail(googleUser.email);
+      const { email, name, picture, given_name } = (await this.tokenService.decodeToken(
+        googleToken,
+      )) as JwtPayload;
+
+      let user = await this.userService.findOneByEmail(email);
 
       if (!user) {
-        user = await this.userService.createFromGoogle(googleUser);
+        user = await this.userService.createFromGoogle(email, name);
       }
 
       const tokenPair = await this.tokenService.getTokenPair(user);
 
       const { accessToken, refreshToken } = await this.tokenService.saveTokenPair(tokenPair);
 
-      const authDataParams = `accessToken=${accessToken}&refreshToken=${refreshToken}&id=${user.id}&email=${user.email}`;
-
-      res.redirect(`http://localhost:3000/google-auth?${authDataParams}`);
-
-      // return {
-      //   accessToken,
-      //   refreshToken,
-      //   user: {
-      //     id: user.id,
-      //     email: user.email,
-      //   },
-      // };
+      return {
+        accessToken,
+        refreshToken,
+        user: {
+          id: user.id,
+          email: user.email,
+        },
+      };
     } catch (e) {
       throw new HttpException(e.message, e.status);
     }
@@ -155,7 +150,7 @@ export class AuthService {
 
       const { email } = (await this.tokenService.verifyToken(
         token,
-        constants.JWT_SECRET_KEY,
+        this.configService.get('JWT_SECRET_KEY'),
       )) as JwtPayload;
       const existingUser = await this.userService.findOneByEmail(email);
 

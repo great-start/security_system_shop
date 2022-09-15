@@ -26,7 +26,9 @@ export const GoogleAuthButton: FC = () => {
   const googleCallBackResponse = (response: IGoogleCallbackResponse) => {
     const token = response.credential;
 
-    dispatch(authWithGoogle(token));
+    if (token) {
+      dispatch(authWithGoogle(token));
+    }
   };
 
   return (

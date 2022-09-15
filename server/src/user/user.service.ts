@@ -2,7 +2,6 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma.service';
 import { SignUpUserDto } from '../auth/dto/signUp.user.dto';
 import { IOrder } from './models/order.inteface';
-import { GoogleAuthProfileDto } from '../auth/dto/google.auth.profile.dto';
 import { IRequestExtended } from '../auth/models/requestExtended.interface';
 import express from 'express';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -36,11 +35,11 @@ export class UserService {
   //   return `This action removes a #${id} user`;
   // }
 
-  async createFromGoogle(user: GoogleAuthProfileDto) {
+  async createFromGoogle(email: string, name: string) {
     return this.prismaService.user.create({
       data: {
-        email: user.email,
-        firstName: user.firstName,
+        email: email,
+        firstName: name,
       },
     });
   }
