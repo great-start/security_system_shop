@@ -7,9 +7,6 @@ import GoogleButton from 'react-google-button';
 import { Container } from 'react-bootstrap';
 
 export const GoogleAuth: FC = () => {
-  const location = useLocation();
-  const dispatch = useAppDispatch();
-
   const googleAuth = async (response: any) => {
     console.log(response);
     // e.preventDefault();
