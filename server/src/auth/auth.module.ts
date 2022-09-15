@@ -6,11 +6,10 @@ import { TokenService } from './token.service';
 import { PrismaService } from '../prisma.service';
 import { RefreshMiddleware } from './middlewares/refresh.middleware';
 import { RolesGuard } from './guards/roles.guard';
-import { GoogleStrategy } from './google.strategy';
 
 @Module({
   controllers: [AuthController],
-  providers: [AuthService, UserService, TokenService, PrismaService, RolesGuard, GoogleStrategy],
+  providers: [AuthService, UserService, TokenService, PrismaService, RolesGuard],
 })
 export class AuthModule {
   configure(consumer: MiddlewareConsumer) {

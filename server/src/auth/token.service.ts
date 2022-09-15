@@ -4,10 +4,15 @@ import { constants } from '../constants';
 import { PrismaService } from '../prisma.service';
 import { Injectable } from '@nestjs/common';
 import { ITokenPair } from './models/token.interface';
+import { ConfigService } from '@nestjs/config';
+import { config } from 'rxjs';
 
 @Injectable()
 export class TokenService {
-  constructor(private readonly prismaService: PrismaService) {}
+  constructor(
+    private readonly prismaService: PrismaService,
+    private readonly configService: ConfigService,
+  ) {}
 
   public async getTokenPair(user: User) {
     return TokenService._generateTokenPair(user);
@@ -17,13 +22,16 @@ export class TokenService {
     return this.prismaService.token.create({ data: tokenPair });
   }
 
-  private static _generateTokenPair(user: User) {
+  private _generateTokenPair(user: User) {
     const payload = { userId: user.id, email: user.email };
-    const accessToken = jwt.sign(payload, constants.JWT_SECRET_KEY, {
-      expiresIn: constants.JWT_ACCESS_TIME,
+    const jwtSecretKey = this.configService.get('JWT_SECRET_KEY');
+    const jwtAccessTime = this.configService.get('JWT_ACCESS_TIME');
+    const jwtRefreshTime = this.configService.get('JWT_REFRESH_TIME');
+    const accessToken = jwt.sign(payload, jwtSecretKey, {
+      expiresIn: jwtAccessTime,
     });
-    const refreshToken = jwt.sign(payload, constants.JWT_SECRET_KEY, {
-      expiresIn: constants.JWT_REFRESH_TIME,
+    const refreshToken = jwt.sign(payload, jwtSecretKey, {
+      expiresIn: jwtRefreshTime,
     });
     return { accessToken, refreshToken, userId: user.id };
   }
@@ -36,8 +44,8 @@ export class TokenService {
     });
   }
 
-  public async verifyToken(token: string) {
-    return jwt.verify(token, constants.JWT_SECRET_KEY);
+  public async verifyToken(token: string, secretKey: string) {
+    return jwt.verify(token, secretKey);
   }
 
   async deleteTokenPair(user: User) {

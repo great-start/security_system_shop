@@ -52,14 +52,9 @@ export class AuthController {
     return this.authService.signIn(authUser);
   }
 
-  @Get('/google')
-  @UseGuards(AuthGuard('google'))
-  authGoogle() {}
-
-  @Get('/google/callback')
-  @UseGuards(AuthGuard('google'))
-  googleAuthResponse(@Req() req: IRequestExtended, @Res() res: Response) {
-    return this.authService.authGoogle(req.user, res);
+  @Post('/googleAuth')
+  googleAuthResponse(@Req() req: Request) {
+    return this.authService.googleAuth(req);
   }
 
   @ApiOperation({

@@ -24,7 +24,10 @@ export class RefreshMiddleware implements NestMiddleware {
         throw new UnauthorizedException('Token not valid');
       }
 
-      const { email } = (await this.tokenService.verifyToken(refreshToken)) as JwtPayload;
+      const { email } = (await this.tokenService.verifyToken(
+        refreshToken,
+        constants.JWT_SECRET_KEY,
+      )) as JwtPayload;
       const existingUser = await this.userService.findOneByEmail(email);
 
       if (!existingUser) {

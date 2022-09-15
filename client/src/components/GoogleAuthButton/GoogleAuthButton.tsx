@@ -4,9 +4,11 @@ import { Container } from 'react-bootstrap';
 import { IGoogleCallbackResponse } from 'react-google-one-tap-login/dist/types/types';
 import { userService } from '../../services';
 import { useAppDispatch } from '../../hooks';
+import { authWithGoogle } from '../../store';
 
 export const GoogleAuthButton: FC = () => {
   const dispatch = useAppDispatch();
+
   useEffect(() => {
     // @ts-ignore
     google.accounts.id.initialize({
@@ -24,7 +26,7 @@ export const GoogleAuthButton: FC = () => {
   const googleCallBackResponse = (response: IGoogleCallbackResponse) => {
     const token = response.credential;
 
-    userService.
+    dispatch(authWithGoogle(token));
   };
 
   return (

@@ -111,9 +111,9 @@ export const logOutAsync = createAsyncThunk<void, void, { rejectValue: ErrorsRes
   },
 );
 
-export const googleAuthAsync = createAsyncThunk<void, void, { rejectValue: ErrorsResponse }>(
-  'authSlice/googleAuthAsync',
-  async (_: void, { dispatch, rejectWithValue }) => {
+export const authWithGoogle = createAsyncThunk<void, string, { rejectValue: ErrorsResponse }>(
+  'authSlice/authWithGoogle',
+  async (_: token, { dispatch, rejectWithValue }) => {
     try {
       const googleData = await userService.googleAuth();
       console.log(googleData);

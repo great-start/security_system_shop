@@ -1,6 +1,6 @@
 import { HttpException, HttpStatus, Injectable, UnauthorizedException } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
-import { JwtPayload } from 'jsonwebtoken';
+import { JwtPayload,  } from 'jsonwebtoken';
 import { Response } from 'express';
 
 import { TokenService } from './token.service';
@@ -9,13 +9,14 @@ import { IRequestExtended } from './models/requestExtended.interface';
 import { constants } from '../constants';
 import { SignUpUserDto } from './dto/signUp.user.dto';
 import { UserService } from '../user/user.service';
-import { GoogleAuthProfileDto } from './dto/google.auth.profile.dto';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class AuthService {
   constructor(
     private readonly userService: UserService,
     private readonly tokenService: TokenService,
+    private readonly configService: ConfigService,
   ) {}
 
   async signUp(user: SignUpUserDto) {
@@ -72,7 +73,12 @@ export class AuthService {
     }
   }
 
-  async authGoogle(googleUser: GoogleAuthProfileDto, res: Response) {
+  async googleAuth(req: Request) {
+    const googleToken = req.body;
+
+    this.tokenService.verifyToken(googleToken, this.configService.get('GOOGLE_CLIENT_SECRET'))
+
+
     try {
       let user = await this.userService.findOneByEmail(googleUser.email);
 
@@ -147,7 +153,10 @@ export class AuthService {
         throw new UnauthorizedException('Permission denied');
       }
 
-      const { email } = (await this.tokenService.verifyToken(token)) as JwtPayload;
+      const { email } = (await this.tokenService.verifyToken(
+        token,
+        constants.JWT_SECRET_KEY,
+      )) as JwtPayload;
       const existingUser = await this.userService.findOneByEmail(email);
 
       if (!existingUser) {
