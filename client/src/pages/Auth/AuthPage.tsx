@@ -6,6 +6,7 @@ import { changeAuthForm, signInAsync, signUpAsync } from '../../store';
 import { Navigate, useNavigate } from 'react-router-dom';
 import GoogleLogin from 'react-google-login';
 import GoogleButton from 'react-google-button';
+import { GoogleAuthButton } from '../../components';
 
 export const AuthPage: FC = () => {
   const dispatch = useAppDispatch();
@@ -45,16 +46,6 @@ export const AuthPage: FC = () => {
       ).unwrap();
       navigate('/personal');
     } catch (e) {}
-  };
-
-  const googleAuth = async (response: any) => {
-    console.log(response);
-    // e.preventDefault();
-  };
-
-  const responseGoogle = async (response: any) => {
-    console.log(response.details);
-    // e.preventDefault();
   };
 
   return isAuth ? (
@@ -129,15 +120,7 @@ export const AuthPage: FC = () => {
               {isSignInForm ? 'Увійти' : 'Зареєструватись'}
             </Button>
           </Container>
-          <Container className={css.googleButton}>
-            <GoogleLogin
-              clientId={String(process.env.GOOGLE_CLIENT_ID)}
-              onSuccess={googleAuth}
-              onFailure={responseGoogle}
-              cookiePolicy={'single_host_origin'}
-              render={(renderProps) => <GoogleButton onClick={renderProps.onClick} />}
-            ></GoogleLogin>
-          </Container>
+          <GoogleAuthButton></GoogleAuthButton>
         </Form>
       </Card>
     </Container>

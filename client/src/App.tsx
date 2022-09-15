@@ -1,13 +1,12 @@
 import React, { FC } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
-import { Install, Layout, PersonalPage, Shop } from './components';
+import { Layout, PersonalPage } from './components';
 import {
   AuthPage,
   MainPage,
   ProductDetails,
   Basket,
-  GoogleAuth,
   Order,
   UserData,
   UserInstallations,
@@ -15,6 +14,8 @@ import {
   AdminData,
   Statistic,
   StoreManagement,
+  Shop,
+  Install,
 } from './pages';
 
 const App: FC = () => {
@@ -30,7 +31,6 @@ const App: FC = () => {
         <Route path={'install'} element={<Install />} />
         <Route path={'basket'} element={<Basket />} />
         <Route path={'auth'} element={<AuthPage />} />
-        <Route path={'google-auth'} element={<GoogleAuth />} />
         <Route path={'order'} element={<Order />} />
 
         {/*protected user routes*/}
