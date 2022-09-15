@@ -1,29 +1,29 @@
-import React, { FC } from 'react';
-import GoogleLogin from 'react-google-login';
+import React, { FC, useEffect } from 'react';
 import css from '../../pages/Auth/Auth.module.css';
-import GoogleButton from 'react-google-button';
 import { Container } from 'react-bootstrap';
 
 export const GoogleAuthButton: FC = () => {
-  const googleAuth = async (response: any) => {
-    console.log(response);
-    // e.preventDefault();
-  };
+  useEffect(() => {
+    // @ts-ignore
+    google.accounts.id.initialize({
+      client_id: '810053192176-bfu0nf7p2p0mon4a1s3h04npt8ok15sg.apps.googleusercontent.com',
+      callback: googleCallBackResponse,
+    });
+    // @ts-ignore
+    google.accounts.id.renderButton(document.getElementById('g_id_signin'), {
+      type: 'standard',
+      theme: 'filled_blue',
+      size: 'large',
+    });
+  }, []);
 
-  const responseGoogle = async (response: any) => {
-    console.log(response.details);
-    // e.preventDefault();
+  const googleCallBackResponse = (response: any) => {
+    console.log(response);
   };
 
   return (
     <Container className={css.googleButton}>
-      <GoogleLogin
-        clientId={String(process.env.GOOGLE_CLIENT_ID)}
-        onSuccess={googleAuth}
-        onFailure={responseGoogle}
-        cookiePolicy={'single_host_origin'}
-        render={(renderProps) => <GoogleButton onClick={renderProps.onClick} />}
-      ></GoogleLogin>
+      <div id="g_id_signin"></div>
     </Container>
   );
 };

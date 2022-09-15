@@ -4,8 +4,6 @@ import css from './Auth.module.css';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { changeAuthForm, signInAsync, signUpAsync } from '../../store';
 import { Navigate, useNavigate } from 'react-router-dom';
-import GoogleLogin from 'react-google-login';
-import GoogleButton from 'react-google-button';
 import { GoogleAuthButton } from '../../components';
 
 export const AuthPage: FC = () => {
@@ -120,7 +118,7 @@ export const AuthPage: FC = () => {
               {isSignInForm ? 'Увійти' : 'Зареєструватись'}
             </Button>
           </Container>
-          <GoogleAuthButton></GoogleAuthButton>
+          <GoogleAuthButton />
         </Form>
       </Card>
     </Container>
