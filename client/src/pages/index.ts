@@ -1,7 +1,6 @@
 export * from './Auth/AuthPage';
 export * from './Basket/Basket';
 export * from './Install/Install';
-export * from './GoogleAuth/GoogleAuth';
 export * from './Order/Order';
 export * from './ProductDetails/ProductDetails';
 export * from './MainPage/MainPage';

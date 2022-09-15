@@ -47,8 +47,13 @@ export const AuthPage: FC = () => {
     } catch (e) {}
   };
 
-  const googleAuth = async (responce: any) => {
-    console.log(responce);
+  const googleAuth = async (response: any) => {
+    console.log(response);
+    // e.preventDefault();
+  };
+
+  const responseGoogle = async (response: any) => {
+    console.log(response.details);
     // e.preventDefault();
   };
 
@@ -128,7 +133,8 @@ export const AuthPage: FC = () => {
             <GoogleLogin
               clientId={String(process.env.GOOGLE_CLIENT_ID)}
               onSuccess={googleAuth}
-              // onFailure={handleLogin}
+              onFailure={responseGoogle}
+              cookiePolicy={'single_host_origin'}
               render={(renderProps) => <GoogleButton onClick={renderProps.onClick} />}
             ></GoogleLogin>
           </Container>
