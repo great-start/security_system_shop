@@ -32,8 +32,17 @@ export const Header: FC = () => {
   return (
     <div className={css.header}>
       <Container className={css.exchangeRate}>
-        <p>{exchangeRate ? `USD ${exchangeRate[0].buy.slice(0, 5)}` : null}</p>
-        <p>{exchangeRate ? `EUR ${exchangeRate[1].buy.slice(0, 5)}` : null}</p>
+        {exchangeRate ? (
+          <>
+            <p>{exchangeRate ? `USD ${exchangeRate[0].buy.slice(0, 5)}` : null}</p>
+            <p>{exchangeRate ? `EUR ${exchangeRate[1].buy.slice(0, 5)}` : null}</p>
+          </>
+        ) : (
+          <>
+            <p>Currency exchange rate loading...</p>
+            <Spinner animation="grow" variant="primary" />
+          </>
+        )}
       </Container>
       <Navbar
         style={{

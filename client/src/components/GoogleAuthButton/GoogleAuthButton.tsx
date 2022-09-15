@@ -1,8 +1,7 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useEffect } from 'react';
 import css from './GoogleAuthButton.module.css';
 import { Container } from 'react-bootstrap';
 import { IGoogleCallbackResponse } from 'react-google-one-tap-login/dist/types/types';
-import { userService } from '../../services';
 import { useAppDispatch } from '../../hooks';
 import { authWithGoogle } from '../../store';
 
