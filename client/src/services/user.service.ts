@@ -11,7 +11,7 @@ export const userService = {
     API.post<ITokenData>(urls.signUp, { firstName, lastName, email, password }),
   logOut: () => API.post(urls.logout),
   checkAuth: () => API.post(urls.authCheck),
-  googleAuth: (googleToken: string) => API.post(urls.googleAuth, { googleToken }),
+  googleAuth: (googleToken: string) => API.post<ITokenData>(urls.googleAuth, { googleToken }),
   makeAnOrder: ({ productsQuantity, products }: IOrder) =>
     API.post<string>(urls.makeOrder, { productsQuantity, products }),
   getAllOrders: () => API.get(urls.getAllOrders),

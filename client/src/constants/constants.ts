@@ -16,7 +16,6 @@ export const urls = {
   makeOrder: '/user/make-order',
   canselOrder: '/user/order',
   exchangeRates: '/exchange-rate',
-  GOOGLE_AUTH_URL: 'http://localhost:5000/auth/google',
 };
 
 export const protectedPages: IPages = {
