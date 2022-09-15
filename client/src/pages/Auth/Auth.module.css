@@ -15,10 +15,3 @@
 .form {
   display: contents;
 }
-
-.googleButton {
-  display: flex;
-  margin-top: 10px;
-  justify-content: end;
-  padding: 0;
-}

@@ -1,8 +1,12 @@
-import React, { FC, useEffect } from 'react';
-import css from '../../pages/Auth/Auth.module.css';
+import React, { FC, useEffect, useState } from 'react';
+import css from './GoogleAuthButton.module.css';
 import { Container } from 'react-bootstrap';
+import { IGoogleCallbackResponse } from 'react-google-one-tap-login/dist/types/types';
+import { userService } from '../../services';
+import { useAppDispatch } from '../../hooks';
 
 export const GoogleAuthButton: FC = () => {
+  const dispatch = useAppDispatch();
   useEffect(() => {
     // @ts-ignore
     google.accounts.id.initialize({
@@ -17,8 +21,10 @@ export const GoogleAuthButton: FC = () => {
     });
   }, []);
 
-  const googleCallBackResponse = (response: any) => {
-    console.log(response);
+  const googleCallBackResponse = (response: IGoogleCallbackResponse) => {
+    const token = response.credential;
+
+    userService.
   };
 
   return (
