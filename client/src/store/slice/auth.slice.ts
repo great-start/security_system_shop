@@ -3,6 +3,7 @@ import { AxiosError } from 'axios';
 
 import { userService } from '../../services';
 import { ITokenData } from '../../interfaces';
+import { Role } from '../../constants';
 
 interface IAuthState {
   user: {
@@ -117,6 +118,7 @@ export const authWithGoogle = createAsyncThunk<void, string, { rejectValue: Erro
     try {
       const { data } = await userService.googleAuth(token);
       localStorage.setItem('profile', JSON.stringify(data));
+      console.log(data);
       dispatch(setCredentials({ data }));
     } catch (err) {
       const error = err as AxiosError;
@@ -132,7 +134,7 @@ export const AuthSlice = createSlice({
     setCredentials: (state, action) => {
       state.user = action.payload.data.user;
       state.isAuth = true;
-      if (action.payload.data.user.role === 'ADMIN') {
+      if (action.payload.data.user.role === Role.ADMIN) {
         state.isAdmin = true;
       }
     },

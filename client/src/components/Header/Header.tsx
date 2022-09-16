@@ -21,6 +21,11 @@ export const Header: FC = () => {
     dispatch(logOutAsync());
   };
 
+  const logIn = (e: any) => {
+    e.preventDefault();
+    navigate('/personal');
+  };
+
   useEffect(() => {
     const getExchangeRates = async () => {
       const { data } = await API.get(urls.exchangeRates);
@@ -40,7 +45,6 @@ export const Header: FC = () => {
         ) : (
           <>
             <p>Currency exchange rate loading...</p>
-            <Spinner animation="grow" variant="primary" />
           </>
         )}
       </Container>
@@ -83,26 +87,15 @@ export const Header: FC = () => {
               Кошик {sum !== 0 && products.length}
             </Button>
             <Button
-              style={{ color: 'black' }}
+              style={{ color: 'rgb(43,65,89)', fontWeight: 'bold' }}
               className="ml-10"
-              variant={'outline-success'}
+              variant={'outline-primary'}
               onClick={(e) => {
-                e.preventDefault();
-                navigate('/personal');
+                !isAuth ? logIn(e) : logOut(e);
               }}
             >
-              Кабінет
+              {!isAuth ? <>Кабінет</> : <>Вийти</>}
             </Button>
-            {isAuth && (
-              <Button
-                style={{ color: 'black' }}
-                className="ml-10"
-                variant={'outline-secondary'}
-                onClick={logOut}
-              >
-                Вийти
-              </Button>
-            )}
           </Nav>
         </Container>
       </Navbar>

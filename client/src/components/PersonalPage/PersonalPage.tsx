@@ -1,8 +1,9 @@
 import React, { FC, useEffect, useState } from 'react';
-import { protectedPages, urls } from '../../constants';
-import { useAppSelector } from '../../hooks';
 import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { Spinner, Tab, Tabs } from 'react-bootstrap';
+
+import { protectedPages, urls } from '../../constants';
+import { useAppSelector } from '../../hooks';
 import './PersonalPage.css';
 import {
   AdminData,
@@ -56,7 +57,7 @@ export const PersonalPage: FC = () => {
             <AdminData />
           )}
         </Tab>
-        <Tab eventKey={protectedPages.storeManagement} title="Категорії та товари">
+        <Tab eventKey={protectedPages.storeManagement} title="Керування магазином">
           {key !== protectedPages.adminData && key !== protectedPages.statistic && (
             <StoreManagement />
           )}

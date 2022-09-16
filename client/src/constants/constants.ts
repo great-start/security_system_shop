@@ -27,6 +27,11 @@ export const protectedPages: IPages = {
   statistic: 'statistic',
 };
 
+export enum Role {
+  USER = 'USER',
+  ADMIN = 'ADMIN',
+}
+
 interface IPages {
   [index: string]: string;
 }
