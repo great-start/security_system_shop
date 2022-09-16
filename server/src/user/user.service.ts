@@ -11,11 +11,7 @@ import { User } from '@prisma/client';
 export class UserService {
   constructor(private readonly prismaService: PrismaService) {}
 
-  // async findAll() {
-  //   return this.prismaService.user.findMany();
-  // }
-
-  async findOneByEmail(email: string) {
+  public async findOneByEmail(email: string) {
     return this.prismaService.user.findUnique({
       where: {
         email,
@@ -23,7 +19,7 @@ export class UserService {
     });
   }
 
-  async saveUserToDB(user: SignUpUserDto) {
+  public async saveUserToDB(user: SignUpUserDto) {
     return this.prismaService.user.create({ data: user });
   }
 
@@ -35,7 +31,7 @@ export class UserService {
   //   return `This action removes a #${id} user`;
   // }
 
-  async createFromGoogle(email: string, name: string) {
+  public async createFromGoogle(email: string, name: string) {
     return this.prismaService.user.create({
       data: {
         email: email,
@@ -44,7 +40,7 @@ export class UserService {
     });
   }
 
-  async makeAnOrder(order: IOrder, req: IRequestExtended) {
+  public async makeAnOrder(order: IOrder, req: IRequestExtended) {
     try {
       const { productsQuantity, products } = order;
       const user = req.user;
@@ -74,7 +70,7 @@ export class UserService {
     }
   }
 
-  async getOrders(req: IRequestExtended) {
+  public async getOrders(req: IRequestExtended) {
     try {
       const { id } = req.user;
 
@@ -120,7 +116,7 @@ export class UserService {
     }
   }
 
-  async canselOrder(id: number) {
+  public async canselOrder(id: number) {
     try {
       await this.prismaService.basket.delete({
         where: {
@@ -136,7 +132,7 @@ export class UserService {
     }
   }
 
-  async getPersonalData(req: IRequestExtended, res: express.Response) {
+  public async getPersonalData(req: IRequestExtended, res: express.Response) {
     try {
       const { id } = req.user;
 
@@ -165,7 +161,7 @@ export class UserService {
     }
   }
 
-  formatData(user: Partial<User>): Partial<User> {
+  public formatData(user: Partial<User>): Partial<User> {
     return Object.assign(user, {
       createdAt: new Intl.DateTimeFormat('de-DE', {
         day: '2-digit',
@@ -182,7 +178,11 @@ export class UserService {
     });
   }
 
-  async changePersonalData(req: IRequestExtended, data: UpdateUserDto, res: express.Response) {
+  public async changePersonalData(
+    req: IRequestExtended,
+    data: UpdateUserDto,
+    res: express.Response,
+  ) {
     try {
       const { id } = req.user;
 

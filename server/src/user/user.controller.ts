@@ -57,18 +57,6 @@ export class UserController {
     return this.userService.changePersonalData(req, data, res);
   }
 
-  // @UseGuards(JwtCheckGuard, RolesGuard)
-  // @Roles(Role.USER)
-  // @Get('/:id')
-  // findOne(@Param('id') id: string) {
-  //   // return this.userService.findOne(+id);
-  // }
-
-  // @Patch(':id')
-  // update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-  //   return this.userService.update(+id, updateUserDto);
-  // }
-  //
   @UseGuards(JwtCheckGuard, RolesGuard)
   @Roles(Role.USER)
   @Delete('order/:id')
