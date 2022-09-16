@@ -5,7 +5,6 @@ import { RolesGuard } from '../auth/guards/roles.guard';
 import { Roles } from '../auth/decorators/roles.decorator';
 import { Role } from '../auth/models/roles.enum';
 import { IRequestExtended } from '../auth/models/requestExtended.interface';
-import { Response } from 'express';
 
 @Controller('admin')
 export class AdminController {
@@ -14,8 +13,8 @@ export class AdminController {
   @UseGuards(JwtCheckGuard, RolesGuard)
   @Roles(Role.ADMIN)
   @Get('personal')
-  getPersonalData(@Req() req: IRequestExtended, res: Response) {
-    return this.adminService.getPersonalData(req, res);
+  getPersonalData(@Req() req: IRequestExtended) {
+    return this.adminService.getPersonalData(req);
   }
 
   // @Post()

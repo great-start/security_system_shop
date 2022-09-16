@@ -11,7 +11,7 @@ export const AdminData: FC = () => {
 
   useEffect(() => {
     dispatch(getPersonalDataAsync({ isAdmin: true }));
-  });
+  }, []);
 
   return !isLoading ? (
     <div>

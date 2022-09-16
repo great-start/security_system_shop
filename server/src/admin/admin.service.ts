@@ -1,10 +1,8 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { CreateAdminDto } from './dto/create-admin.dto';
-import { UpdateAdminDto } from './dto/update-admin.dto';
 import { PrismaService } from '../prisma.service';
 import { IRequestExtended } from '../auth/models/requestExtended.interface';
 import { User } from '@prisma/client';
-import { Response } from 'express';
+import express from 'express';
 
 @Injectable()
 export class AdminService {
@@ -30,7 +28,7 @@ export class AdminService {
   //   return `This action removes a #${id} admin`;
   // }
 
-  async getPersonalData(req: IRequestExtended, res: Response): Promise<void> {
+  async getPersonalData(req: IRequestExtended): Promise<void> {
     try {
       const { id } = req.user;
 
@@ -51,7 +49,7 @@ export class AdminService {
           .then((data) => {
             const personalFormattedAdminData = this.formatData(data);
 
-            res.status(HttpStatus.OK).json(personalFormattedAdminData);
+            return personalFormattedAdminData;
           });
       }, 1000);
     } catch (e) {
