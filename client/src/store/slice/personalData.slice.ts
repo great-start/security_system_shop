@@ -57,18 +57,21 @@ export const canselOrderAsync = createAsyncThunk(
   },
 );
 
-export const getPersonalDataAsync = createAsyncThunk<void, void, { rejectValue: string }>(
-  'personalDataSlice/getPersonalDataAsync',
-  async (_, { dispatch, rejectWithValue }) => {
-    try {
-      const { data } = await userService.getPersonalData();
-      dispatch(setPersonalData({ data }));
-    } catch (err) {
-      const error = err as AxiosError;
-      return rejectWithValue(error.response?.data as string);
-    }
-  },
-);
+export const getPersonalDataAsync = createAsyncThunk<
+  void,
+  { isAdmin: boolean },
+  { rejectValue: string }
+>('personalDataSlice/getPersonalDataAsync', async ({ isAdmin }, { dispatch, rejectWithValue }) => {
+  try {
+    const { data } = isAdmin
+      ? await userService.getPersonalData.admin()
+      : await userService.getPersonalData.user();
+    dispatch(setPersonalData({ data }));
+  } catch (err) {
+    const error = err as AxiosError;
+    return rejectWithValue(error.response?.data as string);
+  }
+});
 
 export const changePersonalDataAsync = createAsyncThunk<
   void,

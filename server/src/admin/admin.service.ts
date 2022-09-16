@@ -1,4 +1,4 @@
-import { HttpStatus, Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreateAdminDto } from './dto/create-admin.dto';
 import { UpdateAdminDto } from './dto/update-admin.dto';
 import { PrismaService } from '../prisma.service';
@@ -54,7 +54,9 @@ export class AdminService {
             res.status(HttpStatus.OK).json(personalFormattedAdminData);
           });
       }, 1000);
-    } catch (e) {}
+    } catch (e) {
+      throw new HttpException('Server Error', HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 
   formatData(user: Partial<User>): Partial<User> {

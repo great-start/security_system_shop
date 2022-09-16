@@ -13,7 +13,7 @@ export const UserData: FC = () => {
   const { personalData, isLoading } = useAppSelector((state) => state.personalDataReducer);
 
   useEffect(() => {
-    dispatch(getPersonalDataAsync());
+    dispatch(getPersonalDataAsync({ isAdmin: false }));
   }, []);
 
   const changePersonalData = (e: any) => {

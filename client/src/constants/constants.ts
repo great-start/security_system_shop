@@ -15,6 +15,7 @@ export const urls = {
   getAllOrders: '/user/order',
   makeOrder: '/user/make-order',
   canselOrder: '/user/order',
+  adminPersonal: '/admin/personal',
   exchangeRates: '/exchange-rate',
 };
 
