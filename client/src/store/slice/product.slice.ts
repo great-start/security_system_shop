@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
-import { categoryService, productService } from '../../services';
+import { categoryTypeService, productService } from '../../services';
 import { IProduct } from '../../interfaces';
 
 interface IProductState {
@@ -25,7 +25,7 @@ export const getProductsByCategoryAsync = createAsyncThunk(
   'productSlice/getProductsByCategoryAsync',
   async (category: string, { dispatch }) => {
     try {
-      const { data } = await categoryService.getProductsByCategory(category);
+      const { data } = await categoryTypeService.getProductsByCategory(category);
       dispatch(setAllProducts({ data }));
     } catch (e) {}
   },
