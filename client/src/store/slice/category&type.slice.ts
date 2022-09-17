@@ -17,7 +17,7 @@ export const getAllCategoriesAsync = createAsyncThunk(
   async (_, { dispatch }) => {
     try {
       const { data } = await categoryTypeService.getAll.category();
-      dispatch(setAllCategory({ data }));
+      dispatch(setAllCategories({ data }));
     } catch (e) {}
   },
 );
@@ -27,7 +27,7 @@ export const getAllTypesAsync = createAsyncThunk(
   async (_, { dispatch }) => {
     try {
       const { data } = await categoryTypeService.getAll.type();
-      dispatch(setAllCategory({ data }));
+      dispatch(setAllTypes({ data }));
     } catch (e) {}
   },
 );
@@ -36,8 +36,11 @@ const categoryTypeSlice = createSlice({
   name: 'categorySlice',
   initialState,
   reducers: {
-    setAllCategory: (state, action) => {
+    setAllCategories: (state, action) => {
       state.categories = action.payload.data;
+    },
+    setAllTypes: (state, action) => {
+      state.types = action.payload.data;
     },
   },
   // extraReducers: (builder) => {
@@ -46,7 +49,7 @@ const categoryTypeSlice = createSlice({
   // },
 });
 
-export const { setAllCategory } = categoryTypeSlice.actions;
+export const { setAllCategories, setAllTypes } = categoryTypeSlice.actions;
 
 const categoryReducer = categoryTypeSlice.reducer;
 export default categoryReducer;

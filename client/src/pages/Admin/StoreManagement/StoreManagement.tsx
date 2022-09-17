@@ -2,15 +2,15 @@ import React, { FC, useEffect, useRef, useState } from 'react';
 import { Card, Container, Form, ListGroup, ListGroupItem } from 'react-bootstrap';
 import css from './Store.Management.module.css';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
-import { getAllCategoryAsync } from '../../../store';
+import { getAllCategoriesAsync, getAllTypesAsync } from '../../../store';
 
 export const StoreManagement: FC = () => {
   const newCategory = useRef<HTMLInputElement>(null);
   const dispatch = useAppDispatch();
-  const { categories } = useAppSelector((state) => state.categoryReducer);
+  const { categories, types } = useAppSelector((state) => state.categoryReducer);
 
   useEffect(() => {
-    dispatch(getAllCategoryAsync());
+    dispatch(getAllCategoriesAsync(), getAllTypesAsync());
   }, []);
 
   return (
