@@ -11,7 +11,7 @@ import { IExchangeRate } from '../../interfaces';
 
 export const Header: FC = () => {
   const { products, sum } = useAppSelector((state) => state.basketReducer);
-  const { isAuth, user, isLoading } = useAppSelector((state) => state.authReducer);
+  const { isAuth, user, isLoading, isAdmin } = useAppSelector((state) => state.authReducer);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const [exchangeRate, setExchangeRate] = useState<IExchangeRate | null>(null);
@@ -72,20 +72,26 @@ export const Header: FC = () => {
               <Spinner animation="grow" variant="success" style={{ marginLeft: '120px' }} />
             ) : null}
             <div className="m-auto" style={{ marginRight: 50, color: 'rgba(15,71,128,0.6)' }}>
-              {isAuth && user.email}
+              {isAuth && !isAdmin ? user.email : null}
             </div>
-            <Button
-              style={{ color: 'black' }}
-              className="ml-10"
-              variant={'outline-secondary'}
-              disabled={sum === 0}
-              onClick={(e) => {
-                e.preventDefault();
-                navigate('/basket');
-              }}
-            >
-              Кошик {sum !== 0 && products.length}
-            </Button>
+            {isAdmin ? (
+              <div style={{ color: 'rgba(8,68,42,0.6)', alignSelf: 'center', fontWeight: 'bold' }}>
+                Admin account
+              </div>
+            ) : (
+              <Button
+                style={{ color: 'black' }}
+                className="ml-10"
+                variant={'outline-secondary'}
+                disabled={sum === 0}
+                onClick={(e) => {
+                  e.preventDefault();
+                  navigate('/basket');
+                }}
+              >
+                Кошик {sum !== 0 && products.length}
+              </Button>
+            )}
             <Button
               style={{ color: 'rgb(43,65,89)', fontWeight: 'bold' }}
               className="ml-10"
