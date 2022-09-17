@@ -1,11 +1,14 @@
-import React, { FC, useEffect } from 'react';
-import { Form, ListGroup, Spinner } from 'react-bootstrap';
+import React, { FC, useEffect, useRef, useState } from 'react';
+import { Button, Form, ListGroup, Spinner } from 'react-bootstrap';
 
-import { getPersonalDataAsync } from '../../../store';
+import { changePersonalDataAsync, getPersonalDataAsync } from '../../../store';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import css from '../../User/UserData/UserData.module.css';
 
 export const AdminData: FC = () => {
+  const [personalDataChange, setPersonalDataChange] = useState(false);
+  const firstNameField = useRef<HTMLInputElement>(null);
+  const lastNameField = useRef<HTMLInputElement>(null);
   const dispatch = useAppDispatch();
   const { personalData, isLoading } = useAppSelector((state) => state.personalDataReducer);
 
@@ -15,6 +18,19 @@ export const AdminData: FC = () => {
     dispatch(getPersonalDataAsync({ isAdmin: true }));
   }, []);
 
+  const changePersonalData = (e: any) => {
+    e.preventDefault();
+    if (personalDataChange) {
+      dispatch(
+        changePersonalDataAsync({
+          firstName: firstNameField?.current?.value || personalData?.firstName,
+          lastName: lastNameField?.current?.value || personalData?.lastName,
+        }),
+      ).unwrap();
+    }
+    setPersonalDataChange(!personalDataChange);
+  };
+
   return !isLoading ? (
     <div>
       <div className={css.userData}>
@@ -22,31 +38,31 @@ export const AdminData: FC = () => {
           <ListGroup variant="flush" className={css.userDataFields}>
             <ListGroup.Item variant="light">
               <span>Ім'я: </span>
-              {/*{personalDataChange ? (*/}
-              <Form.Group className={css.personalDataChangeFormFields}>
-                <Form.Control
-                  // ref={firstNameField}
-                  type="email"
-                  placeholder={personalData?.firstName}
-                />
-              </Form.Group>
-              {/*) : (*/}
-              <div> {personalData?.firstName} </div>
-              {/*)}*/}
+              {personalDataChange ? (
+                <Form.Group className={css.personalDataChangeFormFields}>
+                  <Form.Control
+                    ref={firstNameField}
+                    type="email"
+                    placeholder={personalData?.firstName}
+                  />
+                </Form.Group>
+              ) : (
+                <div> {personalData?.firstName} </div>
+              )}
             </ListGroup.Item>
             <ListGroup.Item variant="light">
               <span>Прізвище: </span>
-              {/*{personalDataChange ? (*/}
-              <Form.Group className={css.personalDataChangeFormFields}>
-                <Form.Control
-                  // ref={lastNameField}
-                  type="email"
-                  placeholder={personalData?.lastName}
-                />
-              </Form.Group>
-              {/*) : (*/}
-              {/*  <div> {personalData?.lastName} </div>*/}
-              {/*)}*/}
+              {personalDataChange ? (
+                <Form.Group className={css.personalDataChangeFormFields}>
+                  <Form.Control
+                    ref={lastNameField}
+                    type="email"
+                    placeholder={personalData?.lastName}
+                  />
+                </Form.Group>
+              ) : (
+                <div> {personalData?.lastName} </div>
+              )}
             </ListGroup.Item>
             <ListGroup.Item variant="light">
               <span>Пошта: </span>
@@ -72,9 +88,9 @@ export const AdminData: FC = () => {
         </div>
       </div>
       <div className={css.personalDataChange}>
-        {/*<Button variant={'outline-success'} onClick={(e) => changePersonalData(e)}>*/}
-        {/*  {personalDataChange ? 'Зберегти зміни' : 'Змінити персональні дані'}*/}
-        {/*</Button>*/}
+        <Button variant={'outline-success'} onClick={(e) => changePersonalData(e)}>
+          {personalDataChange ? 'Зберегти зміни' : 'Змінити персональні дані'}
+        </Button>
       </div>
     </div>
   ) : (
