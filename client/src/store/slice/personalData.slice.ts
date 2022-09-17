@@ -66,6 +66,8 @@ export const getPersonalDataAsync = createAsyncThunk<
     const { data } = isAdmin
       ? await userService.getPersonalData.admin()
       : await userService.getPersonalData.user();
+
+    console.log(data);
     dispatch(setPersonalData({ data }));
   } catch (err) {
     const error = err as AxiosError;

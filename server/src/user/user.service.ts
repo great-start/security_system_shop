@@ -136,6 +136,7 @@ export class UserService {
     try {
       const { id } = req.user;
 
+      // ...imitating response delay
       setTimeout(async () => {
         await this.prismaService.user
           .findUnique({

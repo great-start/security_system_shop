@@ -11,7 +11,7 @@ export const urls = {
   authCheck: '/auth/check',
   refresh: '/auth/refresh',
   user: '/user',
-  personalData: '/user/personal',
+  userPersonal: '/user/personal',
   getAllOrders: '/user/order',
   makeOrder: '/user/make-order',
   canselOrder: '/user/order',

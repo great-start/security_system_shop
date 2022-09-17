@@ -2,7 +2,7 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma.service';
 import { IRequestExtended } from '../auth/models/requestExtended.interface';
 import { User } from '@prisma/client';
-import express from 'express';
+import { Response } from 'express';
 
 @Injectable()
 export class AdminService {
@@ -28,10 +28,11 @@ export class AdminService {
   //   return `This action removes a #${id} admin`;
   // }
 
-  async getPersonalData(req: IRequestExtended): Promise<void> {
+  async getPersonalData(req: IRequestExtended, res: Response): Promise<void> {
     try {
       const { id } = req.user;
 
+      // ...imitating response delay
       setTimeout(async () => {
         await this.prismaService.user
           .findUnique({
@@ -49,7 +50,7 @@ export class AdminService {
           .then((data) => {
             const personalFormattedAdminData = this.formatData(data);
 
-            return personalFormattedAdminData;
+            res.status(HttpStatus.OK).json(personalFormattedAdminData);
           });
       }, 1000);
     } catch (e) {
