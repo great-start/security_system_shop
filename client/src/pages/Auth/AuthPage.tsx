@@ -1,10 +1,11 @@
 import React, { FC } from 'react';
 import { Button, Card, Container, Form, Spinner } from 'react-bootstrap';
-import css from './Auth.module.css';
-import { useAppDispatch, useAppSelector } from '../../hooks';
-import { changeAuthForm, signInAsync, signUpAsync } from '../../store';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { GoogleAuthButton } from '../../components';
+
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { changeAuthForm, signInAsync, signUpAsync } from '../../store';
+import css from './Auth.module.css';
 
 export const AuthPage: FC = () => {
   const dispatch = useAppDispatch();

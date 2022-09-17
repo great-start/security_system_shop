@@ -20,6 +20,8 @@ export const PersonalPage: FC = () => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
 
+  console.log(`isAuth ${isAuth}`, `isAdmin ${isAdmin}`);
+
   useEffect(() => {
     const path = pathname.split('/')[2] || null;
     if (path && Object.keys(protectedPages).includes(path)) {
@@ -38,10 +40,10 @@ export const PersonalPage: FC = () => {
     }
   };
 
-  return isLoading ? (
-    <Spinner animation="grow" variant="success" style={{ marginLeft: '120px' }} />
-  ) : isAuth ? (
-    isAdmin ? (
+  return isAuth ? (
+    isLoading ? (
+      <Spinner animation="grow" variant="success" style={{ marginLeft: '120px' }} />
+    ) : isAdmin ? (
       <Tabs
         id="controlled-tab-example"
         activeKey={key}

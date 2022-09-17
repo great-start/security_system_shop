@@ -30,8 +30,8 @@ const App: FC = () => {
         <Route path={'product/:id'} element={<ProductDetails />} />
         <Route path={'install'} element={<Install />} />
         <Route path={'basket'} element={<Basket />} />
-        <Route path={'auth'} element={<AuthPage />} />
         <Route path={'order'} element={<Order />} />
+        <Route path={'auth'} element={<AuthPage />} />
 
         {/*protected user routes*/}
         <Route path={'personal'} element={<PersonalPage />}>

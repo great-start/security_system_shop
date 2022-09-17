@@ -156,7 +156,7 @@ export class AuthService {
       const existingUser = await this.userService.findOneByEmail(email);
 
       if (!existingUser) {
-        throw new UnauthorizedException('Permision demied');
+        throw new UnauthorizedException('Permission denied');
       }
 
       return existingUser;

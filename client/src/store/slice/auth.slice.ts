@@ -118,7 +118,6 @@ export const authWithGoogle = createAsyncThunk<void, string, { rejectValue: Erro
     try {
       const { data } = await userService.googleAuth(token);
       localStorage.setItem('profile', JSON.stringify(data));
-      console.log(data);
       dispatch(setCredentials({ data }));
     } catch (err) {
       const error = err as AxiosError;

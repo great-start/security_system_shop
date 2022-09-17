@@ -89,8 +89,8 @@ export class AuthController {
     status: 200,
   })
   @Post('/check')
+  @UseGuards(JwtCheckGuard)
   async checkAuth(@Req() req: IRequestExtended, @Res() res: Response) {
-    await this.authService.checkAccess(req);
     res.status(HttpStatus.OK).json({ message: 'Permission granted' });
   }
 }

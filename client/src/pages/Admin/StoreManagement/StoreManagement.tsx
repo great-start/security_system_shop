@@ -1,8 +1,9 @@
 import React, { FC, useEffect, useRef, useState } from 'react';
 import { Card, Container, Form, ListGroup, ListGroupItem } from 'react-bootstrap';
-import css from './Store.Management.module.css';
+
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { getAllCategoriesAsync, getAllTypesAsync } from '../../../store';
+import css from './Store.Management.module.css';
 
 export const StoreManagement: FC = () => {
   const newCategory = useRef<HTMLInputElement>(null);
