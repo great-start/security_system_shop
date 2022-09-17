@@ -20,11 +20,18 @@ export const PersonalPage: FC = () => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
 
-  console.log(`isAuth ${isAuth}`, `isAdmin ${isAdmin}`);
-
   useEffect(() => {
     const path = pathname.split('/')[2] || null;
     if (path && Object.keys(protectedPages).includes(path)) {
+      if (
+        isAdmin &&
+        (path === protectedPages.userData ||
+          path === protectedPages.orders ||
+          path === protectedPages.installations)
+      ) {
+        navigate(protectedPages.adminData);
+        return;
+      }
       navigate(protectedPages[path]);
       setKey(protectedPages[path]);
       return;
