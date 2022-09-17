@@ -3,11 +3,11 @@ import { ICategory } from '../../interfaces';
 import { categoryService } from '../../services';
 
 interface ICategoryState {
-  category: ICategory[];
+  categories: ICategory[];
 }
 
 const initialState: ICategoryState = {
-  category: [],
+  categories: [],
 };
 
 export const getAllCategoryAsync = createAsyncThunk(
@@ -25,7 +25,7 @@ const categorySlice = createSlice({
   initialState,
   reducers: {
     setAllCategory: (state, action) => {
-      state.category = action.payload.data;
+      state.categories = action.payload.data;
     },
   },
   // extraReducers: (builder) => {

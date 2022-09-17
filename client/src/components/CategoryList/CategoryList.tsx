@@ -7,7 +7,7 @@ import { getAllCategoryAsync } from '../../store';
 import css from './CategoryList.module.css';
 
 export const CategoryList: FC = () => {
-  const { category } = useAppSelector((state) => state.categoryReducer);
+  const { categories } = useAppSelector((state) => state.categoryReducer);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const params = useParams();
@@ -19,18 +19,18 @@ export const CategoryList: FC = () => {
   return (
     <ListGroup className={css.groupList}>
       <p>Каталог товарів</p>
-      {category &&
-        category.map((value) => (
+      {categories &&
+        categories.map((value) => (
           <ListGroup.Item
             key={value.name}
-            className={params.category === value.name ? css.linkedin : ''}
+            className={params.categories === value.name ? css.linkedin : ''}
             action
             href={`/shop/${value.name}`}
             onClick={(e) => {
               e.preventDefault();
               navigate(`/shop/${value.name}`);
             }}
-            active={params.category === value.name}
+            active={params.categories === value.name}
             // variant="secondary"
           >
             {value.name}
