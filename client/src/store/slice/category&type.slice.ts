@@ -51,5 +51,5 @@ const categoryTypeSlice = createSlice({
 
 export const { setAllCategories, setAllTypes } = categoryTypeSlice.actions;
 
-const categoryReducer = categoryTypeSlice.reducer;
-export default categoryReducer;
+const categoryTypeReducer = categoryTypeSlice.reducer;
+export default categoryTypeReducer;

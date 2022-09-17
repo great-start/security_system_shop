@@ -7,10 +7,11 @@ import { getAllCategoriesAsync, getAllTypesAsync } from '../../../store';
 export const StoreManagement: FC = () => {
   const newCategory = useRef<HTMLInputElement>(null);
   const dispatch = useAppDispatch();
-  const { categories, types } = useAppSelector((state) => state.categoryReducer);
+  const { categories, types } = useAppSelector((state) => state.categoryTypeReducer);
 
   useEffect(() => {
-    dispatch(getAllCategoriesAsync(), getAllTypesAsync());
+    dispatch(getAllCategoriesAsync());
+    dispatch(getAllTypesAsync());
   }, []);
 
   return (

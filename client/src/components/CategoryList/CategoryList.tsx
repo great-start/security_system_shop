@@ -3,17 +3,17 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { ListGroup } from 'react-bootstrap';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { getAllCategoryAsync } from '../../store';
+import { getAllCategoriesAsync } from '../../store';
 import css from './CategoryList.module.css';
 
 export const CategoryList: FC = () => {
-  const { categories } = useAppSelector((state) => state.categoryReducer);
+  const { categories } = useAppSelector((state) => state.categoryTypeReducer);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const params = useParams();
 
   useEffect(() => {
-    dispatch(getAllCategoryAsync());
+    dispatch(getAllCategoriesAsync());
   }, []);
 
   return (
