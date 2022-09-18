@@ -19,10 +19,13 @@ export const urls = {
   exchangeRates: '/exchange-rate',
 };
 
-export const protectedPages: IPages = {
+export const protectedUserPages: IPages = {
   userData: 'userData',
   orders: 'orders',
   installations: 'installations',
+};
+
+export const protectedAdminPage: IPages = {
   adminData: 'adminData',
   storeManagement: 'storeManagement',
   statistic: 'statistic',
