@@ -25,7 +25,7 @@ export const protectedUserPages: IPages = {
   installations: 'installations',
 };
 
-export const protectedAdminPage: IPages = {
+export const protectedAdminPages: IPages = {
   adminData: 'adminData',
   storeManagement: 'storeManagement',
   statistic: 'statistic',

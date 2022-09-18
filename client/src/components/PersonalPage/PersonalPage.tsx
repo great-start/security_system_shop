@@ -2,7 +2,7 @@ import React, { FC, useEffect, useState } from 'react';
 import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { Spinner, Tab, Tabs } from 'react-bootstrap';
 
-import { protectedUserPages, protectedAdminPage, urls } from '../../constants';
+import { protectedUserPages, protectedAdminPages, urls } from '../../constants';
 import { useAppSelector } from '../../hooks';
 import './PersonalPage.css';
 import {
@@ -17,7 +17,7 @@ import {
 export const PersonalPage: FC = () => {
   const { isAuth, isLoading, isAdmin } = useAppSelector((state) => state.authReducer);
   const [key, setKey] = useState(
-    isAdmin ? protectedAdminPage.adminData : protectedUserPages.userData,
+    isAdmin ? protectedAdminPages.adminData : protectedUserPages.userData,
   );
   const navigate = useNavigate();
   const { pathname } = useLocation();
@@ -26,25 +26,21 @@ export const PersonalPage: FC = () => {
     const path = pathname.split('/')[2] || null;
     if (
       path &&
-      Object.keys(protectedAdminPage).includes(path) &&
-      Object.keys(protectedAdminPage).includes(path)
+      Object.keys(protectedAdminPages).includes(path) &&
+      Object.keys(protectedUserPages).includes(path)
     ) {
-      if (isAdmin && Object.keys(protectedAdminPage).includes(path)) {
-        navigate(protectedPages.adminData);
-        return;
-      }
-      navigate(protectedPages[path]);
-      setKey(protectedPages[path]);
+      navigate(isAdmin ? protectedAdminPages[path] : protectedUserPages[path]);
+      setKey(isAdmin ? protectedAdminPages[path] : protectedUserPages[path]);
       return;
     }
-    navigate(isAdmin ? protectedAdminPage.adminData : protectedPages.userData);
+    navigate(isAdmin ? protectedAdminPages.adminData : protectedUserPages.userData);
   }, []);
 
   const changePage = (k: string) => {
     switch (k) {
-      case isAdmin ? protectedAdminPage[k as string] : protectedUserPages[k as string]:
-        navigate(isAdmin ? protectedAdminPage[k as string] : protectedUserPages[k as string]);
-        setKey(isAdmin ? protectedAdminPage[k as string] : protectedUserPages[k as string]);
+      case isAdmin ? protectedAdminPages[k as string] : protectedUserPages[k as string]:
+        navigate(isAdmin ? protectedAdminPages[k as string] : protectedUserPages[k as string]);
+        setKey(isAdmin ? protectedAdminPages[k as string] : protectedUserPages[k as string]);
     }
   };
 
@@ -60,18 +56,18 @@ export const PersonalPage: FC = () => {
         }}
         className="tabs"
       >
-        <Tab eventKey={protectedAdminPage.adminData} title="Особист дані">
-          {key !== protectedAdminPage.storeManagement && key !== protectedAdminPage.statistic && (
+        <Tab eventKey={protectedAdminPages.adminData} title="Особист дані">
+          {key !== protectedAdminPages.storeManagement && key !== protectedAdminPages.statistic && (
             <AdminData />
           )}
         </Tab>
-        <Tab eventKey={protectedAdminPage.storeManagement} title="Керування магазином">
-          {key !== protectedAdminPage.adminData && key !== protectedAdminPage.statistic && (
+        <Tab eventKey={protectedAdminPages.storeManagement} title="Керування магазином">
+          {key !== protectedAdminPages.adminData && key !== protectedAdminPages.statistic && (
             <StoreManagement />
           )}
         </Tab>
-        <Tab eventKey={protectedAdminPage.statistic} title="Статистика">
-          {key !== protectedAdminPage.storeManagement && key !== protectedAdminPage.adminData && (
+        <Tab eventKey={protectedAdminPages.statistic} title="Статистика">
+          {key !== protectedAdminPages.storeManagement && key !== protectedAdminPages.adminData && (
             <Statistic />
           )}
         </Tab>
@@ -85,16 +81,18 @@ export const PersonalPage: FC = () => {
         }}
         className="tabs"
       >
-        <Tab eventKey={protectedPages.userData} title="Особисті дані">
-          {key !== protectedPages.orders && key !== protectedPages.installations && <UserData />}
+        <Tab eventKey={protectedUserPages.userData} title="Особисті дані">
+          {key !== protectedUserPages.orders && key !== protectedUserPages.installations && (
+            <UserData />
+          )}
         </Tab>
-        <Tab eventKey={protectedPages.orders} title="Мої замовлення">
-          {key !== protectedPages.userData && key !== protectedPages.installations && (
+        <Tab eventKey={protectedUserPages.orders} title="Мої замовлення">
+          {key !== protectedUserPages.userData && key !== protectedUserPages.installations && (
             <UserOrders />
           )}
         </Tab>
-        <Tab eventKey={protectedPages.installations} title="Роботи">
-          {key !== protectedPages.userData && key !== protectedPages.orders && (
+        <Tab eventKey={protectedUserPages.installations} title="Роботи">
+          {key !== protectedUserPages.userData && key !== protectedUserPages.orders && (
             <UserInstallations />
           )}
         </Tab>
