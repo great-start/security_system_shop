@@ -16,19 +16,20 @@ import {
 
 export const PersonalPage: FC = () => {
   const { isAuth, isLoading, isAdmin } = useAppSelector((state) => state.authReducer);
-  const [key, setKey] = useState(isAdmin ? protectedAdminPage.adminData : protectedUserPages.userData);
+  const [key, setKey] = useState(
+    isAdmin ? protectedAdminPage.adminData : protectedUserPages.userData,
+  );
   const navigate = useNavigate();
   const { pathname } = useLocation();
 
   useEffect(() => {
     const path = pathname.split('/')[2] || null;
-    if (path && Object.keys(protectedPages).includes(path)) {
-      if (
-        isAdmin &&
-        (path === protectedPages.userData ||
-          path === protectedPages.orders ||
-          path === protectedPages.installations)
-      ) {
+    if (
+      path &&
+      Object.keys(protectedAdminPage).includes(path) &&
+      Object.keys(protectedAdminPage).includes(path)
+    ) {
+      if (isAdmin && Object.keys(protectedAdminPage).includes(path)) {
         navigate(protectedPages.adminData);
         return;
       }
