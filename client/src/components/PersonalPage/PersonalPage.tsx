@@ -87,7 +87,7 @@ export const PersonalPage: FC = () => {
         <Tab eventKey={protectedPages.userData} title="Особисті дані">
           {key !== protectedPages.orders && key !== protectedPages.installations && <UserData />}
         </Tab>
-        <Tab eventKey={protectedPages.orders} title="Замовлення">
+        <Tab eventKey={protectedPages.orders} title="Мої замовлення">
           {key !== protectedPages.userData && key !== protectedPages.installations && (
             <UserOrders />
           )}
