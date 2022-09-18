@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, current } from '@reduxjs/toolkit';
 import { AxiosError } from 'axios';
 
 import { userService } from '../../services';
@@ -16,6 +16,7 @@ interface IAuthState {
   error401: null | string;
   isLoading: boolean;
   isSignInForm: boolean;
+  authChecking: boolean;
 }
 
 interface ErrorsResponse {
@@ -52,6 +53,7 @@ const initialState: IAuthState = {
   error401: null,
   isLoading: false,
   isSignInForm: true,
+  authChecking: false,
 };
 
 export const signInAsync = createAsyncThunk<
@@ -83,11 +85,12 @@ export const signUpAsync = createAsyncThunk<void, ISignUp, { rejectValue: Errors
   },
 );
 
-export const checkIsAuth = createAsyncThunk<void, void, { rejectValue: ErrorsResponse }>(
-  'authSlice/checkIsAuth',
+export const checkIsAuthAsync = createAsyncThunk<void, void, { rejectValue: ErrorsResponse }>(
+  'authSlice/checkIsAuthAsync',
   async (_: void, { dispatch, rejectWithValue }) => {
     try {
       if (localStorage.getItem('profile')) {
+        console.log('loading');
         await userService.checkAuth();
         const data = JSON.parse(localStorage.getItem('profile') as string) as ITokenData;
         dispatch(setCredentials({ data }));
@@ -169,17 +172,16 @@ export const AuthSlice = createSlice({
       .addCase(signInAsync.fulfilled, (state) => {
         state.isLoading = false;
       })
-      .addCase(checkIsAuth.pending, (state) => {
-        state.isLoading = true;
+      .addCase(checkIsAuthAsync.pending, (state) => {
+        state.authChecking = true;
       })
-      .addCase(checkIsAuth.rejected, (state, action) => {
+      .addCase(checkIsAuthAsync.rejected, (state, action) => {
         if (action.payload) {
-          state.isAuth = false;
-          state.isLoading = false;
+          state.authChecking = false;
         }
       })
-      .addCase(checkIsAuth.fulfilled, (state) => {
-        state.isLoading = false;
+      .addCase(checkIsAuthAsync.fulfilled, (state) => {
+        state.authChecking = false;
       })
       .addCase(signUpAsync.pending, (state) => {
         state.isLoading = true;

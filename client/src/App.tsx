@@ -33,7 +33,7 @@ const App: FC = () => {
         <Route path={'order'} element={<Order />} />
         <Route path={'auth'} element={<AuthPage />} />
 
-        {/*protected user routes*/}
+        {/*protected routes*/}
         <Route path={'personal'} element={<PersonalPage />}>
           {/* user */}
           <Route path={'userData'} element={<UserData />} />

@@ -3,19 +3,19 @@ import { Outlet } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
 import { Header } from '../Header/Header';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { checkIsAuth } from '../../store';
+import { checkIsAuthAsync } from '../../store';
 
 export const Layout: FC = () => {
   const dispatch = useAppDispatch();
-  const { isLoading } = useAppSelector((state) => state.authReducer);
+  const { authChecking } = useAppSelector((state) => state.authReducer);
 
   useEffect(() => {
-    dispatch(checkIsAuth());
+    dispatch(checkIsAuthAsync());
   }, []);
 
   return (
-    <div>
-      {!isLoading && (
+    <>
+      {!authChecking && (
         <>
           <Header />
           <Container className="mt-5">
@@ -23,6 +23,6 @@ export const Layout: FC = () => {
           </Container>
         </>
       )}
-    </div>
+    </>
   );
 };

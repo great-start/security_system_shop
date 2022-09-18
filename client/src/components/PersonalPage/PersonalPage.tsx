@@ -15,22 +15,25 @@ import {
 } from '../../pages';
 
 export const PersonalPage: FC = () => {
-  const { isAuth, isLoading, isAdmin } = useAppSelector((state) => state.authReducer);
+  const { isAuth, isLoading, isAdmin, authChecking } = useAppSelector((state) => state.authReducer);
   const [key, setKey] = useState(
     isAdmin ? protectedAdminPages.adminData : protectedUserPages.userData,
   );
   const navigate = useNavigate();
   const { pathname } = useLocation();
+  console.log(pathname);
+  console.log(isAdmin, isLoading, isAuth, authChecking);
 
   useEffect(() => {
     const path = pathname.split('/')[2] || null;
+    // console.log(path, isAdmin, isLoading, isAuth);
     if (
       path &&
-      Object.keys(protectedAdminPages).includes(path) &&
-      Object.keys(protectedUserPages).includes(path)
+      (Object.keys(protectedAdminPages).includes(path) ||
+        Object.keys(protectedUserPages).includes(path))
     ) {
-      navigate(isAdmin ? protectedAdminPages[path] : protectedUserPages[path]);
-      setKey(isAdmin ? protectedAdminPages[path] : protectedUserPages[path]);
+      navigate(isAdmin ? 'adminData' : protectedUserPages[path]);
+      setKey(isAdmin ? 'adminData' : protectedUserPages[path]);
       return;
     }
     navigate(isAdmin ? protectedAdminPages.adminData : protectedUserPages.userData);
@@ -44,61 +47,61 @@ export const PersonalPage: FC = () => {
     }
   };
 
-  return isAuth ? (
-    isLoading ? (
-      <Spinner animation="grow" variant="success" style={{ marginLeft: '120px' }} />
-    ) : isAdmin ? (
-      <Tabs
-        id="controlled-tab-example"
-        activeKey={key}
-        onSelect={(k) => {
-          changePage(k as string);
-        }}
-        className="tabs"
-      >
-        <Tab eventKey={protectedAdminPages.adminData} title="Особист дані">
-          {key !== protectedAdminPages.storeManagement && key !== protectedAdminPages.statistic && (
-            <AdminData />
-          )}
-        </Tab>
-        <Tab eventKey={protectedAdminPages.storeManagement} title="Керування магазином">
-          {key !== protectedAdminPages.adminData && key !== protectedAdminPages.statistic && (
-            <StoreManagement />
-          )}
-        </Tab>
-        <Tab eventKey={protectedAdminPages.statistic} title="Статистика">
-          {key !== protectedAdminPages.storeManagement && key !== protectedAdminPages.adminData && (
-            <Statistic />
-          )}
-        </Tab>
-      </Tabs>
-    ) : (
-      <Tabs
-        id="controlled-tab-example"
-        activeKey={key}
-        onSelect={(k) => {
-          changePage(k as string);
-        }}
-        className="tabs"
-      >
-        <Tab eventKey={protectedUserPages.userData} title="Особисті дані">
-          {key !== protectedUserPages.orders && key !== protectedUserPages.installations && (
-            <UserData />
-          )}
-        </Tab>
-        <Tab eventKey={protectedUserPages.orders} title="Мої замовлення">
-          {key !== protectedUserPages.userData && key !== protectedUserPages.installations && (
-            <UserOrders />
-          )}
-        </Tab>
-        <Tab eventKey={protectedUserPages.installations} title="Роботи">
-          {key !== protectedUserPages.userData && key !== protectedUserPages.orders && (
-            <UserInstallations />
-          )}
-        </Tab>
-      </Tabs>
-    )
+  if (!isAuth) return <Navigate to={urls.auth} replace={true} />;
+  if (authChecking)
+    return <Spinner animation="grow" variant="success" style={{ marginLeft: '120px' }} />;
+
+  return isLoading ? (
+    <Spinner animation="grow" variant="success" style={{ marginLeft: '120px' }} />
+  ) : isAdmin ? (
+    <Tabs
+      id="controlled-tab-example"
+      activeKey={key}
+      onSelect={(k) => {
+        changePage(k as string);
+      }}
+      className="tabs"
+    >
+      <Tab eventKey={protectedAdminPages.adminData} title="Особист дані">
+        {key !== protectedAdminPages.storeManagement && key !== protectedAdminPages.statistic && (
+          <AdminData />
+        )}
+      </Tab>
+      <Tab eventKey={protectedAdminPages.storeManagement} title="Керування магазином">
+        {key !== protectedAdminPages.adminData && key !== protectedAdminPages.statistic && (
+          <StoreManagement />
+        )}
+      </Tab>
+      <Tab eventKey={protectedAdminPages.statistic} title="Статистика">
+        {key !== protectedAdminPages.storeManagement && key !== protectedAdminPages.adminData && (
+          <Statistic />
+        )}
+      </Tab>
+    </Tabs>
   ) : (
-    <Navigate to={urls.auth} replace={true} />
+    <Tabs
+      id="controlled-tab-example"
+      activeKey={key}
+      onSelect={(k) => {
+        changePage(k as string);
+      }}
+      className="tabs"
+    >
+      <Tab eventKey={protectedUserPages.userData} title="Особисті дані">
+        {key !== protectedUserPages.orders && key !== protectedUserPages.installations && (
+          <UserData />
+        )}
+      </Tab>
+      <Tab eventKey={protectedUserPages.orders} title="Мої замовлення">
+        {key !== protectedUserPages.userData && key !== protectedUserPages.installations && (
+          <UserOrders />
+        )}
+      </Tab>
+      <Tab eventKey={protectedUserPages.installations} title="Роботи">
+        {key !== protectedUserPages.userData && key !== protectedUserPages.orders && (
+          <UserInstallations />
+        )}
+      </Tab>
+    </Tabs>
   );
 };
