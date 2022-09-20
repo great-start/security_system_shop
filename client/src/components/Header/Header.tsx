@@ -11,7 +11,7 @@ import { IExchangeRate } from '../../interfaces';
 
 export const Header: FC = () => {
   const { products, sum } = useAppSelector((state) => state.basketReducer);
-  const { isAuth, user, isLoading, isAdmin } = useAppSelector((state) => state.authReducer);
+  const { isAuth, user, isAdmin, authChecking } = useAppSelector((state) => state.authReducer);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const [exchangeRate, setExchangeRate] = useState<IExchangeRate | null>(null);
@@ -68,7 +68,7 @@ export const Header: FC = () => {
             </NavLink>
           </Nav>
           <Nav className="ml-auto gap-3">
-            {isLoading ? (
+            {authChecking ? (
               <Spinner animation="grow" variant="success" style={{ marginLeft: '120px' }} />
             ) : null}
             <div className="m-auto" style={{ marginRight: 50, color: 'rgba(15,71,128,0.6)' }}>

@@ -14,7 +14,6 @@ interface IAuthState {
   isAuth: boolean;
   errors: null | [Record<string, any>];
   error401: null | string;
-  isLoading: boolean;
   isSignInForm: boolean;
   authChecking: boolean;
 }
@@ -51,9 +50,8 @@ const initialState: IAuthState = {
   isAuth: false,
   errors: null,
   error401: null,
-  isLoading: false,
   isSignInForm: true,
-  authChecking: false,
+  authChecking: true,
 };
 
 export const signInAsync = createAsyncThunk<
@@ -90,7 +88,7 @@ export const checkIsAuthAsync = createAsyncThunk<void, void, { rejectValue: Erro
   async (_: void, { dispatch, rejectWithValue }) => {
     try {
       if (localStorage.getItem('profile')) {
-        console.log('loading');
+        console.log('checkIsAuthAsync');
         await userService.checkAuth();
         const data = JSON.parse(localStorage.getItem('profile') as string) as ITokenData;
         dispatch(setCredentials({ data }));
@@ -139,6 +137,7 @@ export const AuthSlice = createSlice({
       if (action.payload.data.user.role === Role.ADMIN) {
         state.isAdmin = true;
       }
+      state.authChecking = false;
     },
     logout: (state) => {
       localStorage.removeItem('profile');
@@ -154,46 +153,44 @@ export const AuthSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(signInAsync.pending, (state) => {
-        state.isLoading = true;
+        state.authChecking = true;
       })
       .addCase(signInAsync.rejected, (state, action) => {
         if (action.payload) {
           if (action.payload.statusCode !== 401) {
             state.errors = action.payload?.message as [Record<string, any>];
             state.error401 = null;
-            state.isLoading = false;
+            state.authChecking = false;
             return;
           }
           state.errors = null;
           state.error401 = action.payload?.message as string;
-          state.isLoading = false;
+          state.authChecking = false;
         }
       })
       .addCase(signInAsync.fulfilled, (state) => {
-        state.isLoading = false;
+        state.authChecking = false;
       })
       .addCase(checkIsAuthAsync.pending, (state) => {
         state.authChecking = true;
       })
-      .addCase(checkIsAuthAsync.rejected, (state, action) => {
-        if (action.payload) {
-          state.authChecking = false;
-        }
+      .addCase(checkIsAuthAsync.rejected, (state) => {
+        state.authChecking = false;
       })
       .addCase(checkIsAuthAsync.fulfilled, (state) => {
         state.authChecking = false;
       })
       .addCase(signUpAsync.pending, (state) => {
-        state.isLoading = true;
+        state.authChecking = true;
       })
       .addCase(signUpAsync.rejected, (state, action) => {
         if (action.payload) {
           state.errors = action.payload?.message as [Record<string, any>];
-          state.isLoading = false;
+          state.authChecking = false;
         }
       })
       .addCase(signUpAsync.fulfilled, (state) => {
-        state.isLoading = false;
+        state.authChecking = false;
       });
   },
 });

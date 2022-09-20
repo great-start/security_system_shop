@@ -15,29 +15,34 @@ import {
 } from '../../pages';
 
 export const PersonalPage: FC = () => {
-  const { isAuth, isLoading, isAdmin, authChecking } = useAppSelector((state) => state.authReducer);
-  const [key, setKey] = useState(
+  const { isAuth, isAdmin, authChecking } = useAppSelector((state) => state.authReducer);
+  const [key, setKey] = useState<string>(
     isAdmin ? protectedAdminPages.adminData : protectedUserPages.userData,
   );
   const navigate = useNavigate();
   const { pathname } = useLocation();
-  console.log(pathname);
-  console.log(isAdmin, isLoading, isAuth, authChecking);
 
   useEffect(() => {
-    const path = pathname.split('/')[2] || null;
-    // console.log(path, isAdmin, isLoading, isAuth);
-    if (
-      path &&
-      (Object.keys(protectedAdminPages).includes(path) ||
-        Object.keys(protectedUserPages).includes(path))
-    ) {
-      navigate(isAdmin ? 'adminData' : protectedUserPages[path]);
-      setKey(isAdmin ? 'adminData' : protectedUserPages[path]);
-      return;
+    if (!authChecking) {
+      console.log(isAdmin);
+
+      const path = pathname.split('/')[2] || null;
+      if (
+        path &&
+        (Object.keys(protectedAdminPages).includes(path) ||
+          Object.keys(protectedUserPages).includes(path))
+      ) {
+        navigate(isAdmin ? protectedAdminPages[path] : protectedUserPages[path]);
+        setKey(isAdmin ? protectedAdminPages[path] : protectedUserPages[path]);
+        return;
+      }
+      navigate(isAdmin ? protectedAdminPages.adminData : protectedUserPages.userData);
     }
-    navigate(isAdmin ? protectedAdminPages.adminData : protectedUserPages.userData);
-  }, []);
+  }, [authChecking]);
+
+  // useEffect(() => {
+  //
+  // }, [authChecking]);
 
   const changePage = (k: string) => {
     switch (k) {
@@ -47,13 +52,12 @@ export const PersonalPage: FC = () => {
     }
   };
 
-  if (!isAuth) return <Navigate to={urls.auth} replace={true} />;
   if (authChecking)
     return <Spinner animation="grow" variant="success" style={{ marginLeft: '120px' }} />;
 
-  return isLoading ? (
-    <Spinner animation="grow" variant="success" style={{ marginLeft: '120px' }} />
-  ) : isAdmin ? (
+  if (!isAuth) return <Navigate to={urls.auth} replace={true} />;
+
+  return isAdmin ? (
     <Tabs
       id="controlled-tab-example"
       activeKey={key}

@@ -9,7 +9,7 @@ import css from './Auth.module.css';
 
 export const AuthPage: FC = () => {
   const dispatch = useAppDispatch();
-  const { isLoading, errors, error401, isAuth, isSignInForm } = useAppSelector(
+  const { errors, error401, isAuth, isSignInForm, authChecking } = useAppSelector(
     (state) => state.authReducer,
   );
   const navigate = useNavigate();
@@ -109,7 +109,7 @@ export const AuthPage: FC = () => {
                 </a>
               </p>
             )}
-            {isLoading ? (
+            {authChecking ? (
               <Spinner animation="border" variant="secondary" style={{ marginLeft: '120px' }} />
             ) : null}
             {error401 ? (

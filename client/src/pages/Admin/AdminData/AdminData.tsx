@@ -12,7 +12,7 @@ export const AdminData: FC = () => {
   const dispatch = useAppDispatch();
   const { personalData, isLoading } = useAppSelector((state) => state.personalDataReducer);
 
-  console.log(personalData);
+  console.log('AdminData');
 
   useEffect(() => {
     dispatch(getPersonalDataAsync({ isAdmin: true }));
