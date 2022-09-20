@@ -21,7 +21,6 @@ export const PersonalPage: FC = () => {
   );
   const navigate = useNavigate();
   const { pathname } = useLocation();
-  console.log(authChecking, isAuth);
 
   useEffect(() => {
     if (!authChecking && isAuth) {
@@ -42,11 +41,9 @@ export const PersonalPage: FC = () => {
 
         navigate(isAdmin ? protectedAdminPages[path] : protectedUserPages[path]);
         setKey(isAdmin ? protectedAdminPages[path] : protectedUserPages[path]);
-        return;
       }
-      navigate(isAdmin ? protectedAdminPages.adminData : protectedUserPages.userData);
     }
-  }, [authChecking]);
+  }, [authChecking, pathname]);
 
   const changePage = (k: string) => {
     switch (k) {
