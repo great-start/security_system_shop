@@ -2,11 +2,12 @@ import React, { FC, useEffect, useRef, useState } from 'react';
 import { Button, Card, Container, Form, ListGroup, ListGroupItem } from 'react-bootstrap';
 
 import { useAppDispatch, useAppSelector } from '../../../hooks';
-import { getAllCategoriesAsync, getAllTypesAsync } from '../../../store';
+import { addNewAsync, getAllCategoriesAsync, getAllTypesAsync } from '../../../store';
 import css from './Store.Management.module.css';
 
 export const StoreManagement: FC = () => {
   const newCategory = useRef<HTMLInputElement>(null);
+  const newType = useRef<HTMLInputElement>(null);
   const dispatch = useAppDispatch();
   const { categories, types } = useAppSelector((state) => state.categoryTypeReducer);
 
@@ -14,6 +15,18 @@ export const StoreManagement: FC = () => {
     dispatch(getAllCategoriesAsync());
     dispatch(getAllTypesAsync());
   }, []);
+
+  const addNew = (e: React.MouseEvent<HTMLButtonElement>, action: string) => {
+    e.preventDefault();
+    if (newCategory || newType) {
+      dispatch(
+        addNewAsync({
+          action,
+          body: action === 'newCategory' ? newCategory?.current?.value : newType?.current?.type,
+        }),
+      );
+    }
+  };
 
   return (
     <Container>
@@ -44,7 +57,9 @@ export const StoreManagement: FC = () => {
               <Form.Group>
                 <Form.Control ref={newCategory} type="text" placeholder={'enter new category'} />
               </Form.Group>
-              <Button variant={'outline-primary'}>Створити</Button>
+              <Button variant={'outline-primary'} onClick={(e) => addNew(e, 'newCategory')}>
+                Створити
+              </Button>
             </Container>
           </Card.Body>
         </Card>
@@ -74,7 +89,9 @@ export const StoreManagement: FC = () => {
               <Form.Group>
                 <Form.Control ref={newCategory} type="text" placeholder={'enter new type'} />
               </Form.Group>
-              <Button variant={'outline-primary'}>Створити</Button>
+              <Button variant={'outline-primary'} onClick={(e) => addNew(e, 'newType')}>
+                Створити
+              </Button>
             </Container>
           </Card.Body>
         </Card>

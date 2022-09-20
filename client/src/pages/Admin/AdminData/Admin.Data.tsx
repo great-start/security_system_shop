@@ -16,7 +16,7 @@ export const AdminData: FC = () => {
     dispatch(getPersonalDataAsync({ isAdmin: true }));
   }, []);
 
-  const changePersonalData = (e: any) => {
+  const changePersonalData = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     if (personalDataChange) {
       dispatch(

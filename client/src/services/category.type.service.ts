@@ -10,4 +10,8 @@ export const categoryTypeService = {
   },
   getProductsByCategory: (category: string) =>
     API.get<IProduct[]>(`${urls.categories}/${category}`),
+  addNew: {
+    category: (category: string) => API.post<void>(urls.categories),
+    type: (type: string) => API.post<void>(urls.types),
+  },
 };
