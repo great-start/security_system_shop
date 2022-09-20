@@ -6,6 +6,7 @@ import { GoogleAuthButton } from '../../components';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { changeAuthForm, signInAsync, signUpAsync } from '../../store';
 import css from './Auth.module.css';
+import { pages } from '../../constants';
 
 export const AuthPage: FC = () => {
   const dispatch = useAppDispatch();
@@ -28,7 +29,7 @@ export const AuthPage: FC = () => {
           password: e.target.password.value,
         }),
       ).unwrap();
-      navigate('/personal');
+      navigate(pages.personal);
     } catch (e) {}
   };
 
@@ -43,12 +44,12 @@ export const AuthPage: FC = () => {
           password: e.target.password.value,
         }),
       ).unwrap();
-      navigate('/personal');
+      navigate(pages.personal);
     } catch (e) {}
   };
 
   return isAuth ? (
-    <Navigate to={'/personal'} replace={true} />
+    <Navigate to={pages.personal} replace={true} />
   ) : (
     <Container className={css.wrap}>
       <Card className={css.card}>

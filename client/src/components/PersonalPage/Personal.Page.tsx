@@ -4,7 +4,7 @@ import { Spinner, Tab, Tabs } from 'react-bootstrap';
 
 import { protectedUserPages, protectedAdminPages, urls } from '../../constants';
 import { useAppSelector } from '../../hooks';
-import './PersonalPage.css';
+import './Personal.Page.css';
 import {
   AdminData,
   Statistic,

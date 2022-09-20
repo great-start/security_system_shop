@@ -9,5 +9,5 @@ export * from './User/UserData/User.Data';
 export * from './User/UserInstallations/User.Installations';
 export * from './User/UserOrders/User.Orders';
 export * from './Admin/AdminData/Admin.Data';
-export * from './Admin/Store.Management/StoreManagement';
+export * from './Admin/StoreManagement/Store.Management';
 export * from './Admin/Statistic/Statistic';

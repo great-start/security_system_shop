@@ -3,7 +3,7 @@ import { Accordion, Button, Container, FormText, ListGroup, Spinner } from 'reac
 
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { canselOrderAsync, getUserOrdersAsync, IOrderData } from '../../../store';
-import css from './UserOrders.module.css';
+import css from './User.Orders.module.css';
 
 export const UserOrders: FC = () => {
   const { orders, isLoading } = useAppSelector((state) => state.personalDataReducer);
