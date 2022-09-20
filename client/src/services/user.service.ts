@@ -20,6 +20,10 @@ export const userService = {
     user: () => API.get<IPersonalData>(urls.userPersonal),
     admin: () => API.get<IPersonalData>(urls.adminPersonal),
   },
-  changePersonalData: ({ firstName, lastName }: Partial<IPersonalData>) =>
-    API.patch(urls.userPersonal, { firstName, lastName }),
+  changePersonalData: {
+    user: ({ firstName, lastName }: Partial<IPersonalData>) =>
+      API.patch(urls.userPersonal, { firstName, lastName }),
+    admin: ({ firstName, lastName }: Partial<IPersonalData>) =>
+      API.patch(urls.adminPersonal, { firstName, lastName }),
+  },
 };

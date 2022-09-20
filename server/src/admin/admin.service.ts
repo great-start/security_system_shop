@@ -75,7 +75,27 @@ export class AdminService {
     });
   }
 
-  changePersonalData(req: IRequestExtended, data: UpdateUserDto, res: e.Response) {
-    
+  async changePersonalData(req: IRequestExtended, data: UpdateUserDto, res: e.Response) {
+    try {
+      const { id } = req.user;
+
+      setTimeout(async () => {
+        const updatedUser = await this.prismaService.user.update({
+          where: {
+            id,
+          },
+          data: {
+            firstName: data.firstName,
+            lastName: data.lastName,
+          },
+          select: {
+            firstName: true,
+            lastName: true,
+            createdAt: true,
+            updatedAt: true,
+            email: true,
+          },
+        });
+    } catch (e) {}
   }
 }
