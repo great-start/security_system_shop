@@ -87,7 +87,7 @@ export const StoreManagement: FC = () => {
               style={{ padding: 0, display: 'flex', justifyContent: 'space-between', gap: '50px' }}
             >
               <Form.Group>
-                <Form.Control ref={newCategory} type="text" placeholder={'enter new type'} />
+                <Form.Control ref={newType} type="text" placeholder={'enter new type'} />
               </Form.Group>
               <Button variant={'outline-primary'} onClick={(e) => addNew(e, 'newType')}>
                 Створити

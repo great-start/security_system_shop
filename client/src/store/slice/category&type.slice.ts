@@ -41,11 +41,11 @@ export const getAllTypesAsync = createAsyncThunk(
 
 export const addNewAsync = createAsyncThunk<
   void,
-  { action: string; body: string | undefined},
+  { action: string; body: string | undefined },
   { rejectValue: ErrorsResponse }
 >('categoryTypeSlice/addNewAsync', async ({ action, body }, { rejectWithValue }) => {
   try {
-    if (action === 'category') {
+    if (action === 'newCategory') {
       await categoryTypeService.addNew.category(body);
     } else {
       await categoryTypeService.addNew.type(body);

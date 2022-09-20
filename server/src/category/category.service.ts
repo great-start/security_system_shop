@@ -9,6 +9,7 @@ export class CategoryService {
   constructor(private readonly prismaService: PrismaService) {}
 
   create(category: CreateCategoryDto) {
+    console.log(category);
     return this.prismaService.category.create({ data: category });
   }
 

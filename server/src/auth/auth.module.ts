@@ -6,10 +6,11 @@ import { TokenService } from './token.service';
 import { PrismaService } from '../prisma.service';
 import { RefreshMiddleware } from './middlewares/refresh.middleware';
 import { RolesGuard } from './guards/roles.guard';
+import { JwtCheckGuard } from './guards/jwt-check.guard';
 
 @Module({
   controllers: [AuthController],
-  providers: [AuthService, UserService, TokenService, PrismaService, RolesGuard],
+  providers: [AuthService, UserService, TokenService, PrismaService, RolesGuard, JwtCheckGuard],
 })
 export class AuthModule {
   configure(consumer: MiddlewareConsumer) {
