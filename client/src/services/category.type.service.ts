@@ -6,7 +6,7 @@ import { ICategory, IProduct, IType } from '../interfaces';
 export const categoryTypeService = {
   getAll: {
     category: () => API.get<ICategory[]>(urls.categories),
-    type: () => API.get<IType[]>(urls.categories),
+    type: () => API.get<IType[]>(urls.types),
   },
   getProductsByCategory: (category: string) =>
     API.get<IProduct[]>(`${urls.categories}/${category}`),

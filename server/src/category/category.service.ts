@@ -1,7 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
 import { PrismaService } from '../prisma.service';
+import { DateFormat } from '../utils/date.format';
 
 @Injectable()
 export class CategoryService {
@@ -12,7 +13,13 @@ export class CategoryService {
   }
 
   async findAll() {
-    return this.prismaService.category.findMany();
+    try {
+      const categories = await this.prismaService.category.findMany();
+      categories.forEach((type) => DateFormat.formatData(type));
+      return categories;
+    } catch (e) {
+      throw new HttpException('Server Error', HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 
   async findProducts(category: string) {

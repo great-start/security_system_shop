@@ -1,7 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreateTypeDto } from './dto/create-type.dto';
 import { UpdateTypeDto } from './dto/update-type.dto';
 import { PrismaService } from '../prisma.service';
+import { DateFormat } from '../utils/date.format';
 
 @Injectable()
 export class TypeService {
@@ -11,8 +12,14 @@ export class TypeService {
     return this.prismaService.type.create({ data: type });
   }
 
-  findAll() {
-    return this.prismaService.type.findMany();
+  async findAll() {
+    try {
+      const types = await this.prismaService.type.findMany();
+      types.forEach((type) => DateFormat.formatData(type));
+      return types;
+    } catch (e) {
+      throw new HttpException('Server Error', HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 
   findOne(id: number) {

@@ -23,7 +23,6 @@ export const PersonalPage: FC = () => {
   const { pathname } = useLocation();
 
   useEffect(() => {
-    console.log(isAdmin, isAuth, authChecking);
     if (!authChecking && isAuth) {
       const path = pathname.split('/')[2] || null;
 

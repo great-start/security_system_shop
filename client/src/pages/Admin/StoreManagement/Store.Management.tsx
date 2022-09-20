@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useRef, useState } from 'react';
-import { Card, Container, Form, ListGroup, ListGroupItem } from 'react-bootstrap';
+import { Button, Card, Container, Form, ListGroup, ListGroupItem } from 'react-bootstrap';
 
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { getAllCategoriesAsync, getAllTypesAsync } from '../../../store';
@@ -25,19 +25,27 @@ export const StoreManagement: FC = () => {
             <ListGroup>
               {categories &&
                 categories.map((category) => (
-                  <ListGroupItem key={category.name}>{category.name}</ListGroupItem>
+                  <ListGroupItem key={category.name}>
+                    <div style={{ padding: 0, display: 'flex', justifyContent: 'space-between' }}>
+                      <div>{category.name}</div>
+                      <div style={{ color: '#777fa8', fontSize: '0.8rem' }}>
+                        Cтворено: {category.createdAt}
+                      </div>
+                    </div>
+                  </ListGroupItem>
                 ))}
             </ListGroup>
           </Card.Body>
           <Card.Body>
             Add new:
-            <Form.Group>
-              <Form.Control
-                ref={newCategory}
-                type="text"
-                placeholder={'new category of products'}
-              />
-            </Form.Group>
+            <Container
+              style={{ padding: 0, display: 'flex', justifyContent: 'space-between', gap: '50px' }}
+            >
+              <Form.Group>
+                <Form.Control ref={newCategory} type="text" placeholder={'enter new category'} />
+              </Form.Group>
+              <Button variant={'outline-primary'}>Створити</Button>
+            </Container>
           </Card.Body>
         </Card>
         <Card border={'success'}>
@@ -46,16 +54,28 @@ export const StoreManagement: FC = () => {
             <div>All types:</div>
             <ListGroup>
               {types &&
-                categories.map((category) => (
-                  <ListGroupItem key={category.name}>{category.name}</ListGroupItem>
+                types.map((type) => (
+                  <ListGroupItem key={type.name}>
+                    <div style={{ padding: 0, display: 'flex', justifyContent: 'space-between' }}>
+                      <div>{type.name}</div>
+                      <div style={{ color: '#778ba8', fontSize: '0.8rem' }}>
+                        Cтворено: {type.createdAt}
+                      </div>
+                    </div>
+                  </ListGroupItem>
                 ))}
             </ListGroup>
           </Card.Body>
           <Card.Body>
             Add new:
-            <Form.Group>
-              <Form.Control ref={newCategory} type="text" placeholder={'new type of products'} />
-            </Form.Group>
+            <Container
+              style={{ padding: 0, display: 'flex', justifyContent: 'space-between', gap: '50px' }}
+            >
+              <Form.Group>
+                <Form.Control ref={newCategory} type="text" placeholder={'enter new type'} />
+              </Form.Group>
+              <Button variant={'outline-primary'}>Створити</Button>
+            </Container>
           </Card.Body>
         </Card>
       </Container>
