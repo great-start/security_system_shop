@@ -23,8 +23,8 @@ export const AdminData: FC = () => {
         updatePersonalDataAsync({
           isAdmin: true,
           personalData: {
-            firstName: firstNameField?.current?.value || personalData?.firstName,
-            lastName: lastNameField?.current?.value || personalData?.lastName,
+            firstName: firstNameField.current?.value || personalData?.firstName,
+            lastName: lastNameField.current?.value || personalData?.lastName,
           },
         }),
       ).unwrap();

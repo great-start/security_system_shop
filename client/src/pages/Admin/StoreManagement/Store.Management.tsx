@@ -22,7 +22,7 @@ export const StoreManagement: FC = () => {
       dispatch(
         addNewAsync({
           action,
-          body: action === 'newCategory' ? newCategory?.current?.value : newType?.current?.type,
+          body: action === 'newCategory' ? newCategory.current?.value : newType.current?.type,
         }),
       );
     }
