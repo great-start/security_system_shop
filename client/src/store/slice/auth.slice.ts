@@ -88,7 +88,6 @@ export const checkIsAuthAsync = createAsyncThunk<void, void, { rejectValue: Erro
   async (_: void, { dispatch, rejectWithValue }) => {
     try {
       if (localStorage.getItem('profile')) {
-        console.log('checkIsAuthAsync');
         await userService.checkAuth();
         const data = JSON.parse(localStorage.getItem('profile') as string) as ITokenData;
         dispatch(setCredentials({ data }));
@@ -176,6 +175,7 @@ export const AuthSlice = createSlice({
       })
       .addCase(checkIsAuthAsync.rejected, (state) => {
         state.authChecking = false;
+        state.isAuth = false;
       })
       .addCase(checkIsAuthAsync.fulfilled, (state) => {
         state.authChecking = false;

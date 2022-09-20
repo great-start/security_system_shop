@@ -21,17 +21,25 @@ export const PersonalPage: FC = () => {
   );
   const navigate = useNavigate();
   const { pathname } = useLocation();
+  console.log(authChecking, isAuth);
 
   useEffect(() => {
-    if (!authChecking) {
-      console.log(isAdmin);
-
+    if (!authChecking && isAuth) {
       const path = pathname.split('/')[2] || null;
-      if (
-        path &&
-        (Object.keys(protectedAdminPages).includes(path) ||
-          Object.keys(protectedUserPages).includes(path))
-      ) {
+
+      if (path) {
+        if (isAdmin && Object.values(protectedUserPages).includes(path)) {
+          navigate(protectedAdminPages.adminData);
+          setKey(protectedAdminPages.adminData);
+          return;
+        }
+
+        if (!isAdmin && !Object.values(protectedUserPages).includes(path)) {
+          navigate(protectedUserPages.userData);
+          setKey(protectedUserPages.userData);
+          return;
+        }
+
         navigate(isAdmin ? protectedAdminPages[path] : protectedUserPages[path]);
         setKey(isAdmin ? protectedAdminPages[path] : protectedUserPages[path]);
         return;
@@ -39,10 +47,6 @@ export const PersonalPage: FC = () => {
       navigate(isAdmin ? protectedAdminPages.adminData : protectedUserPages.userData);
     }
   }, [authChecking]);
-
-  // useEffect(() => {
-  //
-  // }, [authChecking]);
 
   const changePage = (k: string) => {
     switch (k) {

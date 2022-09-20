@@ -179,6 +179,7 @@ export class AuthService {
         user: {
           id: req.user.id,
           email: req.user.email,
+          role: req.user,
         },
       };
     } catch (e) {
