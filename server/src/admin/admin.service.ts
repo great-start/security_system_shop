@@ -2,7 +2,8 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma.service';
 import { IRequestExtended } from '../auth/models/requestExtended.interface';
 import { User } from '@prisma/client';
-import { Response } from 'express';
+import express, { Response } from 'express';
+import { UpdateAdminDto } from './dto/update-admin.dto';
 
 @Injectable()
 export class AdminService {
@@ -28,7 +29,7 @@ export class AdminService {
   //   return `This action removes a #${id} admin`;
   // }
 
-  async getPersonalData(req: IRequestExtended, res: Response): Promise<void> {
+  public async getPersonalData(req: IRequestExtended, res: Response): Promise<void> {
     try {
       const { id } = req.user;
 
@@ -75,12 +76,16 @@ export class AdminService {
     });
   }
 
-  async changePersonalData(req: IRequestExtended, data: UpdateUserDto, res: e.Response) {
+  public async changePersonalData(
+    req: IRequestExtended,
+    data: UpdateAdminDto,
+    res: express.Response,
+  ) {
     try {
       const { id } = req.user;
 
       setTimeout(async () => {
-        const updatedUser = await this.prismaService.user.update({
+        const updatedAdmin = await this.prismaService.user.update({
           where: {
             id,
           },
@@ -96,6 +101,13 @@ export class AdminService {
             email: true,
           },
         });
-    } catch (e) {}
+
+        const updatedAdminWithFormatData = this.formatData(updatedAdmin);
+
+        res.status(HttpStatus.OK).json(updatedAdminWithFormatData);
+      }, 1000);
+    } catch (e) {
+      throw new HttpException('Server Error', HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 }

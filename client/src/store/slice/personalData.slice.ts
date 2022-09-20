@@ -73,15 +73,17 @@ export const getPersonalDataAsync = createAsyncThunk<
   }
 });
 
-export const changePersonalDataAsync = createAsyncThunk<
+export const updatePersonalDataAsync = createAsyncThunk<
   void,
-  Partial<IPersonalData>,
+  { isAdmin: boolean; personalData: Partial<IPersonalData> },
   { rejectValue: string }
 >(
-  'personalDataSlice/changePersonalDataAsync',
-  async ({ firstName, lastName }, { dispatch, rejectWithValue }) => {
+  'personalDataSlice/updatePersonalDataAsync',
+  async ({ isAdmin, personalData }, { dispatch, rejectWithValue }) => {
     try {
-      const { data } = await userService.changePersonalData({ firstName, lastName });
+      const { data } = isAdmin
+        ? await userService.updatePersonalData.admin(personalData)
+        : await userService.updatePersonalData.user(personalData);
       dispatch(setPersonalData({ data }));
     } catch (err) {
       const error = err as AxiosError;
@@ -116,10 +118,10 @@ const personalDataSlice = createSlice({
       state.isLoading = false;
       state.error = action.error as string;
     });
-    builder.addCase(changePersonalDataAsync.pending, (state) => {
+    builder.addCase(updatePersonalDataAsync.pending, (state) => {
       state.isLoading = true;
     });
-    builder.addCase(changePersonalDataAsync.fulfilled, (state) => {
+    builder.addCase(updatePersonalDataAsync.fulfilled, (state) => {
       state.isLoading = false;
     });
   },
