@@ -2,8 +2,8 @@ import React, { FC, useEffect, useRef, useState } from 'react';
 import { Button, Form, ListGroup, Spinner } from 'react-bootstrap';
 
 import { useAppDispatch, useAppSelector } from '../../../hooks';
-import { changePersonalDataAsync, getPersonalDataAsync } from '../../../store';
-import css from './UserData.module.css';
+import { updatePersonalDataAsync, getPersonalDataAsync } from '../../../store';
+import css from './User.Data.module.css';
 
 export const UserData: FC = () => {
   const [personalDataChange, setPersonalDataChange] = useState(false);
@@ -20,9 +20,12 @@ export const UserData: FC = () => {
     e.preventDefault();
     if (personalDataChange) {
       dispatch(
-        changePersonalDataAsync({
-          firstName: firstNameField?.current?.value || personalData?.firstName,
-          lastName: lastNameField?.current?.value || personalData?.lastName,
+        updatePersonalDataAsync({
+          isAdmin: false,
+          personalData: {
+            firstName: firstNameField?.current?.value || personalData?.firstName,
+            lastName: lastNameField?.current?.value || personalData?.lastName,
+          },
         }),
       ).unwrap();
     }
