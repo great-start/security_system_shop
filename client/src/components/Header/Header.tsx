@@ -76,7 +76,7 @@ export const Header: FC = () => {
               {isAuth && !isAdmin ? user.email : null}
             </div>
             {isAdmin ? (
-              <div style={{ color: 'rgba(8,68,42,0.6)', alignSelf: 'center', fontWeight: 'bold' }}>
+              <div style={{ color: 'rgba(11,82,51,0.6)', alignSelf: 'center', fontWeight: 'bold' }}>
                 Admin account
               </div>
             ) : (
@@ -91,6 +91,16 @@ export const Header: FC = () => {
                 }}
               >
                 Кошик {sum !== 0 && products.length}
+              </Button>
+            )}
+            {isAuth && (
+              <Button
+                variant={'outline-success'}
+                onClick={(e) => {
+                  navigate('/personal');
+                }}
+              >
+                Кабінет
               </Button>
             )}
             <Button

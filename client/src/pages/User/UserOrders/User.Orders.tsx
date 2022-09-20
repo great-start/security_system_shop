@@ -27,7 +27,7 @@ export const UserOrders: FC = () => {
 
   return !isLoading ? (
     <Accordion alwaysOpen>
-      {orders &&
+      {orders?.length ? (
         orders.map((order) => (
           <Accordion.Item key={order.id} eventKey={String(order.id)}>
             <Accordion.Header className={css.ordersHeader}>
@@ -66,7 +66,10 @@ export const UserOrders: FC = () => {
               </Container>
             </Accordion.Body>
           </Accordion.Item>
-        ))}
+        ))
+      ) : (
+        <Container>У Вас поки що немає замовлень</Container>
+      )}
     </Accordion>
   ) : (
     <Spinner animation={'grow'} variant="success" />
