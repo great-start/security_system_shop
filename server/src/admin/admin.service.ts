@@ -74,4 +74,8 @@ export class AdminService {
       }).format(user.updatedAt),
     });
   }
+
+  changePersonalData(req: IRequestExtended, data: UpdateUserDto, res: e.Response) {
+    
+  }
 }

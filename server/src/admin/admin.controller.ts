@@ -6,6 +6,7 @@ import { Roles } from '../auth/decorators/roles.decorator';
 import { Role } from '../auth/models/roles.enum';
 import { IRequestExtended } from '../auth/models/requestExtended.interface';
 import { Response } from 'express';
+import { UpdateUserDto } from '../user/dto/update-user.dto';
 
 @Controller('admin')
 export class AdminController {
@@ -16,6 +17,17 @@ export class AdminController {
   @Get('personal')
   getPersonalData(@Req() req: IRequestExtended, @Res() res: Response) {
     return this.adminService.getPersonalData(req, res);
+  }
+
+  @UseGuards(JwtCheckGuard, RolesGuard)
+  @Roles(Role.ADMIN)
+  @Patch('personal')
+  changePersonalData(
+    @Req() req: IRequestExtended,
+    @Body() data: UpdateUserDto,
+    @Res() res: Response,
+  ) {
+    return this.adminService.changePersonalData(req, data, res);
   }
 
   // @Post()
@@ -31,11 +43,6 @@ export class AdminController {
   // @Get(':id')
   // findOne(@Param('id') id: string) {
   //   return this.adminService.findOne(+id);
-  // }
-  //
-  // @Patch(':id')
-  // update(@Param('id') id: string, @Body() updateAdminDto: UpdateAdminDto) {
-  //   return this.adminService.update(+id, updateAdminDto);
   // }
   //
   // @Delete(':id')
