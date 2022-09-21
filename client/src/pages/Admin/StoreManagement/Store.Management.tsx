@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useRef, useState } from 'react';
-import { Button, Card, Container, Form, ListGroup, ListGroupItem } from 'react-bootstrap';
+import { Button, Card, Container, Form, ListGroup, ListGroupItem, Spinner } from 'react-bootstrap';
 
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { addNewAsync, getAllCategoriesAsync, getAllTypesAsync } from '../../../store';
@@ -8,25 +8,31 @@ import css from './Store.Management.module.css';
 export const StoreManagement: FC = () => {
   const newCategory = useRef<HTMLInputElement>(null);
   const newType = useRef<HTMLInputElement>(null);
+  const [reload, setReload] = useState<boolean>(false);
   const dispatch = useAppDispatch();
-  const { categories, types } = useAppSelector((state) => state.categoryTypeReducer);
+  const { categories, types, isLoading } = useAppSelector((state) => state.categoryTypeReducer);
 
   useEffect(() => {
     dispatch(getAllCategoriesAsync());
     dispatch(getAllTypesAsync());
-  }, []);
+    if (newCategory.current) newCategory.current.placeholder = 'enter new category';
+    if (newType.current) newType.current.placeholder = 'enter new type';
+  }, [reload]);
 
   const addNew = (e: React.MouseEvent<HTMLButtonElement>, action: string) => {
     e.preventDefault();
-    if (newCategory || newType) {
-      dispatch(
-        addNewAsync({
-          action,
-          body: action === 'newCategory' ? newCategory.current?.value : newType.current?.type,
-        }),
-      );
-    }
+    dispatch(
+      addNewAsync({
+        action,
+        body: action === 'newCategory' ? newCategory.current?.value : newType.current?.value,
+      }),
+    );
+    if (newCategory.current) newCategory.current.placeholder = 'enter new category';
+    if (newType.current) newType.current.placeholder = 'enter new type';
+    setReload(!reload);
   };
+
+  console.log(isLoading);
 
   return (
     <Container>
@@ -36,7 +42,10 @@ export const StoreManagement: FC = () => {
           <Card.Body>
             <div>All categories:</div>
             <ListGroup>
-              {categories &&
+              {isLoading ? (
+                <Spinner animation="grow" variant="success" style={{ marginLeft: '120px' }} />
+              ) : (
+                categories &&
                 categories.map((category) => (
                   <ListGroupItem key={category.name}>
                     <div style={{ padding: 0, display: 'flex', justifyContent: 'space-between' }}>
@@ -46,7 +55,8 @@ export const StoreManagement: FC = () => {
                       </div>
                     </div>
                   </ListGroupItem>
-                ))}
+                ))
+              )}
             </ListGroup>
           </Card.Body>
           <Card.Body>
@@ -55,7 +65,11 @@ export const StoreManagement: FC = () => {
               style={{ padding: 0, display: 'flex', justifyContent: 'space-between', gap: '50px' }}
             >
               <Form.Group>
-                <Form.Control ref={newCategory} type="text" placeholder={'enter new category'} />
+                <Form.Control
+                  ref={newCategory}
+                  type="text"
+                  placeholder={newCategory.current?.placeholder}
+                />
               </Form.Group>
               <Button variant={'outline-primary'} onClick={(e) => addNew(e, 'newCategory')}>
                 Створити
@@ -87,7 +101,11 @@ export const StoreManagement: FC = () => {
               style={{ padding: 0, display: 'flex', justifyContent: 'space-between', gap: '50px' }}
             >
               <Form.Group>
-                <Form.Control ref={newType} type="text" placeholder={'enter new type'} />
+                <Form.Control
+                  ref={newType}
+                  type="text"
+                  placeholder={newType.current?.placeholder}
+                />
               </Form.Group>
               <Button variant={'outline-primary'} onClick={(e) => addNew(e, 'newType')}>
                 Створити

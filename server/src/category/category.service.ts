@@ -8,15 +8,22 @@ import { DateFormat } from '../utils/date.format';
 export class CategoryService {
   constructor(private readonly prismaService: PrismaService) {}
 
-  create(category: CreateCategoryDto) {
-    console.log(category);
-    return this.prismaService.category.create({ data: category });
+  async create(category: CreateCategoryDto) {
+    try {
+      const newCategory = await this.prismaService.category.create({ data: category });
+      console.log(newCategory);
+      return newCategory;
+    } catch (e) {
+      throw new HttpException('Server Error', HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 
   async findAll() {
     try {
+      console.log(' get all categories_________________');
       const categories = await this.prismaService.category.findMany();
       categories.forEach((type) => DateFormat.formatData(type));
+      console.log(categories.length);
       return categories;
     } catch (e) {
       throw new HttpException('Server Error', HttpStatus.INTERNAL_SERVER_ERROR);

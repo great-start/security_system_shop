@@ -6,11 +6,13 @@ import { AxiosError } from 'axios';
 interface ICategoriesTypesState {
   categories: ICategory[];
   types: IType[];
+  isLoading: boolean;
 }
 
 const initialState: ICategoriesTypesState = {
   categories: [],
   types: [],
+  isLoading: false,
 };
 
 interface ErrorsResponse {
@@ -23,8 +25,11 @@ export const getAllCategoriesAsync = createAsyncThunk(
   'categoryTypeSlice/getAllCategoriesAsync',
   async (_, { dispatch }) => {
     try {
-      const { data } = await categoryTypeService.getAll.category();
-      dispatch(setAllCategories({ data }));
+      setTimeout(async () => {
+        const { data } = await categoryTypeService.getAll.category();
+        console.log('get All Categories', data);
+        dispatch(setAllCategories({ data }));
+      }, 1000);
     } catch (e) {}
   },
 );
@@ -50,6 +55,7 @@ export const addNewAsync = createAsyncThunk<
     } else {
       await categoryTypeService.addNew.type(body);
     }
+    // await getAllCategoriesAsync();
   } catch (err) {
     const error = err as AxiosError;
     return rejectWithValue(error.response?.data as ErrorsResponse);
@@ -67,10 +73,18 @@ const categoryTypeSlice = createSlice({
       state.types = action.payload.data;
     },
   },
-  // extraReducers: (builder) => {
-  //
-  //
-  // },
+  extraReducers: (builder) => {
+    builder
+      .addCase(getAllCategoriesAsync.pending, (state, action) => {
+        state.isLoading = true;
+        console.log('pending');
+      })
+      .addCase(getAllCategoriesAsync.fulfilled, (state, action) => {
+        state.isLoading = false;
+        console.log('fulfilled');
+
+      });
+  },
 });
 
 export const { setAllCategories, setAllTypes } = categoryTypeSlice.actions;
