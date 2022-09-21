@@ -60,7 +60,7 @@ export const StoreManagement: FC = () => {
             )}
           </Card.Body>
           <Card.Body>
-            Add:
+            <div className={css.titleAll}>Add:</div>
             <Container
               style={{ padding: 0, display: 'flex', justifyContent: 'space-between', gap: '50px' }}
             >
@@ -108,7 +108,7 @@ export const StoreManagement: FC = () => {
             )}
           </Card.Body>
           <Card.Body>
-            Add:
+            <div className={css.titleAll}>Add:</div>
             <Container
               style={{ padding: 0, display: 'flex', justifyContent: 'space-between', gap: '50px' }}
             >
@@ -116,8 +116,11 @@ export const StoreManagement: FC = () => {
                 <Form.Control
                   ref={newType}
                   type="text"
-                  onClick={() => {
+                  onMouseEnter={() => {
                     if (newType.current) newType.current.placeholder = 'new type';
+                  }}
+                  onMouseOut={() => {
+                    if (newType.current) newType.current.placeholder = '';
                   }}
                 />
               </Form.Group>
