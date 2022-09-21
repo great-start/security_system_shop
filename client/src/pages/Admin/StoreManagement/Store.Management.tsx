@@ -13,7 +13,7 @@ export const StoreManagement: FC = () => {
   const { categories, types, isLoading } = useAppSelector((state) => state.categoryTypeReducer);
 
   useEffect(() => {
-    dispatch(getAllCategoriesAsync());
+    dispatch(getAllCategoriesAsync()).unwrap();
     dispatch(getAllTypesAsync());
     if (newCategory.current) newCategory.current.placeholder = 'enter new category';
     if (newType.current) newType.current.placeholder = 'enter new type';
@@ -41,23 +41,23 @@ export const StoreManagement: FC = () => {
           <Card.Header className={css.title}>Categories</Card.Header>
           <Card.Body>
             <div>All categories:</div>
-            <ListGroup>
-              {isLoading ? (
-                <Spinner animation="grow" variant="success" style={{ marginLeft: '120px' }} />
-              ) : (
-                categories &&
-                categories.map((category) => (
-                  <ListGroupItem key={category.name}>
-                    <div style={{ padding: 0, display: 'flex', justifyContent: 'space-between' }}>
-                      <div>{category.name}</div>
-                      <div style={{ color: '#777fa8', fontSize: '0.8rem' }}>
-                        Cтворено: {category.createdAt}
+            {isLoading ? (
+              <Spinner animation="grow" variant="success" style={{ marginLeft: '120px' }} />
+            ) : (
+              <ListGroup>
+                {categories &&
+                  categories.map((category) => (
+                    <ListGroupItem key={category.name}>
+                      <div style={{ padding: 0, display: 'flex', justifyContent: 'space-between' }}>
+                        <div>{category.name}</div>
+                        <div style={{ color: '#777fa8', fontSize: '0.8rem' }}>
+                          Cтворено: {category.createdAt}
+                        </div>
                       </div>
-                    </div>
-                  </ListGroupItem>
-                ))
-              )}
-            </ListGroup>
+                    </ListGroupItem>
+                  ))}
+              </ListGroup>
+            )}
           </Card.Body>
           <Card.Body>
             Add new:

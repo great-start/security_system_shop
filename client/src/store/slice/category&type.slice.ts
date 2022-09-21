@@ -25,9 +25,8 @@ export const getAllCategoriesAsync = createAsyncThunk(
   'categoryTypeSlice/getAllCategoriesAsync',
   async (_, { dispatch }) => {
     try {
-      setTimeout(async () => {
+      await setTimeout(async () => {
         const { data } = await categoryTypeService.getAll.category();
-        console.log('get All Categories', data);
         dispatch(setAllCategories({ data }));
       }, 1000);
     } catch (e) {}
@@ -55,7 +54,6 @@ export const addNewAsync = createAsyncThunk<
     } else {
       await categoryTypeService.addNew.type(body);
     }
-    // await getAllCategoriesAsync();
   } catch (err) {
     const error = err as AxiosError;
     return rejectWithValue(error.response?.data as ErrorsResponse);
@@ -82,7 +80,6 @@ const categoryTypeSlice = createSlice({
       .addCase(getAllCategoriesAsync.fulfilled, (state, action) => {
         state.isLoading = false;
         console.log('fulfilled');
-
       });
   },
 });
