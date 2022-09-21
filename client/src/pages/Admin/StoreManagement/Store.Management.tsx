@@ -13,26 +13,23 @@ export const StoreManagement: FC = () => {
   const { categories, types, isLoading } = useAppSelector((state) => state.categoryTypeReducer);
 
   useEffect(() => {
-    dispatch(getAllCategoriesAsync()).unwrap();
+    dispatch(getAllCategoriesAsync());
     dispatch(getAllTypesAsync());
-    if (newCategory.current) newCategory.current.placeholder = 'enter new category';
-    if (newType.current) newType.current.placeholder = 'enter new type';
   }, [reload]);
 
-  const addNew = (e: React.MouseEvent<HTMLButtonElement>, action: string) => {
-    e.preventDefault();
+  const addNew = (action: string) => {
     dispatch(
       addNewAsync({
         action,
         body: action === 'newCategory' ? newCategory.current?.value : newType.current?.value,
       }),
     );
-    if (newCategory.current) newCategory.current.placeholder = 'enter new category';
-    if (newType.current) newType.current.placeholder = 'enter new type';
-    setReload(!reload);
+    if (newCategory.current) newCategory.current.value = '';
+    if (newType.current) newType.current.value = '';
+    setTimeout(() => {
+      setReload(!reload);
+    }, 800);
   };
-
-  console.log(isLoading);
 
   return (
     <Container>
@@ -40,8 +37,11 @@ export const StoreManagement: FC = () => {
         <Card border={'success'}>
           <Card.Header className={css.title}>Categories</Card.Header>
           <Card.Body>
-            <div>All categories:</div>
-            {isLoading ? (
+            <div className={css.titleAll}>
+              <div>All categories:</div>
+              <div style={{ color: '#777fa8', fontSize: '0.8rem' }}>Cтворено:</div>
+            </div>
+            {!categories.length ? (
               <Spinner animation="grow" variant="success" style={{ marginLeft: '120px' }} />
             ) : (
               <ListGroup>
@@ -51,7 +51,7 @@ export const StoreManagement: FC = () => {
                       <div style={{ padding: 0, display: 'flex', justifyContent: 'space-between' }}>
                         <div>{category.name}</div>
                         <div style={{ color: '#777fa8', fontSize: '0.8rem' }}>
-                          Cтворено: {category.createdAt}
+                          {category.createdAt}
                         </div>
                       </div>
                     </ListGroupItem>
@@ -60,7 +60,7 @@ export const StoreManagement: FC = () => {
             )}
           </Card.Body>
           <Card.Body>
-            Add new:
+            Add:
             <Container
               style={{ padding: 0, display: 'flex', justifyContent: 'space-between', gap: '50px' }}
             >
@@ -68,10 +68,15 @@ export const StoreManagement: FC = () => {
                 <Form.Control
                   ref={newCategory}
                   type="text"
-                  placeholder={newCategory.current?.placeholder}
+                  onMouseEnter={() => {
+                    if (newCategory.current) newCategory.current.placeholder = 'new category';
+                  }}
+                  onMouseOut={() => {
+                    if (newCategory.current) newCategory.current.placeholder = '';
+                  }}
                 />
               </Form.Group>
-              <Button variant={'outline-primary'} onClick={(e) => addNew(e, 'newCategory')}>
+              <Button variant={'outline-primary'} onClick={() => addNew('newCategory')}>
                 Створити
               </Button>
             </Container>
@@ -80,23 +85,30 @@ export const StoreManagement: FC = () => {
         <Card border={'success'}>
           <Card.Header className={css.title}>Types</Card.Header>
           <Card.Body>
-            <div>All types:</div>
-            <ListGroup>
-              {types &&
-                types.map((type) => (
-                  <ListGroupItem key={type.name}>
-                    <div style={{ padding: 0, display: 'flex', justifyContent: 'space-between' }}>
-                      <div>{type.name}</div>
-                      <div style={{ color: '#778ba8', fontSize: '0.8rem' }}>
-                        Cтворено: {type.createdAt}
+            <div className={css.titleAll}>
+              <div>All types:</div>
+              <div style={{ color: '#777fa8', fontSize: '0.8rem' }}>Cтворено:</div>
+            </div>
+            {!types.length ? (
+              <Spinner animation="grow" variant="success" style={{ marginLeft: '120px' }} />
+            ) : (
+              <ListGroup>
+                {types &&
+                  types.map((type) => (
+                    <ListGroupItem key={type.name}>
+                      <div style={{ padding: 0, display: 'flex', justifyContent: 'space-between' }}>
+                        <div>{type.name}</div>
+                        <div style={{ color: '#778ba8', fontSize: '0.8rem' }}>
+                          Cтворено: {type.createdAt}
+                        </div>
                       </div>
-                    </div>
-                  </ListGroupItem>
-                ))}
-            </ListGroup>
+                    </ListGroupItem>
+                  ))}
+              </ListGroup>
+            )}
           </Card.Body>
           <Card.Body>
-            Add new:
+            Add:
             <Container
               style={{ padding: 0, display: 'flex', justifyContent: 'space-between', gap: '50px' }}
             >
@@ -104,10 +116,12 @@ export const StoreManagement: FC = () => {
                 <Form.Control
                   ref={newType}
                   type="text"
-                  placeholder={newType.current?.placeholder}
+                  onClick={() => {
+                    if (newType.current) newType.current.placeholder = 'new type';
+                  }}
                 />
               </Form.Group>
-              <Button variant={'outline-primary'} onClick={(e) => addNew(e, 'newType')}>
+              <Button variant={'outline-primary'} onClick={() => addNew('newType')}>
                 Створити
               </Button>
             </Container>

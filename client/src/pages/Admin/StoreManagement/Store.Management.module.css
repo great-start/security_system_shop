@@ -10,3 +10,10 @@
     font-weight: bold;
     color: #384f8d;
 }
+
+.titleAll {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 20px;
+    align-items: center;
+}

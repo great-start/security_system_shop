@@ -25,10 +25,8 @@ export const getAllCategoriesAsync = createAsyncThunk(
   'categoryTypeSlice/getAllCategoriesAsync',
   async (_, { dispatch }) => {
     try {
-      await setTimeout(async () => {
-        const { data } = await categoryTypeService.getAll.category();
-        dispatch(setAllCategories({ data }));
-      }, 1000);
+      const { data } = await categoryTypeService.getAll.category();
+      dispatch(setAllCategories({ data }));
     } catch (e) {}
   },
 );
