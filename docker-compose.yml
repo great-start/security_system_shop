@@ -19,7 +19,7 @@ services:
 #      SWAGGER_URL: docs
 #      DATABASE_URL: postgresql://postgres:postgres@jetup_db/jetup?schema=public
     links:
-      -   postgres
+      - postgres
 
   postgres:
     image: postgres:14.5-alpine
