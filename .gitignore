@@ -1,6 +1,6 @@
 .idea
 /server/node_modules/
-/server/.env.example
+/server/.env
 /server/prisma/migrations/
 /server/dist/
 /client/node_modules/

@@ -11,13 +11,13 @@ services:
     ports:
       - 5000:5000
     env_file:
-      - server/.env.example
+      - server/.env
 #    environment:
 #      PORT: 5000
 #      PROTOCOL: http
 #      HOST: localhost
 #      SWAGGER_URL: docs
-#      DATABASE_URL: postgresql://postgres:postgres@jetup_db/jetup?schema=public
+#      DATABASE_URL: postgresql://postgres:postgres@jetup_db/test?schema=public
     links:
       - postgres
 
@@ -31,5 +31,5 @@ services:
       timeout: 5s
       retries: 5
     env_file:
-      - server/.env.example
+      - server/.env
 

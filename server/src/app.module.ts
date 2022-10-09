@@ -14,7 +14,7 @@ import { AdminModule } from './admin/admin.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
-      envFilePath: '.env.example',
+      envFilePath: '.env',
       isGlobal: true,
     }),
     ProductModule,
