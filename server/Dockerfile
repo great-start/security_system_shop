@@ -1,7 +1,5 @@
 FROM node:16-alpine
 
-MAINTAINER "Ev"
-
 WORKDIR /usr/src/server
 
 COPY --chown=nest:nest package*.json ./

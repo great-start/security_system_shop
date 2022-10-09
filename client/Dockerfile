@@ -9,3 +9,9 @@ RUN npm ci
 COPY --chown=node:node . .
 
 CMD npm run build
+
+
+
+FROM nginx:alpine as production
+
+ENV
