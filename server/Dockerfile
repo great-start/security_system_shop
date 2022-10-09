@@ -12,6 +12,8 @@ COPY --chown=nest:nest . .
 
 RUN npm run build
 
-CMD [ "npm", "run", "start:prod" ]
+EXPOSE 5000
+
+CMD npm run start:prod
 
 
