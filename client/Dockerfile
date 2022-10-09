@@ -14,4 +14,3 @@ CMD npm run build
 
 FROM nginx:alpine as production
 
-ENV
