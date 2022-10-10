@@ -38,8 +38,7 @@ services:
 
   app:
     build:
-      context: ./
-      dockerfile: client/Dockerfile
+      context: ./client
     container_name: app
     restart: on-failure
     ports:
