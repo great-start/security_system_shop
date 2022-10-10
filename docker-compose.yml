@@ -2,8 +2,9 @@ version: '3.9'
 
 services:
 
-  api:
+  server:
     build: ./server
+    container_name: server
     depends_on:
       postgres:
         condition: service_healthy
@@ -37,6 +38,7 @@ services:
 
   app:
     build: ./client
+    container_name: app
     restart: on-failure
     ports:
       - 3000:3000
