@@ -1,17 +1,10 @@
 FROM node:16-alpine
-
 WORKDIR /usr/src/server
-
 COPY --chown=nest:nest package*.json ./
-
 RUN npm ci
-
 COPY --chown=nest:nest . .
-
 RUN npm run build
-
 EXPOSE 5000
-
 CMD npm run start:prod
 
 
