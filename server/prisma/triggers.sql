@@ -17,7 +17,7 @@ RETURN NULL;
 END;
     $$;
 
-CREATE TRIGGER status_change
+CREATE OR REPLACE TRIGGER status_change
     BEFORE UPDATE OR INSERT
     ON "Product"
     FOR EACH ROW
