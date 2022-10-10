@@ -24,7 +24,7 @@ services:
 
   postgres:
     image: postgres:14.5-alpine
-    container_name: db-postgres
+    container_name: postgres
     restart: on-failure
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -U postgres" ]
@@ -46,4 +46,4 @@ services:
       - ./client/.env
 
 volumes:
-  - postgres_data:
+  postgres_data:
