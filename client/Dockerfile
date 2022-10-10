@@ -11,6 +11,7 @@ COPY --chown=node:node . .
 RUN npm run build
 
 
+
 FROM nginx:alpine AS production
 
 LABEL maintainer="zhenya.bill@gmail.com"
