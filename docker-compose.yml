@@ -34,10 +34,12 @@ services:
     env_file:
       - ./server/.env
     volumes:
-      - postgres_data:var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql/data
 
   app:
-    build: ./client
+    build:
+      context: ./
+      dockerfile: client/Dockerfile
     container_name: app
     restart: on-failure
     ports:

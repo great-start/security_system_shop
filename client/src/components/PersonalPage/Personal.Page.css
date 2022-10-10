@@ -1,18 +1,18 @@
 .nav-tabs .nav-link.active {
-    color: rgba(5, 71, 129, 0.6);
-    font-weight: bold;
+  color: rgba(5, 71, 129, 0.6);
+  font-weight: bold;
 }
 
 .tabs > li > button:hover,
 .nav-tabs .nav-link:hover {
-    color: black;
-    background-color: #e8e8e8;
+  color: black;
+  background-color: #e8e8e8;
 }
 
 .tabs > li > button {
-    color: black;
+  color: black;
 }
 
 .tabs {
-    margin-bottom: 30px;
+  margin-bottom: 30px;
 }

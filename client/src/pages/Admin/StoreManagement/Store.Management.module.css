@@ -1,19 +1,19 @@
 .mainBox {
-    display: flex;
-    flex-direction: row;
-    padding: 0;
-    column-gap: 50px;
-    margin-bottom: 20px;
+  display: flex;
+  flex-direction: row;
+  padding: 0;
+  column-gap: 50px;
+  margin-bottom: 20px;
 }
 
 .title {
-    font-weight: bold;
-    color: #384f8d;
+  font-weight: bold;
+  color: #384f8d;
 }
 
 .titleAll {
-    display: flex;
-    justify-content: space-between;
-    padding: 10px 20px;
-    align-items: center;
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 20px;
+  align-items: center;
 }
