@@ -62,7 +62,7 @@ export const Header: FC = () => {
               SECSYSTEMS
             </NavLink>
             <NavLink to={'/shop'} className={css.isActive ? css.activeClassName : undefined}>
-              Магазин
+              Магазинbbb
             </NavLink>
             <NavLink to={'/install'} className={css.isActive ? css.activeClassName : undefined}>
               Послуги

@@ -32,20 +32,23 @@ services:
       timeout: 5s
       retries: 5
     ports:
-      - 5432:5432
+      - 5433:5432
     env_file:
       - ./server/.env
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
-  app:
+  web:
     build: ./client
-    container_name: app
-    restart: on-failure
+    container_name: web
+    restart: always
     ports:
       - 3000:3000
     env_file:
       - ./client/.env
+    volumes:
+      - /app/node_modules
+      - ./client:/app
 
 volumes:
   postgres_data:
