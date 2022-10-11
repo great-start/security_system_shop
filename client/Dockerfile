@@ -1,6 +1,7 @@
-FROM node:16-alpine AS builder
+#FROM node:16-alpine AS builder
+FROM node:16-alpine
 
-WORKDIR /usr/app
+WORKDIR /usr/src/app
 
 COPY --chown=node:node package*.json ./
 
@@ -11,7 +12,7 @@ COPY --chown=node:node . .
 EXPOSE 3000
 
 #RUN npm run build
-CMD npm run start
+CMD ["npm", "run", "dev"]
 
 
 # Production configuration
