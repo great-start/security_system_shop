@@ -44,6 +44,8 @@ services:
       dockerfile: ./Dockerfile_prod
     container_name: web
     restart: always
+    depends_on:
+      - server
     ports:
       - 3000:3000
     env_file:
@@ -55,8 +57,6 @@ services:
 #      - /usr/src/app/node_modules
 #    stdin_open: true     # option for delevopment
 #    tty: true
-#    depends_on:
-#      - server
 
 volumes:
   postgres_data:

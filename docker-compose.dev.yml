@@ -13,6 +13,8 @@ services:
       - 5000:5000
     env_file:
       - ./server/.env
+    volumes:
+      - ./server:/usr/src/server
     links:
       - postgres
 
@@ -38,13 +40,15 @@ services:
       dockerfile: ./Dockerfile_dev
     container_name: web
     restart: on-failure
+    depends_on:
+      - server
     ports:
       - 3000:3000
     env_file:
       - ./client/.env
     volumes:
       - ./client:/usr/src/app
-#      - /usr/src/app/node_modules
+#     - /usr/src/app/node_modules
 
 volumes:
   postgres_data:
