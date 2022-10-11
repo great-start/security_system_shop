@@ -39,7 +39,9 @@ services:
       - postgres_data:/var/lib/postgresql/data
 
   web:
-    build: ./client
+    build:
+      context: ./client
+      dockerfile: ./Dockerfile_prod
     container_name: web
     restart: always
     ports:
