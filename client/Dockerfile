@@ -1,6 +1,6 @@
 FROM node:16-alpine AS builder
 
-WORKDIR /app
+WORKDIR /usr/app
 
 COPY --chown=node:node package*.json ./
 
@@ -8,11 +8,13 @@ RUN npm ci
 
 COPY --chown=node:node . .
 
+EXPOSE 3000
+
 #RUN npm run build
 CMD npm run start
 
 
-
+# Production configuration
 #FROM nginx:alpine AS production
 #
 #LABEL maintainer="zhenya.bill@gmail.com"
