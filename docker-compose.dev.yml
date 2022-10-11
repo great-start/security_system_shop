@@ -35,7 +35,7 @@ services:
   web:
     build:
       context: ./client
-      dockerfile: ./Dockerfile.dev
+      dockerfile: client/Dockerfile_dev
     container_name: web
     restart: on-failure
     ports:
