@@ -10,7 +10,7 @@ RUN npm ci
 
 COPY --chown=nest:nest . .
 
-RUN npm run build
+#RUN npm run build
 
 EXPOSE 5000
 

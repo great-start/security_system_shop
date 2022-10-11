@@ -41,7 +41,7 @@ services:
   web:
     build:
       context: ./client
-      dockerfile: ./Dockerfile_prod
+      dockerfile: client/Dockerfile
     container_name: web
     restart: always
     depends_on:

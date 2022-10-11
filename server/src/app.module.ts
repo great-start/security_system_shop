@@ -17,6 +17,7 @@ import { AdminModule } from './admin/admin.module';
       envFilePath: '.env',
       isGlobal: true,
     }),
+
     ProductModule,
     TypeModule,
     CategoryModule,
