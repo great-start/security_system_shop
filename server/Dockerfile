@@ -6,7 +6,7 @@ WORKDIR /usr/src/server
 
 COPY --chown=nest:nest package*.json ./
 
-RUN npm ci
+RUN npm ci --only=production
 
 COPY --chown=nest:nest . .
 
@@ -15,6 +15,6 @@ COPY --chown=nest:nest . .
 EXPOSE 5000
 
 #CMD npm run start:prod
-CMD npm run start:dev
+CMD ["npm", "run", "start:dev"]
 
 

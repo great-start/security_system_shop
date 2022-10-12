@@ -2,11 +2,11 @@ version: '3.9'
 
 services:
 
-  server:
+  api:
     build:
       context: ./server
       dockerfile: Dockerfile
-    container_name: server
+    container_name: api
     restart: on-failure
     depends_on:
       postgres:
@@ -17,6 +17,7 @@ services:
       - ./server/.env
     volumes:
       - ./server:/usr/src/server
+      - /usr/src/server/node_modules
     links:
       - postgres
 
@@ -52,7 +53,7 @@ services:
       - ./client/.env
     volumes:
       - ./client:/usr/src/app
-#     - /usr/src/app/node_modules
+      - /usr/src/app/node_modules
 
 volumes:
   postgres_data:
