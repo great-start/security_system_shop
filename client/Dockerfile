@@ -1,11 +1,11 @@
-FROM node:16-alpine AS builder
+FROM node:16.17.1-alpine AS builder
 
 WORKDIR /usr/src/app
 
 COPY --chown=node:node package*.json ./
 
-RUN npm ci
-#RUN npm ci --only=production
+RUN npm ci   # for development
+#RUN npm ci --only=production   # for production
 
 COPY --chown=node:node . .
 

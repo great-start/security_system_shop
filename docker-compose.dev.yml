@@ -46,7 +46,7 @@ services:
     restart: on-failure
     depends_on:
       - server
-    command: npm run dev
+    command: ["npm", "run", "dev"]
     ports:
       - 3000:3000
     env_file:
