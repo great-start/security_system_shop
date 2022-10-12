@@ -1,6 +1,8 @@
 build/
 node_modules/
 
+Dockerfile
+
 npm-debug.log
 .idea
 .git
