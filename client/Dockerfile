@@ -1,5 +1,8 @@
 FROM node:16.17.1-alpine AS builder
 
+# production option
+# ENV NODE_ENV production
+
 WORKDIR /usr/src/app
 
 COPY --chown=node:node package*.json ./
