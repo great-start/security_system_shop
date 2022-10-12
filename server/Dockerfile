@@ -18,9 +18,13 @@ COPY --chown=nest:nest . .
 
 EXPOSE 5000
 
-# production option
-# CMD npm run start:prod
+USER nest
 
 CMD ["npm", "run", "start:dev"]
 
+# production option
+# RUN npm run prisma:prepare
+
+# production option
+# CMD ["node", "dist/main"]
 

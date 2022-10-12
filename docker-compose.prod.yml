@@ -36,8 +36,6 @@ services:
       - 5433:5432
     env_file:
       - ./server/.env
-    environment:
-      NODE_ENV: production
     volumes:
       - postgres_data:/var/lib/postgresql/data
 

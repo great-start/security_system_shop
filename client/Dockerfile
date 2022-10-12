@@ -12,6 +12,8 @@ RUN npm ci   # for development
 
 COPY --chown=node:node . .
 
+USER node
+
 RUN npm run build
 
 
