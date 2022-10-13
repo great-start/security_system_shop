@@ -1,4 +1,4 @@
-FROM node:16.17.1-slim
+FROM node:16.17.1-bullseye-slim
 
 LABEL maintainer="zhenya.bill@gmail.com"
 
@@ -7,18 +7,20 @@ LABEL maintainer="zhenya.bill@gmail.com"
 
 WORKDIR /usr/src/server
 
-COPY --chown=nest:nest package*.json ./
+COPY --chown=node:node package*.json ./
 
-RUN npm ci --only=production
+RUN npm ci
 
-COPY --chown=nest:nest . .
+COPY --chown=node:node . .
 
 # production option
 # RUN npm run build
 
+RUN npm run prisma:generate
+
 EXPOSE 5000
 
-USER nest
+USER node
 
 CMD ["npm", "run", "start:dev"]
 

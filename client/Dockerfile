@@ -1,4 +1,4 @@
-FROM node:16.17.1-alpine AS builder
+FROM node:16.17.1-alpine3.16 AS builder
 
 # production option
 # ENV NODE_ENV production
@@ -11,8 +11,6 @@ RUN npm ci   # for development
 #RUN npm ci --only=production   # for production
 
 COPY --chown=node:node . .
-
-USER node
 
 RUN npm run build
 

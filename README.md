@@ -2,7 +2,7 @@
 
 ## Installation && Running the app
 ```bash
-$ docker compose up -f docker-compose.prod.yml
+$ docker compose up -f docker-compose.dev.yml
 ```
 
 ## Test
