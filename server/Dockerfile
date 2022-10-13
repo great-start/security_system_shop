@@ -1,4 +1,4 @@
-FROM node:16.17.1-bullseye-slim
+FROM node:16.17.1-bullseye
 
 LABEL maintainer="zhenya.bill@gmail.com"
 
@@ -10,6 +10,9 @@ WORKDIR /usr/src/server
 COPY --chown=node:node package*.json ./
 
 RUN npm ci
+
+# production option
+# RUN npm ci --only=production
 
 COPY --chown=node:node . .
 

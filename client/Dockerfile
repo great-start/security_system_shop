@@ -12,7 +12,10 @@ RUN npm ci   # for development
 
 COPY --chown=node:node . .
 
-RUN npm run build
+#RUN npm run dev
+
+# production option
+#RUN npm run build
 
 
 # Final production configuration
