@@ -16,8 +16,8 @@ services:
     env_file:
       - ./server/.env
     volumes:
-      - ./server:/usr/src/server
       - /usr/src/server/node_modules
+      - ./server:/usr/src/server
     links:
       - postgres
 
@@ -52,8 +52,8 @@ services:
     env_file:
       - ./client/.env
     volumes:
-      - ./client:/usr/src/app
       - /usr/src/app/node_modules
+      - ./client:/usr/src/app
 
 volumes:
   postgres_data:
