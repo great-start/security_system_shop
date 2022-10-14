@@ -118,9 +118,7 @@ export const StoreManagement: FC = () => {
                     <ListGroupItem key={type.name}>
                       <div style={{ padding: 0, display: 'flex', justifyContent: 'space-between' }}>
                         <div>{type.name}</div>
-                        <div style={{ color: '#778ba8', fontSize: '0.8rem' }}>
-                          Cтворено: {type.createdAt}
-                        </div>
+                        <div style={{ color: '#778ba8', fontSize: '0.8rem' }}>{type.createdAt}</div>
                       </div>
                     </ListGroupItem>
                   ))}

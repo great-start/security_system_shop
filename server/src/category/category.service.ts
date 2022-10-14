@@ -19,7 +19,11 @@ export class CategoryService {
 
   async getAll() {
     try {
-      const categories = await this.prismaService.category.findMany();
+      const categories = await this.prismaService.category.findMany({
+        include: {
+          Type: true,
+        },
+      });
       categories.forEach((type) => DateFormat.formatData(type));
       return categories;
     } catch (e) {

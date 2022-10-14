@@ -20,20 +20,20 @@ export const CategoryList: FC = () => {
     <ListGroup className={css.groupList}>
       <p>Каталог товарів</p>
       {categories &&
-        categories.map((value) => (
+        categories.map((category) => (
           <ListGroup.Item
-            key={value.name}
-            className={params.categories === value.name ? css.linkedin : ''}
+            key={category.name}
+            className={params.categories === category.name ? css.linkedin : ''}
             action
-            href={`/shop/${value.name}`}
+            href={`/shop/${category.name}`}
             onClick={(e) => {
               e.preventDefault();
-              navigate(`/shop/${value.name}`);
+              navigate(`/shop/${category.name}`);
             }}
-            active={params.categories === value.name}
+            active={params.categories === category.name}
             // variant="secondary"
           >
-            {value.name}
+            {category.name}
           </ListGroup.Item>
         ))}
     </ListGroup>
