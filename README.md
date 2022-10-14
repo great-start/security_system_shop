@@ -1,6 +1,6 @@
 ## Description
 
-## Installation && Running the app
+## Installation && Running the app in dev mode
 ```bash
 $ docker compose up -f docker-compose.dev.yml
 ```

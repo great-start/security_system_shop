@@ -52,8 +52,8 @@ export class CategoryController {
     },
   })
   @Get('')
-  findAllCategories() {
-    return this.categoryService.findAll();
+  getAllCategories() {
+    return this.categoryService.getAll();
   }
 
   @Patch(':id')

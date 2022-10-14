@@ -11,19 +11,16 @@ export class CategoryService {
   async create(category: CreateCategoryDto) {
     try {
       const newCategory = await this.prismaService.category.create({ data: category });
-      console.log(newCategory);
       return newCategory;
     } catch (e) {
       throw new HttpException('Server Error', HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 
-  async findAll() {
+  async getAll() {
     try {
-      console.log(' get all categories_________________');
       const categories = await this.prismaService.category.findMany();
       categories.forEach((type) => DateFormat.formatData(type));
-      console.log(categories.length);
       return categories;
     } catch (e) {
       throw new HttpException('Server Error', HttpStatus.INTERNAL_SERVER_ERROR);

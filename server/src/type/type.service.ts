@@ -9,7 +9,11 @@ export class TypeService {
   constructor(private readonly prismaService: PrismaService) {}
 
   create(type: CreateTypeDto) {
-    return this.prismaService.type.create({ data: type });
+    // return this.prismaService.type.create({ data: {
+    //   name: type.name,
+    //     categoryId: type.
+    //
+    //   } });
   }
 
   async findAll() {

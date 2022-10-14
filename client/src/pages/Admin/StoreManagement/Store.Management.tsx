@@ -8,6 +8,7 @@ import css from './Store.Management.module.css';
 export const StoreManagement: FC = () => {
   const newCategory = useRef<HTMLInputElement>(null);
   const newType = useRef<HTMLInputElement>(null);
+  const chooseCategory = useRef<HTMLSelectElement>(null);
   const [reload, setReload] = useState<boolean>(false);
   const dispatch = useAppDispatch();
   const { categories, types, isLoading } = useAppSelector((state) => state.categoryTypeReducer);
@@ -17,7 +18,7 @@ export const StoreManagement: FC = () => {
     dispatch(getAllTypesAsync());
   }, [reload]);
 
-  const addNew = (action: string) => {
+  const addNewCategory = (action: string) => {
     dispatch(
       addNewAsync({
         action,
@@ -29,6 +30,11 @@ export const StoreManagement: FC = () => {
     setTimeout(() => {
       setReload(!reload);
     }, 800);
+  };
+
+  const addNewType = () => {
+    dispatch(add)
+    console.log(chooseCategory.current?.value, newType.current?.value);
   };
 
   return (
@@ -76,7 +82,7 @@ export const StoreManagement: FC = () => {
                   }}
                 />
               </Form.Group>
-              <Button variant={'outline-primary'} onClick={() => addNew('newCategory')}>
+              <Button variant={'outline-primary'} onClick={() => addNewCategory('newCategory')}>
                 Створити
               </Button>
             </Container>
@@ -107,24 +113,53 @@ export const StoreManagement: FC = () => {
               </ListGroup>
             )}
           </Card.Body>
-          <Card.Body>
-            <div className={css.titleAll}>Add:</div>
+          <Card.Body style={{ display: 'flex' }}>
             <Container
-              style={{ padding: 0, display: 'flex', justifyContent: 'space-between', gap: '50px' }}
+              style={{
+                padding: 0,
+                display: 'flex',
+                justifyContent: 'space-between',
+                gap: '50px',
+                alignSelf: 'end',
+              }}
             >
               <Form.Group>
-                <Form.Control
-                  ref={newType}
-                  type="text"
-                  onMouseEnter={() => {
-                    if (newType.current) newType.current.placeholder = 'new type';
+                <Container
+                  style={{
+                    padding: 0,
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    gap: '50px',
                   }}
-                  onMouseOut={() => {
-                    if (newType.current) newType.current.placeholder = '';
-                  }}
-                />
+                >
+                  <Container style={{ padding: 0 }}>
+                    <div className={css.titleAll}>To category:</div>
+                    <Form.Select ref={chooseCategory}>
+                      {categories.map((category) => (
+                        <option value={category.name}>{category.name}</option>
+                      ))}
+                    </Form.Select>
+                  </Container>
+                  <Container style={{ padding: 0 }}>
+                    <div className={css.titleAll}>New type:</div>
+                    <Form.Control
+                      ref={newType}
+                      type="text"
+                      onMouseEnter={() => {
+                        if (newType.current) newType.current.placeholder = 'new type';
+                      }}
+                      onMouseOut={() => {
+                        if (newType.current) newType.current.placeholder = '';
+                      }}
+                    />
+                  </Container>
+                </Container>
               </Form.Group>
-              <Button variant={'outline-primary'} onClick={() => addNew('newType')}>
+              <Button
+                variant={'outline-primary'}
+                onClick={() => addNewType()}
+                style={{ alignSelf: 'flex-end', display: 'block' }}
+              >
                 Створити
               </Button>
             </Container>

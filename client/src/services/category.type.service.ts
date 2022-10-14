@@ -12,6 +12,7 @@ export const categoryTypeService = {
     API.get<IProduct[]>(`${urls.categories}/${category}`),
   addNew: {
     category: (category: string | undefined) => API.post<void>(urls.categories, { name: category }),
-    type: (type: string | undefined) => API.post<void>(urls.types, { name: type }),
+    type: (attachedToCategory: string, type: string) =>
+      API.post<void>(urls.types, { attachedToCategory, type }),
   },
 };

@@ -1,7 +1,8 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { AxiosError } from 'axios';
+
 import { ICategory, IType } from '../../interfaces';
 import { categoryTypeService } from '../../services';
-import { AxiosError } from 'axios';
 
 interface ICategoriesTypesState {
   categories: ICategory[];
@@ -47,16 +48,28 @@ export const addNewAsync = createAsyncThunk<
   { rejectValue: ErrorsResponse }
 >('categoryTypeSlice/addNewAsync', async ({ action, body }, { rejectWithValue }) => {
   try {
-    if (action === 'newCategory') {
-      await categoryTypeService.addNew.category(body);
-    } else {
-      await categoryTypeService.addNew.type(body);
-    }
+    await categoryTypeService.addNew.category(body);
   } catch (err) {
     const error = err as AxiosError;
     return rejectWithValue(error.response?.data as ErrorsResponse);
   }
 });
+
+export const addNewTypeAsync = createAsyncThunk<
+  void,
+  { attachedToCategory: string; type: string },
+  { rejectValue: ErrorsResponse }
+>(
+  'categoryTypeSlice/addNewTypeAsync',
+  async ({ attachedToCategory, type }, { rejectWithValue }) => {
+    try {
+      await categoryTypeService.addNew.type(attachedToCategory, type);
+    } catch (err) {
+      const error = err as AxiosError;
+      return rejectWithValue(error.response?.data as ErrorsResponse);
+    }
+  },
+);
 
 const categoryTypeSlice = createSlice({
   name: 'categorySlice',
