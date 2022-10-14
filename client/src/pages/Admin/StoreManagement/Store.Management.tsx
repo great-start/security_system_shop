@@ -41,11 +41,14 @@ export const StoreManagement: FC = () => {
     if (chooseCategory.current && newType.current) {
       dispatch(
         addNewTypeAsync({
-          attachedToCategory: chooseCategory.current.value,
-          type: newType.current.value,
+          typeName: newType.current.value,
+          relatedCategoryId: Number(chooseCategory.current.value),
         }),
       );
     }
+    setTimeout(() => {
+      setReload(!reload);
+    }, 800);
   };
 
   return (
@@ -147,7 +150,7 @@ export const StoreManagement: FC = () => {
                     <div className={css.titleAll}>To category:</div>
                     <Form.Select ref={chooseCategory}>
                       {categories.map((category) => (
-                        <option key={category.name} value={category.name}>
+                        <option key={category.id} value={category.id}>
                           {category.name}
                         </option>
                       ))}

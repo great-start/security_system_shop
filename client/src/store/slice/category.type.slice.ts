@@ -57,13 +57,13 @@ export const addNewAsync = createAsyncThunk<
 
 export const addNewTypeAsync = createAsyncThunk<
   void,
-  { attachedToCategory: string; type: string },
+  { typeName: string; relatedCategoryId: number },
   { rejectValue: ErrorsResponse }
 >(
   'categoryTypeSlice/addNewTypeAsync',
-  async ({ attachedToCategory, type }, { rejectWithValue }) => {
+  async ({ typeName, relatedCategoryId }, { rejectWithValue }) => {
     try {
-      await categoryTypeService.addNew.type(attachedToCategory, type);
+      await categoryTypeService.addNew.type(typeName, relatedCategoryId);
     } catch (err) {
       const error = err as AxiosError;
       return rejectWithValue(error.response?.data as ErrorsResponse);

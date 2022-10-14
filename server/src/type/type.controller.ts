@@ -17,8 +17,9 @@ export class TypeController {
   @UseGuards(JwtCheckGuard, RolesGuard)
   @Roles(Role.ADMIN)
   @Post('/')
-  create(@Body() type: CreateTypeDto) {
-    return this.typeService.create(type);
+  create(@Body() typeData: CreateTypeDto) {
+    console.log(typeData);
+    return this.typeService.create(typeData);
   }
 
   @Get()

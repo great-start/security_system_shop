@@ -10,10 +10,11 @@ export class TypeService {
   constructor(private readonly prismaService: PrismaService) {}
 
   async create(typeData: CreateTypeDto) {
+    console.log(typeData);
     await this.prismaService.type.create({
       data: {
         name: typeData.name,
-        categoryId: typeData.relatedCategoryId,
+        categoryId: Number(typeData.relatedCategoryId),
       },
     });
   }
