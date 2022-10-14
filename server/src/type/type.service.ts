@@ -1,4 +1,5 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+
 import { CreateTypeDto } from './dto/create-type.dto';
 import { UpdateTypeDto } from './dto/update-type.dto';
 import { PrismaService } from '../prisma.service';
@@ -8,12 +9,13 @@ import { DateFormat } from '../utils/date.format';
 export class TypeService {
   constructor(private readonly prismaService: PrismaService) {}
 
-  create(type: CreateTypeDto) {
-    // return this.prismaService.type.create({ data: {
-    //   name: type.name,
-    //     categoryId: type.
-    //
-    //   } });
+  async create(typeData: CreateTypeDto) {
+    await this.prismaService.type.create({
+      data: {
+        name: typeData.name,
+        categoryId: typeData.relatedCategoryId,
+      },
+    });
   }
 
   async findAll() {

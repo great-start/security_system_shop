@@ -147,7 +147,9 @@ export const StoreManagement: FC = () => {
                     <div className={css.titleAll}>To category:</div>
                     <Form.Select ref={chooseCategory}>
                       {categories.map((category) => (
-                        <option value={category.name}>{category.name}</option>
+                        <option key={category.name} value={category.name}>
+                          {category.name}
+                        </option>
                       ))}
                     </Form.Select>
                   </Container>
