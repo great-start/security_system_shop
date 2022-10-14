@@ -2,7 +2,12 @@ import React, { FC, useEffect, useRef, useState } from 'react';
 import { Button, Card, Container, Form, ListGroup, ListGroupItem, Spinner } from 'react-bootstrap';
 
 import { useAppDispatch, useAppSelector } from '../../../hooks';
-import { addNewAsync, getAllCategoriesAsync, getAllTypesAsync } from '../../../store';
+import {
+  addNewAsync,
+  addNewTypeAsync,
+  getAllCategoriesAsync,
+  getAllTypesAsync,
+} from '../../../store';
 import css from './Store.Management.module.css';
 
 export const StoreManagement: FC = () => {
@@ -33,8 +38,14 @@ export const StoreManagement: FC = () => {
   };
 
   const addNewType = () => {
-    dispatch(add)
-    console.log(chooseCategory.current?.value, newType.current?.value);
+    if (chooseCategory.current && newType.current) {
+      dispatch(
+        addNewTypeAsync({
+          attachedToCategory: chooseCategory.current.value,
+          type: newType.current.value,
+        }),
+      );
+    }
   };
 
   return (
