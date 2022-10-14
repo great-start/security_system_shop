@@ -67,11 +67,13 @@ model Product {
 }
 
 model Type {
-  id        Int       @id @default(autoincrement())
-  name      String    @unique
-  createdAt DateTime  @default(now())
-  updatedAt DateTime? @updatedAt
-  Product   Product[]
+  id         Int       @id @default(autoincrement())
+  name       String    @unique
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime? @updatedAt
+  Product    Product[]
+  category   Category  @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  categoryId Int
 }
 
 model Category {
@@ -80,6 +82,7 @@ model Category {
   createdAt DateTime  @default(now())
   updatedAt DateTime? @updatedAt
   Product   Product[]
+  Type      Type[]
 }
 
 enum Product_status {
