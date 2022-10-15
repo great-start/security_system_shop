@@ -21,46 +21,33 @@ export const Shop: FC = () => {
   const dispatch = useAppDispatch();
   const params = useParams();
 
-  console.log(categories);
+  useEffect(() => {
+    dispatch(getAllCategoriesAsync());
+    // dispatch(getAllProductsAsync());
+  }, []);
 
   useEffect(() => {
-    const getProducts = async () => {
-      dispatch(getAllCategoriesAsync())
-        .unwrap()
-        .then(() => {
-          if (params.category) {
-            // dispatch(getProductsByCategoryAsync(params.category));
-            showTypes(params.category);
-            return;
-          }
-          dispatch(getAllProductsAsync());
-          console.log('load');
-        });
-    };
-    getProducts();
-  }, []);
+    if (params.category) {
+      showTypes(params.category);
+      return;
+    }
+  }, [isLoading]);
 
   const showTypes = (categoryTitle: string) => {
     const category = categories.find((category) => category.name === categoryTitle);
     category ? setCategory(category) : null;
     setIsTypesHide(true);
-    console.log('load inside', category);
   };
-
-  console.log('loading');
 
   const activateCategory = (e: React.MouseEvent<Element>, categoryTitle: string) => {
     e.preventDefault();
     navigate(`/shop/${categoryTitle}`);
     showTypes(categoryTitle);
-    console.log('activateCategory');
   };
 
-  if (!isLoading) {
-    return <Spinner animation="grow" variant="success" style={{ marginLeft: '120px' }} />;
-  }
-
-  return (
+  return isLoading ? (
+    <Spinner animation="border" variant="success" style={{ marginLeft: '120px' }} />
+  ) : (
     <div style={{ display: 'flex' }}>
       <ListGroup className={css.groupList}>
         <p>Каталог товарів</p>

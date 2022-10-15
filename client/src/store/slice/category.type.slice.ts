@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AxiosError } from 'axios';
 
 import { ICategory, IType } from '../../interfaces';
@@ -86,11 +86,9 @@ const categoryTypeSlice = createSlice({
     builder
       .addCase(getAllCategoriesAsync.pending, (state) => {
         state.isLoading = true;
-        console.log('pending');
       })
       .addCase(getAllCategoriesAsync.fulfilled, (state) => {
         state.isLoading = false;
-        console.log('fulfilled');
       });
   },
 });
