@@ -3,13 +3,30 @@
   flex-wrap: wrap;
 }
 
-groupList {
-  max-width: 226px;
-  width: 25%;
+.groupList {
+  /*max-width: 226px;*/
+  /*width: 25%;*/
+  /*flex: 1 0 0;*/
 }
 
 .linkedin {
   background-color: rgba(123, 171, 231, 0.23) !important;
   border-color: lightgray !important;
   color: black !important;
+}
+
+.titles {
+  padding: 1em;
+}
+
+.shopWrap {
+  display: flex;
+}
+
+.shopWrap:nth-child(1) {
+  flex: 1 0 100px;
+}
+
+.shopWrap:nth-child(2) {
+  flex: 7 0 100px;
 }

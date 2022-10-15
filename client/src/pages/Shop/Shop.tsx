@@ -1,9 +1,9 @@
 import React, { FC, useEffect, useState } from 'react';
-import { ListGroup, Spinner } from 'react-bootstrap';
+import { Container, ListGroup, Spinner } from 'react-bootstrap';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { getAllCategoriesAsync } from '../../store';
+import { getAllCategoriesAsync, getAllProductsAsync, getProductsSortedByType } from '../../store';
 import { Product } from '../../components';
 import { ICategory } from '../../interfaces';
 import css from './Shop.module.css';
@@ -19,6 +19,7 @@ export const Shop: FC = () => {
 
   useEffect(() => {
     dispatch(getAllCategoriesAsync());
+    dispatch(getAllProductsAsync());
   }, []);
 
   useEffect(() => {
@@ -40,39 +41,49 @@ export const Shop: FC = () => {
     showTypes(categoryTitle);
   };
 
+  const activateType = (e: React.MouseEvent<Element>, typeId: number) => {
+    e.preventDefault();
+    dispatch(getProductsSortedByType({ typeId }));
+  };
+
   return isLoading ? (
     <Spinner animation="border" variant="success" style={{ marginLeft: '120px' }} />
   ) : (
-    <div style={{ display: 'flex' }}>
-      <ListGroup className={css.groupList}>
-        <p>Каталог товарів</p>
-        {categories &&
-          categories.map((category) => (
-            <ListGroup.Item
-              key={category.name}
-              className={params.categories === category.name ? css.linkedin : ''}
-              action
-              href={`/shop/${category.name}`}
-              onClick={(e) => activateCategory(e, category.name)}
-              active={params.categories === category.name}
-              // variant="secondary"
-            >
-              {category.name}
-            </ListGroup.Item>
-          ))}
-      </ListGroup>
+    <div className={css.shopWrap}>
+      <div>
+        <ListGroup className={css.groupList}>
+          <div className={css.titles}>Каталог товарів</div>
+          {categories &&
+            categories.map((category) => (
+              <ListGroup.Item
+                key={category.name}
+                className={params.categories === category.name ? css.linkedin : ''}
+                action
+                href={`/shop/${category.name}`}
+                onClick={(e) => activateCategory(e, category.name)}
+                active={params.categories === category.name}
+                // variant="secondary"
+              >
+                {category.name}
+              </ListGroup.Item>
+            ))}
+        </ListGroup>
+      </div>
       <div style={{ display: 'flex', flexDirection: 'column', marginLeft: 20 }}>
-        {isTypesHide && (
-          <div style={{ display: 'flex', flexDirection: 'row', gap: '50px' }}>
-            <p>Типи товарів:</p>
+        <div style={{ display: 'flex', flexDirection: 'row', gap: '50px' }}>
+          <div className={css.titles}>Типи товарів:</div>
+          {isTypesHide && (
             <ListGroup horizontal>
               {category?.Type &&
                 category.Type.map((type) => (
-                  <ListGroup.Item key={type.name}>{type.name}</ListGroup.Item>
+                  <ListGroup.Item key={type.name} onClick={(e) => activateType(e, type.id)}>
+                    {type.name}
+                  </ListGroup.Item>
                 ))}
             </ListGroup>
-          </div>
-        )}
+          )}
+        </div>
+
         <div className={css.products}>
           {products && products.map((product) => <Product key={product.id} product={product} />)}
         </div>

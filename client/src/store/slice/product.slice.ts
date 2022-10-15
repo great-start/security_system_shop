@@ -28,13 +28,13 @@ export const getAllProductsAsync = createAsyncThunk<void, void, { dispatch: Disp
   },
 );
 
-export const getProductsByCategoryAsync = createAsyncThunk<
+export const getProductsSortedByType = createAsyncThunk<
   void,
-  { category: string },
+  { typeId: number },
   { dispatch: Dispatch }
->('productSlice/getProductsByCategoryAsync', async ({ category }, { dispatch }) => {
+>('productSlice/getProductsByCategoryAsync', async ({ typeId }, { dispatch }) => {
   try {
-    const { data } = await categoryTypeService.getProductsByCategory(category);
+    const { data } = await categoryTypeService.getProductsSortedByType(typeId);
     dispatch(setAllProducts({ data }));
   } catch (e) {}
 });
