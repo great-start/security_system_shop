@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { IProduct } from '../../interfaces';
+import { ErrorsResponse, IProduct } from '../../interfaces';
 import { userService } from '../../services';
 import { AxiosError } from 'axios';
 
@@ -13,12 +13,6 @@ export interface IBasket extends IOrder {
   products: IProduct[];
   sum: number;
   orderStatus: boolean;
-}
-
-interface ErrorsResponse {
-  error: string;
-  message: [Record<string, any>];
-  statusCode: number;
 }
 
 const initialState: IBasket = {

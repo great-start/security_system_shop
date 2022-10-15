@@ -15,11 +15,11 @@ import {
   addNewCategoryAsync,
   addNewProductAsync,
   addNewTypeAsync,
-  getAllCategoriesAsync,
+  clearState,
+  getAllCategoriesAsync, getAllProductsAsync,
   getAllTypesAsync,
 } from '../../../store';
 import css from './Store.Management.module.css';
-import { Prod } from '../../../interfaces';
 
 export const StoreManagement: FC = () => {
   const newCategory = useRef<HTMLInputElement>(null);
@@ -31,7 +31,8 @@ export const StoreManagement: FC = () => {
   const newProductQuantity = useRef<HTMLInputElement>(null);
   const newProductType = useRef<HTMLSelectElement>(null);
   const dispatch = useAppDispatch();
-  const { categories, types, isLoading } = useAppSelector((state) => state.categoryTypeReducer);
+  const { categories, types } = useAppSelector((state) => state.categoryTypeReducer);
+  const { errors, successfulResponce } = useAppSelector((state) => state.productReducer);
 
   useEffect(() => {
     dispatch(getAllCategoriesAsync());
@@ -49,7 +50,8 @@ export const StoreManagement: FC = () => {
     }, 500);
   };
 
-  const addNewType = () => {
+  const addNewType = (e: React.MouseEvent) => {
+    e.preventDefault();
     if (chooseCategory.current && newType.current) {
       dispatch(
         addNewTypeAsync({
@@ -80,7 +82,18 @@ export const StoreManagement: FC = () => {
           price: Number(newProductPrice.current.value),
           quantity: newProductQuantity.current.value,
         }),
-      );
+      )
+        .unwrap()
+        .then(() => {
+          const timer = setTimeout(() => {
+            dispatch(clearState());
+            clearTimeout(timer);
+          }, 2000);
+        });
+      newProductType.current.value = '';
+      newProductName.current.value = '';
+      newProductPrice.current.value = '';
+      newProductQuantity.current.value = '';
     }
   };
 
@@ -242,7 +255,7 @@ export const StoreManagement: FC = () => {
               </Form.Group>
               <Button
                 variant={'outline-primary'}
-                onClick={() => addNewType()}
+                onClick={(e) => addNewType(e)}
                 style={{ alignSelf: 'flex-end', display: 'block' }}
               >
                 Створити
@@ -294,6 +307,7 @@ export const StoreManagement: FC = () => {
                       if (newProductName.current) newProductName.current.placeholder = '';
                     }}
                   />
+                  <Form.Text style={{ color: 'chocolate' }}>{errors && errors[0].name}</Form.Text>
                 </Container>
                 <Container style={{ padding: 0 }}>
                   <div className={css.title}>Price:</div>
@@ -307,6 +321,7 @@ export const StoreManagement: FC = () => {
                       if (newProductPrice.current) newProductPrice.current.placeholder = '';
                     }}
                   />
+                  <Form.Text style={{ color: 'chocolate' }}>{errors && errors[0].price}</Form.Text>
                 </Container>
                 <Container style={{ padding: 0 }}>
                   <div className={css.title}>Quantity:</div>
@@ -321,6 +336,9 @@ export const StoreManagement: FC = () => {
                       if (newProductQuantity.current) newProductQuantity.current.placeholder = '';
                     }}
                   />
+                  <Form.Text style={{ color: 'chocolate' }}>
+                    {errors && errors[0].quantity}
+                  </Form.Text>
                 </Container>
               </Container>
             </Form.Group>
@@ -331,6 +349,9 @@ export const StoreManagement: FC = () => {
             >
               додати товар
             </Button>
+            <Form.Text style={{ color: 'green' }}>
+              {successfulResponce && 'Product was added!'}
+            </Form.Text>
           </Container>
         </Card.Body>
       </Card>

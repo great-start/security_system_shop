@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { AxiosError } from 'axios';
 
 import { userService } from '../../services';
-import { ITokenData } from '../../interfaces';
+import { ErrorsResponse, ITokenData } from '../../interfaces';
 import { Role } from '../../constants';
 
 interface IAuthState {
@@ -16,12 +16,6 @@ interface IAuthState {
   error401: null | string;
   isSignInForm: boolean;
   authChecking: boolean;
-}
-
-interface ErrorsResponse {
-  error: string;
-  message: [Record<string, any>];
-  statusCode: number;
 }
 
 interface Error401Response {
@@ -184,10 +178,8 @@ export const AuthSlice = createSlice({
         state.authChecking = true;
       })
       .addCase(signUpAsync.rejected, (state, action) => {
-        if (action.payload) {
-          state.errors = action.payload?.message as [Record<string, any>];
-          state.authChecking = false;
-        }
+        state.errors = action.payload?.message as [Record<string, any>];
+        state.authChecking = false;
       })
       .addCase(signUpAsync.fulfilled, (state) => {
         state.authChecking = false;

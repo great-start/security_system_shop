@@ -21,31 +21,27 @@ export const AuthPage: FC = () => {
   };
 
   const signIn = async (e: any) => {
-    try {
-      e.preventDefault();
-      await dispatch(
-        signInAsync({
-          email: e.target.email.value,
-          password: e.target.password.value,
-        }),
-      ).unwrap();
-      navigate(pages.personal);
-    } catch (e) {}
+    e.preventDefault();
+    await dispatch(
+      signInAsync({
+        email: e.target.email.value,
+        password: e.target.password.value,
+      }),
+    ).unwrap();
+    navigate(pages.personal);
   };
 
   const signUp = async (e: any) => {
-    try {
-      e.preventDefault();
-      await dispatch(
-        signUpAsync({
-          firstName: e.target.firstName.value,
-          lastName: e.target.lastName.value,
-          email: e.target.email.value,
-          password: e.target.password.value,
-        }),
-      ).unwrap();
-      navigate(pages.personal);
-    } catch (e) {}
+    e.preventDefault();
+    await dispatch(
+      signUpAsync({
+        firstName: e.target.firstName.value,
+        lastName: e.target.lastName.value,
+        email: e.target.email.value,
+        password: e.target.password.value,
+      }),
+    ).unwrap();
+    navigate(pages.personal);
   };
 
   return isAuth ? (

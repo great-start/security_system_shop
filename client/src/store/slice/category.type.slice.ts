@@ -1,7 +1,7 @@
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { AxiosError } from 'axios';
 
-import { ICategory, IType } from '../../interfaces';
+import { ErrorsResponse, ICategory, IType } from '../../interfaces';
 import { categoryTypeService } from '../../services';
 
 interface ICategoriesTypesState {
@@ -15,12 +15,6 @@ const initialState: ICategoriesTypesState = {
   types: [],
   isLoading: false,
 };
-
-export interface ErrorsResponse {
-  error: string;
-  message: [Record<string, any>];
-  statusCode: number;
-}
 
 export const getAllCategoriesAsync = createAsyncThunk(
   'categoryTypeSlice/getAllCategoriesAsync',

@@ -1,15 +1,21 @@
 import { createSlice, createAsyncThunk, Dispatch } from '@reduxjs/toolkit';
 
 import { categoryTypeService, productService } from '../../services';
-import { IAddProduct, IProduct } from '../../interfaces';
-import { ErrorsResponse } from './category.type.slice';
+import { ErrorsResponse, IAddProduct, IProduct } from '../../interfaces';
+import { AxiosError } from 'axios';
 
 interface IProductState {
   products: IProduct[];
+  errors: null | [Record<string, any>];
+  isLoading: boolean;
+  successfulResponce: boolean;
 }
 
 const initialState: IProductState = {
   products: [],
+  errors: null,
+  isLoading: false,
+  successfulResponce: false,
 };
 
 export const getAllProductsAsync = createAsyncThunk<void, void, { dispatch: Dispatch }>(
@@ -37,11 +43,14 @@ export const addNewProductAsync = createAsyncThunk<
   void,
   Partial<IAddProduct>,
   { rejectValue: ErrorsResponse }
->('productSlice/addNewProductAsync', async (product, { rejectWithValue }) => {
+>('productSlice/addNewProductAsync', async (product, { rejectWithValue, dispatch }) => {
   try {
-    console.log(product);
-    await productService.addOne(product);
-  } catch (e) {}
+    const axiosResponse = await productService.addOne(product);
+    axiosResponse.status === 201 ? dispatch(successfulResponce()) : null;
+  } catch (err) {
+    const error = err as AxiosError;
+    return rejectWithValue(error.response?.data as ErrorsResponse);
+  }
 });
 
 const productSlice = createSlice({
@@ -51,21 +60,29 @@ const productSlice = createSlice({
     setAllProducts: (state, action) => {
       state.products = action.payload.data;
     },
+    successfulResponce: (state) => {
+      state.successfulResponce = true;
+    },
+    clearState: (state) => {
+      state.successfulResponce = false;
+      state.errors = null;
+    },
   },
-  // extraReducers: (builder) => {
-  //     builder.addCase(getAllProductsAsync.pending, (state,action) => {
-  //
-  //     });
-  //     builder.addCase(getAllProductsAsync.fulfilled, (state, action) => {
-  //
-  //     });
-  //     builder.addCase(getAllProductsAsync.fulfilled, (state, action) => {
-  //
-  //     });
-  // }
+  extraReducers: (builder) => {
+    builder.addCase(addNewProductAsync.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(addNewProductAsync.fulfilled, (state, payload) => {
+      state.isLoading = false;
+    });
+    builder.addCase(addNewProductAsync.rejected, (state, action) => {
+      state.isLoading = false;
+      state.errors = action.payload?.message as [Record<string, any>];
+    });
+  },
 });
 
-export const { setAllProducts } = productSlice.actions;
+export const { setAllProducts, successfulResponce, clearState } = productSlice.actions;
 
 const productReducer = productSlice.reducer;
 export default productReducer;
