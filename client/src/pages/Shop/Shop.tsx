@@ -71,7 +71,7 @@ export const Shop: FC = () => {
       </div>
       <div style={{ display: 'flex', flexDirection: 'column', marginLeft: 20 }}>
         <div style={{ display: 'flex', flexDirection: 'row', gap: '50px' }}>
-          <div className={css.titles}>Типи товарів:</div>
+          <div className={css.titles}></div>
           {isTypesHide && (
             <ListGroup horizontal>
               {category?.Type &&
