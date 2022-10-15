@@ -84,11 +84,11 @@ const categoryTypeSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(getAllCategoriesAsync.pending, (state, action) => {
+      .addCase(getAllCategoriesAsync.pending, (state) => {
         state.isLoading = true;
         console.log('pending');
       })
-      .addCase(getAllCategoriesAsync.fulfilled, (state, action) => {
+      .addCase(getAllCategoriesAsync.fulfilled, (state) => {
         state.isLoading = false;
         console.log('fulfilled');
       });
