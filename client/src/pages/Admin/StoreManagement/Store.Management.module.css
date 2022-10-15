@@ -4,16 +4,33 @@
   padding: 0;
   column-gap: 50px;
   margin-bottom: 20px;
+  align-items: flex-start;
 }
 
-.title {
-  font-weight: bold;
+.AccordionHeader > button {
+  display: flex;
+  justify-content: space-between;
   color: #384f8d;
+  font-weight: bold;
+  padding: 0.5em;
+  background: rgba(123, 171, 231, 0.23)
 }
 
 .titleAll {
   display: flex;
-  justify-content: space-between;
+  justify-content: end;
   padding: 10px 20px;
-  align-items: center;
+}
+
+.title {
+  justify-content: end;
+}
+
+.accordionBody {
+  background: rgba(123, 171, 231, 0.23);
+  padding: 0;
+}
+
+.cardBody {
+  align-self: end;
 }

@@ -3,11 +3,7 @@ import { ListGroup, Spinner } from 'react-bootstrap';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import {
-  getAllCategoriesAsync,
-  getAllProductsAsync,
-  getProductsByCategoryAsync,
-} from '../../store';
+import { getAllCategoriesAsync } from '../../store';
 import { Product } from '../../components';
 import { ICategory } from '../../interfaces';
 import css from './Shop.module.css';
@@ -23,7 +19,6 @@ export const Shop: FC = () => {
 
   useEffect(() => {
     dispatch(getAllCategoriesAsync());
-    // dispatch(getAllProductsAsync());
   }, []);
 
   useEffect(() => {

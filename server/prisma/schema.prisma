@@ -51,19 +51,17 @@ model Basket_item {
 }
 
 model Product {
-  id         String          @id @default(uuid())
-  name       String          @unique
-  title      String?
-  price      Int
-  status     Product_status?
-  type       Type            @relation(fields: [typeId], references: [id])
-  typeId     Int
-  category   Category        @relation(fields: [categoryId], references: [id])
-  categoryId Int
-  quantity   Int?            @default(0)
-  image      String?
-  createdAt  DateTime        @default(now())
-  Basket     Basket_item[]
+  id        String          @id @default(uuid())
+  name      String          @unique
+  title     String?
+  price     Int
+  status    Product_status?
+  type      Type            @relation(fields: [typeId], references: [id])
+  typeId    Int
+  quantity  Int?            @default(0)
+  image     String?
+  createdAt DateTime        @default(now())
+  Basket    Basket_item[]
 }
 
 model Type {
@@ -81,7 +79,6 @@ model Category {
   name      String    @unique
   createdAt DateTime  @default(now())
   updatedAt DateTime? @updatedAt
-  Product   Product[]
   Type      Type[]
 }
 

@@ -32,23 +32,23 @@ export class CategoryService {
   }
 
   async findProducts(category: string) {
-    const findCategory = await this.prismaService.category.findUnique({
-      where: {
-        name: category,
-      },
-    });
-
-    if (!findCategory) {
-      throw new NotFoundException('Page not Found');
-    }
-
-    return this.prismaService.product.findMany({
-      where: {
-        category: {
-          name: category,
-        },
-      },
-    });
+    // const findCategory = await this.prismaService.category.findUnique({
+    //   where: {
+    //     name: category,
+    //   },
+    // });
+    //
+    // if (!findCategory) {
+    //   throw new NotFoundException('Page not Found');
+    // }
+    //
+    // return this.prismaService.product.findMany({
+    //   where: {
+    //     category: {
+    //       name: category,
+    //     },
+    //   },
+    // });
   }
 
   update(id: number, updateCategoryDto: UpdateCategoryDto) {
