@@ -22,13 +22,6 @@ export class CreateProductDto {
   @Transform(({ value }) => Number(value))
   typeId: number;
 
-  @ApiProperty({ example: '1', description: 'type id' })
-  @IsNumber()
-  @Min(1)
-  @IsNotEmpty()
-  @Transform(({ value }) => Number(value))
-  categoryId: number;
-
   @ApiProperty({ example: '100', description: 'product quantity' })
   @IsNumber()
   @IsOptional()

@@ -13,11 +13,13 @@ import {
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import {
   addNewCategoryAsync,
+  addNewProductAsync,
   addNewTypeAsync,
   getAllCategoriesAsync,
   getAllTypesAsync,
 } from '../../../store';
 import css from './Store.Management.module.css';
+import { Prod } from '../../../interfaces';
 
 export const StoreManagement: FC = () => {
   const newCategory = useRef<HTMLInputElement>(null);
@@ -62,6 +64,24 @@ export const StoreManagement: FC = () => {
     setTimeout(() => {
       setReload(!reload);
     }, 500);
+  };
+
+  const addNewProduct = () => {
+    if (
+      newProductType.current &&
+      newProductName.current &&
+      newProductPrice.current &&
+      newProductQuantity.current
+    ) {
+      dispatch(
+        addNewProductAsync({
+          name: newProductName.current.value,
+          typeId: newProductType.current.value,
+          price: Number(newProductPrice.current.value),
+          quantity: newProductQuantity.current.value,
+        }),
+      );
+    }
   };
 
   return (
@@ -306,7 +326,7 @@ export const StoreManagement: FC = () => {
             </Form.Group>
             <Button
               variant={'outline-primary'}
-              onClick={() => addNewType()}
+              onClick={() => addNewProduct()}
               style={{ alignSelf: 'flex-end', display: 'block' }}
             >
               додати товар

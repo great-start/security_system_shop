@@ -7,6 +7,11 @@ export interface IProduct {
   status?: Prod;
 }
 
+export interface IAddProduct extends IProduct {
+  typeId: string;
+  quantity: string;
+}
+
 export enum Prod {
   OUT_OF_STOCK = 'Немає в наявності',
   IN_STOCK = 'В наявності',

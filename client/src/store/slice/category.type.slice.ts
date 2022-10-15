@@ -16,7 +16,7 @@ const initialState: ICategoriesTypesState = {
   isLoading: false,
 };
 
-interface ErrorsResponse {
+export interface ErrorsResponse {
   error: string;
   message: [Record<string, any>];
   statusCode: number;
@@ -46,7 +46,7 @@ export const addNewCategoryAsync = createAsyncThunk<
   void,
   { newCategory: string },
   { rejectValue: ErrorsResponse }
->('categoryTypeSlice/addNewAsync', async ({ newCategory }, { rejectWithValue }) => {
+>('categoryTypeSlice/addNewCategoryAsync', async ({ newCategory }, { rejectWithValue }) => {
   try {
     await categoryTypeService.addNew.category(newCategory);
   } catch (err) {
