@@ -42,13 +42,13 @@ export const getAllTypesAsync = createAsyncThunk(
   },
 );
 
-export const addNewAsync = createAsyncThunk<
+export const addNewCategoryAsync = createAsyncThunk<
   void,
-  { action: string; body: string | undefined },
+  { newCategory: string },
   { rejectValue: ErrorsResponse }
->('categoryTypeSlice/addNewAsync', async ({ action, body }, { rejectWithValue }) => {
+>('categoryTypeSlice/addNewAsync', async ({ newCategory }, { rejectWithValue }) => {
   try {
-    await categoryTypeService.addNew.category(body);
+    await categoryTypeService.addNew.category(newCategory);
   } catch (err) {
     const error = err as AxiosError;
     return rejectWithValue(error.response?.data as ErrorsResponse);

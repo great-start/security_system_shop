@@ -12,7 +12,7 @@ import {
 
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import {
-  addNewAsync,
+  addNewCategoryAsync,
   addNewTypeAsync,
   getAllCategoriesAsync,
   getAllTypesAsync,
@@ -36,15 +36,12 @@ export const StoreManagement: FC = () => {
     dispatch(getAllTypesAsync());
   }, [reload]);
 
-  const addNewCategory = (action: string) => {
-    dispatch(
-      addNewAsync({
-        action,
-        body: action === 'newCategory' ? newCategory.current?.value : newType.current?.value,
-      }),
-    );
-    if (newCategory.current) newCategory.current.value = '';
-    if (newType.current) newType.current.value = '';
+  const addNewCategory = () => {
+    if (newCategory.current) {
+      dispatch(addNewCategoryAsync({ newCategory: newCategory.current.value }));
+      newCategory.current.value = '';
+    }
+
     setTimeout(() => {
       setReload(!reload);
     }, 500);
@@ -58,7 +55,10 @@ export const StoreManagement: FC = () => {
           relatedCategoryId: Number(chooseCategory.current.value),
         }),
       );
+      chooseCategory.current.value = '';
+      newType.current.value = '';
     }
+
     setTimeout(() => {
       setReload(!reload);
     }, 500);
@@ -76,8 +76,8 @@ export const StoreManagement: FC = () => {
               <Accordion.Body className={css.accordionBody}>
                 <Card.Body>
                   <div className={css.titleAll}>
-                    <div style={{ color: '#777fa8', fontSize: '0.8rem', alignSelf: 'flex-end' }}>
-                      Cтворено:
+                    <div style={{ color: '#777fa8', fontSize: '1rem', alignSelf: 'flex-end' }}>
+                      Дата створення:
                     </div>
                   </div>
                   {!categories.length ? (
@@ -105,37 +105,37 @@ export const StoreManagement: FC = () => {
                   )}
                 </Card.Body>
               </Accordion.Body>
+              <Card.Body style={{ display: 'flex' }}>
+                <Container className={css.cardBody}>
+                  <div className={css.title}>Add new:</div>
+                  <Container
+                    style={{
+                      padding: 0,
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      gap: '50px',
+                    }}
+                  >
+                    <Form.Group>
+                      <Form.Control
+                        ref={newCategory}
+                        type="text"
+                        onMouseEnter={() => {
+                          if (newCategory.current) newCategory.current.placeholder = 'new category';
+                        }}
+                        onMouseOut={() => {
+                          if (newCategory.current) newCategory.current.placeholder = '';
+                        }}
+                      />
+                    </Form.Group>
+                    <Button variant={'outline-primary'} onClick={() => addNewCategory()}>
+                      Створити
+                    </Button>
+                  </Container>
+                </Container>
+              </Card.Body>
             </Accordion.Item>
           </Accordion>
-          <Card.Body style={{ display: 'flex' }}>
-            <Container className={css.cardBody}>
-              <div className={css.title}>Add new:</div>
-              <Container
-                style={{
-                  padding: 0,
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  gap: '50px',
-                }}
-              >
-                <Form.Group>
-                  <Form.Control
-                    ref={newCategory}
-                    type="text"
-                    onMouseEnter={() => {
-                      if (newCategory.current) newCategory.current.placeholder = 'new category';
-                    }}
-                    onMouseOut={() => {
-                      if (newCategory.current) newCategory.current.placeholder = '';
-                    }}
-                  />
-                </Form.Group>
-                <Button variant={'outline-primary'} onClick={() => addNewCategory('newCategory')}>
-                  Створити
-                </Button>
-              </Container>
-            </Container>
-          </Card.Body>
         </Card>
 
         <Card border={'success'}>
@@ -147,8 +147,7 @@ export const StoreManagement: FC = () => {
               <Accordion.Body className={css.accordionBody}>
                 <Card.Body>
                   <div className={css.titleAll}>
-                    <div>All types:</div>
-                    <div style={{ color: '#777fa8', fontSize: '0.8rem' }}>Cтворено:</div>
+                    <div style={{ color: '#777fa8', fontSize: '1rem' }}>Дата створення:</div>
                   </div>
                   {!types.length ? (
                     <Spinner animation="grow" variant="success" style={{ marginLeft: '120px' }} />
@@ -197,7 +196,7 @@ export const StoreManagement: FC = () => {
                   }}
                 >
                   <Container style={{ padding: 0 }}>
-                    <div className={css.titleAll}>To category:</div>
+                    <div className={css.title}>Related to:</div>
                     <Form.Select ref={chooseCategory}>
                       {categories.map((category) => (
                         <option key={category.id} value={category.id}>
@@ -207,7 +206,7 @@ export const StoreManagement: FC = () => {
                     </Form.Select>
                   </Container>
                   <Container style={{ padding: 0 }}>
-                    <div className={css.titleAll}>New type:</div>
+                    <div className={css.title}>New type:</div>
                     <Form.Control
                       ref={newType}
                       type="text"
@@ -254,7 +253,7 @@ export const StoreManagement: FC = () => {
                 }}
               >
                 <Container style={{ padding: 0 }}>
-                  <div className={css.titleAll}>Product type:</div>
+                  <div className={css.title}>Product type:</div>
                   <Form.Select ref={newProductType}>
                     {types.map((type) => (
                       <option key={type.id} value={type.id}>
@@ -264,41 +263,42 @@ export const StoreManagement: FC = () => {
                   </Form.Select>
                 </Container>
                 <Container style={{ padding: 0 }}>
-                  <div className={css.titleAll}>Name:</div>
+                  <div className={css.title}>Name:</div>
                   <Form.Control
                     ref={newProductName}
                     type="text"
                     onMouseEnter={() => {
-                      if (newType.current) newType.current.placeholder = 'name';
+                      if (newProductName.current) newProductName.current.placeholder = 'name';
                     }}
                     onMouseOut={() => {
-                      if (newType.current) newType.current.placeholder = '';
+                      if (newProductName.current) newProductName.current.placeholder = '';
                     }}
                   />
                 </Container>
                 <Container style={{ padding: 0 }}>
-                  <div className={css.titleAll}>Price:</div>
+                  <div className={css.title}>Price:</div>
                   <Form.Control
                     ref={newProductPrice}
                     type="text"
                     onMouseEnter={() => {
-                      if (newType.current) newType.current.placeholder = 'price';
+                      if (newProductPrice.current) newProductPrice.current.placeholder = 'price';
                     }}
                     onMouseOut={() => {
-                      if (newType.current) newType.current.placeholder = '';
+                      if (newProductPrice.current) newProductPrice.current.placeholder = '';
                     }}
                   />
                 </Container>
                 <Container style={{ padding: 0 }}>
-                  <div className={css.titleAll}>Quantity:</div>
+                  <div className={css.title}>Quantity:</div>
                   <Form.Control
                     ref={newProductQuantity}
                     type="text"
                     onMouseEnter={() => {
-                      if (newType.current) newType.current.placeholder = 'quantity';
+                      if (newProductQuantity.current)
+                        newProductQuantity.current.placeholder = 'quantity';
                     }}
                     onMouseOut={() => {
-                      if (newType.current) newType.current.placeholder = '';
+                      if (newProductQuantity.current) newProductQuantity.current.placeholder = '';
                     }}
                   />
                 </Container>
@@ -309,7 +309,7 @@ export const StoreManagement: FC = () => {
               onClick={() => addNewType()}
               style={{ alignSelf: 'flex-end', display: 'block' }}
             >
-              Створити
+              додати товар
             </Button>
           </Container>
         </Card.Body>
