@@ -3,7 +3,7 @@ import { ListGroup, Spinner } from 'react-bootstrap';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { getAllCategoriesAsync, getAllProductsAsync, getProductsSortedBy } from '../../store';
+import { getAllCategoriesAsync, getAllProductsOrSortedBy } from '../../store';
 import { Product } from '../../components';
 import { ICategory, IType } from '../../interfaces';
 import css from './Shop.module.css';
@@ -19,8 +19,7 @@ export const Shop: FC = () => {
 
   useEffect(() => {
     dispatch(getAllCategoriesAsync());
-    dispatch(getAllProductsAsync());
-    console.log('useEffect');
+    dispatch(getAllProductsOrSortedBy({}));
   }, []);
 
   useEffect(() => {
@@ -37,12 +36,12 @@ export const Shop: FC = () => {
     e.preventDefault();
     navigate(`/shop/${category.name}`);
     showTypes(category.name);
-    dispatch(getProductsSortedBy({ categoryId: category.id }));
+    dispatch(getAllProductsOrSortedBy({ categoryId: category.id }));
   };
 
   const activateType = (e: React.MouseEvent<Element>, type: IType) => {
     e.preventDefault();
-    dispatch(getProductsSortedBy({ typeId: type.id }));
+    dispatch(getAllProductsOrSortedBy({ typeId: type.id }));
   };
 
   return isLoading ? (
@@ -68,7 +67,7 @@ export const Shop: FC = () => {
         </ListGroup>
       </div>
       <div style={{ display: 'flex', flexDirection: 'column', marginLeft: 20, width: '100%' }}>
-        <div className={`${css.titles} ${isTypesHide && css.catalog}`}>
+        <div className={`${css.titles} ${css.catalog}`}>
           {isTypesHide && (
             <ListGroup horizontal className={css.types}>
               {category?.Type &&

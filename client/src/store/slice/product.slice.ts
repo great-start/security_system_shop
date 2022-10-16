@@ -18,17 +18,7 @@ const initialState: IProductState = {
   successfulResponce: false,
 };
 
-export const getAllProductsAsync = createAsyncThunk<void, void, { dispatch: Dispatch }>(
-  'productSlice/getAllProductsAsync',
-  async (_, { dispatch }) => {
-    try {
-      const { data } = await productService.getAll();
-      dispatch(setAllProducts({ data }));
-    } catch (e) {}
-  },
-);
-
-export const getProductsSortedBy = createAsyncThunk<
+export const getAllProductsOrSortedBy = createAsyncThunk<
   void,
   { [key: string]: number },
   { dispatch: Dispatch; rejectValue: ErrorsResponse }
@@ -36,7 +26,7 @@ export const getProductsSortedBy = createAsyncThunk<
   'productSlice/getProductsByCategoryAsync',
   async ({ typeId, categoryId }, { dispatch, rejectWithValue }) => {
     try {
-      const { data } = await productService.getProductsSortedBy(typeId, categoryId);
+      const { data } = await productService.getAllProductsOrSortedBy(typeId, categoryId);
       dispatch(setAllProducts({ data }));
     } catch (err) {
       const error = err as AxiosError;
@@ -77,6 +67,7 @@ const productSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(addNewProductAsync.pending, (state) => {
       state.isLoading = true;
+      state.errors = null;
     });
     builder.addCase(addNewProductAsync.fulfilled, (state) => {
       state.isLoading = false;
@@ -85,11 +76,11 @@ const productSlice = createSlice({
       state.isLoading = false;
       state.errors = action.payload?.message as [Record<string, any>];
     });
-    builder.addCase(getProductsSortedBy.pending, (state) => {
+    builder.addCase(getAllProductsOrSortedBy.pending, (state) => {
       state.isLoading = true;
       state.errors = null;
     });
-    builder.addCase(getProductsSortedBy.rejected, (state, action) => {
+    builder.addCase(getAllProductsOrSortedBy.rejected, (state, action) => {
       state.isLoading = false;
       if (action.payload?.statusCode === 404) {
         state.products = [];

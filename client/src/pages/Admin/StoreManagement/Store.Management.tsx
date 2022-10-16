@@ -16,7 +16,7 @@ import {
   addNewProductAsync,
   addNewTypeAsync,
   clearState,
-  getAllCategoriesAsync, getAllProductsAsync,
+  getAllCategoriesAsync,
   getAllTypesAsync,
 } from '../../../store';
 import css from './Store.Management.module.css';
