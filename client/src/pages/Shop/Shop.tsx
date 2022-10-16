@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useState } from 'react';
 import { ListGroup, Spinner } from 'react-bootstrap';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getAllCategoriesAsync, getAllProductsOrSortedBy } from '../../store';
@@ -14,11 +14,22 @@ export const Shop: FC = () => {
   const [category, setCategory] = useState<ICategory | null>(null);
   const [isTypesHide, setIsTypesHide] = useState<boolean>(false);
   const navigate = useNavigate();
+  const { state } = useLocation();
   const dispatch = useAppDispatch();
   const params = useParams();
 
   useEffect(() => {
     dispatch(getAllCategoriesAsync());
+    if (params.category && !params.type && state) {
+      const category = state as ICategory;
+      dispatch(getAllProductsOrSortedBy({ categoryId: category.id }));
+      return;
+    }
+    if (params.category && params.type && state) {
+      const type = state as IType;
+      dispatch(getAllProductsOrSortedBy({ typeId: type.id }));
+      return;
+    }
     dispatch(getAllProductsOrSortedBy({}));
   }, []);
 
@@ -34,18 +45,19 @@ export const Shop: FC = () => {
 
   const activateCategory = (e: React.MouseEvent<Element>, category: ICategory) => {
     e.preventDefault();
-    navigate(`/shop/${category.name}`);
+    navigate(`/shop/${category.name}`, { state: category });
     showTypes(category.name);
     dispatch(getAllProductsOrSortedBy({ categoryId: category.id }));
   };
 
   const activateType = (e: React.MouseEvent<Element>, type: IType) => {
     e.preventDefault();
+    navigate(`/shop/${category?.name}/${type.name}`, { state: type });
     dispatch(getAllProductsOrSortedBy({ typeId: type.id }));
   };
 
   return isLoading ? (
-    <Spinner animation="border" variant="success" style={{ marginLeft: '120px' }} />
+    <Spinner animation="grow" variant="success" style={{ marginLeft: '120px' }} />
   ) : (
     <div className={css.shopWrap}>
       <div>

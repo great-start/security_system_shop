@@ -25,7 +25,9 @@ const App: FC = () => {
         {/*public routes*/}
         <Route index element={<MainPage />} />
         <Route path={'shop'} element={<Shop />}>
-          <Route path={':category'} element={<Shop />} />
+          <Route path={':category'} element={<Shop />}>
+            <Route path={':type'} element={<Shop />} />
+          </Route>
         </Route>
         <Route path={'product/:id'} element={<ProductDetails />} />
         <Route path={'install'} element={<Install />} />
