@@ -43,6 +43,7 @@ export const Shop: FC = () => {
 
   const activateType = (e: React.MouseEvent<Element>, typeId: number) => {
     e.preventDefault();
+    console.log(typeId);
     dispatch(getProductsSortedByType({ typeId }));
   };
 
@@ -52,7 +53,7 @@ export const Shop: FC = () => {
     <div className={css.shopWrap}>
       <div>
         <ListGroup className={css.groupList}>
-          <div className={css.titles}>Каталог товарів</div>
+          <div className={`${css.titles} ${css.catalog}`}>Каталог товарів</div>
           {categories &&
             categories.map((category) => (
               <ListGroup.Item
@@ -70,13 +71,17 @@ export const Shop: FC = () => {
         </ListGroup>
       </div>
       <div style={{ display: 'flex', flexDirection: 'column', marginLeft: 20 }}>
-        <div style={{ display: 'flex', flexDirection: 'row', gap: '50px' }}>
-          <div className={css.titles}></div>
+        <div className={`${css.titles} ${isTypesHide && css.catalog}`}>
           {isTypesHide && (
-            <ListGroup horizontal>
+            <ListGroup horizontal className={css.types}>
               {category?.Type &&
                 category.Type.map((type) => (
-                  <ListGroup.Item key={type.name} onClick={(e) => activateType(e, type.id)}>
+                  <ListGroup.Item
+                    className={css.listItem}
+                    key={type.name}
+                    action
+                    onClick={(e) => activateType(e, type.id)}
+                  >
                     {type.name}
                   </ListGroup.Item>
                 ))}

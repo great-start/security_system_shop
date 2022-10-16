@@ -10,12 +10,12 @@ import {
   UploadedFile,
   UsePipes,
   ValidationPipe,
-  UseGuards,
+  UseGuards, Query,
 } from '@nestjs/common';
 import { ProductService } from './product.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiQuery, ApiTags } from '@nestjs/swagger';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { MulterFileOptions } from '../utils/MulterFileOptions';
 import { JwtCheckGuard } from '../auth/guards/jwt-check.guard';
@@ -33,8 +33,8 @@ export class ProductController {
   @UsePipes(new ValidationPipe({ transform: true }))
   @UseInterceptors(FileInterceptor('image', MulterFileOptions))
   @Post('/')
-  create(@Body() product: CreateProductDto, @UploadedFile() image: Express.Multer.File) {
-    return this.productService.create(product, image?.path);
+  addNew(@Body() product: CreateProductDto, @UploadedFile() image: Express.Multer.File) {
+    return this.productService.addNew(product, image?.path);
   }
 
   @Get()
@@ -45,6 +45,16 @@ export class ProductController {
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.productService.findOne(id);
+  }
+
+  @Get(':typeId')
+  @ApiQuery({
+    name: 'typeId',
+    required: true,
+    type: Number,
+  })
+  findOneSortedByType(@Query('typeId') typeId: number) {
+    return this.productService.findAllOneByTypeId(typeId);
   }
 
   @Patch(':id')

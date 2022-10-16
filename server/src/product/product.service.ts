@@ -7,7 +7,7 @@ import { PrismaService } from '../prisma.service';
 export class ProductService {
   constructor(private prismaService: PrismaService) {}
 
-  async create(product: CreateProductDto, filename?: string) {
+  async addNew(product: CreateProductDto, filename?: string) {
     return this.prismaService.product.create({
       data: {
         ...product,
@@ -23,6 +23,14 @@ export class ProductService {
   async findOne(id: string) {
     return this.prismaService.product.findUnique({
       where: { id },
+    });
+  }
+
+  async findAllOneByTypeId(typeId: number) {
+    return this.prismaService.product.findMany({
+      where: {
+        typeId,
+      },
     });
   }
 

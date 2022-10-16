@@ -18,7 +18,6 @@ export class TypeController {
   @Roles(Role.ADMIN)
   @Post('/')
   create(@Body() typeData: CreateTypeDto) {
-    console.log(typeData);
     return this.typeService.create(typeData);
   }
 
