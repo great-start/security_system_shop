@@ -34,7 +34,7 @@ export const getProductsSortedByType = createAsyncThunk<
   { dispatch: Dispatch }
 >('productSlice/getProductsByCategoryAsync', async ({ typeId }, { dispatch }) => {
   try {
-    const { data } = await categoryTypeService.getProductsSortedByType(typeId);
+    const { data } = await productService.getProductsSortedByType(typeId);
     dispatch(setAllProducts({ data }));
   } catch (e) {}
 });

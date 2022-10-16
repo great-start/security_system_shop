@@ -47,6 +47,8 @@ export const Shop: FC = () => {
     dispatch(getProductsSortedByType({ typeId }));
   };
 
+  console.log(products);
+
   return isLoading ? (
     <Spinner animation="border" variant="success" style={{ marginLeft: '120px' }} />
   ) : (
