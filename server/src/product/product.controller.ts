@@ -10,13 +10,15 @@ import {
   UploadedFile,
   UsePipes,
   ValidationPipe,
-  UseGuards, Query,
+  UseGuards,
+  Query,
 } from '@nestjs/common';
+import { ApiQuery, ApiTags } from '@nestjs/swagger';
+import { FileInterceptor } from '@nestjs/platform-express';
+
 import { ProductService } from './product.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
-import { ApiQuery, ApiTags } from '@nestjs/swagger';
-import { FileInterceptor } from '@nestjs/platform-express';
 import { MulterFileOptions } from '../utils/MulterFileOptions';
 import { JwtCheckGuard } from '../auth/guards/jwt-check.guard';
 import { RolesGuard } from '../auth/guards/roles.guard';
@@ -37,25 +39,25 @@ export class ProductController {
     return this.productService.addNew(product, image?.path);
   }
 
-  @Get()
-  findAll() {
-    return this.productService.findAll();
-  }
-
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.productService.findOne(id);
   }
 
-  @Get(':typeId')
+  @Get('/')
   @ApiQuery({
     name: 'typeId',
-    required: true,
+    required: false,
     type: Number,
   })
   findOneSortedByType(@Query('typeId') typeId: number) {
     return this.productService.findAllOneByTypeId(typeId);
   }
+
+  // @Get('/')
+  // findAll() {
+  //   return this.productService.findAll();
+  // }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateProductDto: UpdateProductDto) {
