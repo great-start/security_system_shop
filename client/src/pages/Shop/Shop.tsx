@@ -1,15 +1,15 @@
 import React, { FC, useEffect, useState } from 'react';
-import { Container, ListGroup, Spinner } from 'react-bootstrap';
+import { ListGroup, Spinner } from 'react-bootstrap';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { getAllCategoriesAsync, getAllProductsAsync, getProductsSortedByType } from '../../store';
+import { getAllCategoriesAsync, getAllProductsAsync, getProductsSortedBy } from '../../store';
 import { Product } from '../../components';
-import { ICategory } from '../../interfaces';
+import { ICategory, IType } from '../../interfaces';
 import css from './Shop.module.css';
 
 export const Shop: FC = () => {
-  const { products } = useAppSelector((state) => state.productReducer);
+  const { products, errors } = useAppSelector((state) => state.productReducer);
   const { categories, isLoading } = useAppSelector((state) => state.categoryTypeReducer);
   const [category, setCategory] = useState<ICategory | null>(null);
   const [isTypesHide, setIsTypesHide] = useState<boolean>(false);
@@ -20,13 +20,11 @@ export const Shop: FC = () => {
   useEffect(() => {
     dispatch(getAllCategoriesAsync());
     dispatch(getAllProductsAsync());
+    console.log('useEffect');
   }, []);
 
   useEffect(() => {
-    if (params.category) {
-      showTypes(params.category);
-      return;
-    }
+    params.category ? showTypes(params.category) : null;
   }, [isLoading]);
 
   const showTypes = (categoryTitle: string) => {
@@ -35,26 +33,24 @@ export const Shop: FC = () => {
     setIsTypesHide(true);
   };
 
-  const activateCategory = (e: React.MouseEvent<Element>, categoryTitle: string) => {
+  const activateCategory = (e: React.MouseEvent<Element>, category: ICategory) => {
     e.preventDefault();
-    navigate(`/shop/${categoryTitle}`);
-    showTypes(categoryTitle);
+    navigate(`/shop/${category.name}`);
+    showTypes(category.name);
+    dispatch(getProductsSortedBy({ categoryId: category.id }));
   };
 
-  const activateType = (e: React.MouseEvent<Element>, typeId: number) => {
+  const activateType = (e: React.MouseEvent<Element>, type: IType) => {
     e.preventDefault();
-    console.log(typeId);
-    dispatch(getProductsSortedByType({ typeId }));
+    dispatch(getProductsSortedBy({ typeId: type.id }));
   };
-
-  console.log(products);
 
   return isLoading ? (
     <Spinner animation="border" variant="success" style={{ marginLeft: '120px' }} />
   ) : (
     <div className={css.shopWrap}>
       <div>
-        <ListGroup className={css.groupList}>
+        <ListGroup>
           <div className={`${css.titles} ${css.catalog}`}>Каталог товарів</div>
           {categories &&
             categories.map((category) => (
@@ -63,16 +59,15 @@ export const Shop: FC = () => {
                 className={params.categories === category.name ? css.linkedin : ''}
                 action
                 href={`/shop/${category.name}`}
-                onClick={(e) => activateCategory(e, category.name)}
+                onClick={(e) => activateCategory(e, category)}
                 active={params.categories === category.name}
-                // variant="secondary"
               >
                 {category.name}
               </ListGroup.Item>
             ))}
         </ListGroup>
       </div>
-      <div style={{ display: 'flex', flexDirection: 'column', marginLeft: 20 }}>
+      <div style={{ display: 'flex', flexDirection: 'column', marginLeft: 20, width: '100%' }}>
         <div className={`${css.titles} ${isTypesHide && css.catalog}`}>
           {isTypesHide && (
             <ListGroup horizontal className={css.types}>
@@ -82,7 +77,7 @@ export const Shop: FC = () => {
                     className={css.listItem}
                     key={type.name}
                     action
-                    onClick={(e) => activateType(e, type.id)}
+                    onClick={(e) => activateType(e, type)}
                   >
                     {type.name}
                   </ListGroup.Item>
@@ -92,6 +87,7 @@ export const Shop: FC = () => {
         </div>
 
         <div className={css.products}>
+          {errors && <div className={css.error404}>{errors.toString()}</div>}
           {products && products.map((product) => <Product key={product.id} product={product} />)}
         </div>
       </div>

@@ -32,7 +32,7 @@ export class ProductController {
 
   @UseGuards(JwtCheckGuard, RolesGuard)
   @Roles(Role.ADMIN)
-  @UsePipes(new ValidationPipe({ transform: true }))
+  // @UsePipes(new ValidationPipe({ transform: true }))
   @UseInterceptors(FileInterceptor('image', MulterFileOptions))
   @Post('/')
   addNew(@Body() product: CreateProductDto, @UploadedFile() image: Express.Multer.File) {
@@ -50,8 +50,13 @@ export class ProductController {
     required: false,
     type: Number,
   })
-  findOneSortedByType(@Query('typeId') typeId: number) {
-    return this.productService.findAllOneByTypeId(typeId);
+  @ApiQuery({
+    name: 'categoryId',
+    required: false,
+    type: Number,
+  })
+  findManySortedByType(@Query('typeId') typeId: number, @Query('categoryId') categoryId: number) {
+    return this.productService.findManySortedBy(typeId, categoryId);
   }
 
   // @Get('/')
@@ -59,13 +64,13 @@ export class ProductController {
   //   return this.productService.findAll();
   // }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateProductDto: UpdateProductDto) {
-    return this.productService.update(+id, updateProductDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.productService.remove(id);
-  }
+  // @Patch(':id')
+  // update(@Param('id') id: string, @Body() updateProductDto: UpdateProductDto) {
+  //   return this.productService.update(+id, updateProductDto);
+  // }
+  //
+  // @Delete(':id')
+  // remove(@Param('id') id: string) {
+  //   return this.productService.remove(id);
+  // }
 }

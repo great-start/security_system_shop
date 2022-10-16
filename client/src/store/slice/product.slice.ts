@@ -1,12 +1,12 @@
 import { createSlice, createAsyncThunk, Dispatch } from '@reduxjs/toolkit';
 
-import { categoryTypeService, productService } from '../../services';
+import { productService } from '../../services';
 import { ErrorsResponse, IAddProduct, IProduct } from '../../interfaces';
 import { AxiosError } from 'axios';
 
 interface IProductState {
   products: IProduct[];
-  errors: null | [Record<string, any>];
+  errors: null | [Record<string, any>] | Record<string, any>;
   isLoading: boolean;
   successfulResponce: boolean;
 }
@@ -28,16 +28,22 @@ export const getAllProductsAsync = createAsyncThunk<void, void, { dispatch: Disp
   },
 );
 
-export const getProductsSortedByType = createAsyncThunk<
+export const getProductsSortedBy = createAsyncThunk<
   void,
-  { typeId: number },
-  { dispatch: Dispatch }
->('productSlice/getProductsByCategoryAsync', async ({ typeId }, { dispatch }) => {
-  try {
-    const { data } = await productService.getProductsSortedByType(typeId);
-    dispatch(setAllProducts({ data }));
-  } catch (e) {}
-});
+  { [key: string]: number },
+  { dispatch: Dispatch; rejectValue: ErrorsResponse }
+>(
+  'productSlice/getProductsByCategoryAsync',
+  async ({ typeId, categoryId }, { dispatch, rejectWithValue }) => {
+    try {
+      const { data } = await productService.getProductsSortedBy(typeId, categoryId);
+      dispatch(setAllProducts({ data }));
+    } catch (err) {
+      const error = err as AxiosError;
+      return rejectWithValue(error.response?.data as ErrorsResponse);
+    }
+  },
+);
 
 export const addNewProductAsync = createAsyncThunk<
   void,
@@ -72,12 +78,23 @@ const productSlice = createSlice({
     builder.addCase(addNewProductAsync.pending, (state) => {
       state.isLoading = true;
     });
-    builder.addCase(addNewProductAsync.fulfilled, (state, payload) => {
+    builder.addCase(addNewProductAsync.fulfilled, (state) => {
       state.isLoading = false;
     });
     builder.addCase(addNewProductAsync.rejected, (state, action) => {
       state.isLoading = false;
       state.errors = action.payload?.message as [Record<string, any>];
+    });
+    builder.addCase(getProductsSortedBy.pending, (state) => {
+      state.isLoading = true;
+      state.errors = null;
+    });
+    builder.addCase(getProductsSortedBy.rejected, (state, action) => {
+      state.isLoading = false;
+      if (action.payload?.statusCode === 404) {
+        state.products = [];
+        state.errors = action.payload?.message as Record<string, any>;
+      }
     });
   },
 });

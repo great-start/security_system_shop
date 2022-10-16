@@ -7,6 +7,8 @@ export const productService = {
   getAll: () => API.get<IProduct[]>(urls.product),
   getOne: (id: string) => API.get<IProduct>(`${urls.product}/${id}`),
   addOne: (product: Partial<IAddProduct>) => API.post<void>(urls.product, product),
-  getProductsSortedByType: (typeId: number) =>
-    API.get<IProduct[]>(`${urls.product}?typeId=${typeId}`),
+  getProductsSortedBy: (typeId: number, categoryId: number) =>
+    API.get<IProduct[]>(
+      `${urls.product}?${typeId ? `typeId=${typeId}` : `categoryId=${categoryId}`}`,
+    ),
 };

@@ -27,20 +27,56 @@ export class ProductService {
     });
   }
 
-  async findAllOneByTypeId(typeId: number): Promise<IProduct[]> {
-    if (!typeId) {
-      return await this.prismaService.product.findMany();
+  async findManySortedBy(typeId: number, categoryId: number): Promise<IProduct[]> {
+    let foundedProducts;
+
+    console.log(typeId, categoryId);
+
+    if (!typeId && !categoryId) {
+      foundedProducts = await this.prismaService.product.findMany();
     }
 
-    const foundedProducts = await this.prismaService.product.findMany({
-      where: {
-        typeId,
-      },
-    });
+    if (typeId) {
+      foundedProducts = await this.prismaService.product.findMany({
+        where: { typeId },
+      });
+    }
+
+    if (categoryId) {
+      // foundedProducts = await this.prismaService.category.findMany({
+      //   where: {
+      //     id: categoryId,
+      //   },
+      //   include: {
+      //     Type: {
+      //       include: {
+      //         Product: true,
+      //       },
+      //     },
+      //   },
+      // });
+
+      foundedProducts = await this.prismaService.product.findMany({
+        // include: {
+        //   type: {
+        //     select: {
+        //       categoryId: true,
+        //     },
+        //   },
+        // },
+        where: {
+          type: {
+            categoryId,
+          },
+        },
+      });
+    }
 
     if (!foundedProducts.length) {
-      throw new NotFoundException();
+      throw new NotFoundException('No products in this type or category');
     }
+
+    console.log(foundedProducts);
 
     return foundedProducts;
   }
