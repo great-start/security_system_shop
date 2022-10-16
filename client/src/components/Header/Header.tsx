@@ -17,6 +17,14 @@ export const Header: FC = () => {
   const navigate = useNavigate();
   const [exchangeRate, setExchangeRate] = useState<IExchangeRate | null>(null);
 
+  useEffect(() => {
+    const getExchangeRates = async () => {
+      const { data } = await API.get(urls.exchangeRates);
+      setExchangeRate(data);
+    };
+    getExchangeRates();
+  }, []);
+
   const logOut = (e: any) => {
     e.preventDefault();
     dispatch(logOutAsync());
@@ -26,14 +34,6 @@ export const Header: FC = () => {
     e.preventDefault();
     navigate('/personal');
   };
-
-  useEffect(() => {
-    const getExchangeRates = async () => {
-      const { data } = await API.get(urls.exchangeRates);
-      setExchangeRate(data);
-    };
-    getExchangeRates();
-  }, []);
 
   return (
     <div className={css.header}>

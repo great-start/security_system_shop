@@ -67,7 +67,7 @@ export const Shop: FC = () => {
             categories.map((category) => (
               <ListGroup.Item
                 key={category.name}
-                className={params.categories === category.name ? css.linkedin : ''}
+                className={params.categories === category.name ? css.linkedin : css.unLinked}
                 action
                 href={`/shop/${category.name}`}
                 onClick={(e) => activateCategory(e, category)}

@@ -6,7 +6,12 @@
 .linkedin {
   background-color: rgba(123, 171, 231, 0.23) !important;
   border-color: lightgray !important;
-  color: black !important;
+  color: #7984c2 !important;
+}
+
+.unLinked {
+  font-weight: bold;
+  color: #7984c2 ;
 }
 
 .titles {
@@ -46,6 +51,8 @@
   align-self: center;
   text-align: center;
   white-space: nowrap;
+  font-weight: bold;
+  color: #7984c2;
   border: 1px solid darkgrey;
 }
 
